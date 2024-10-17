@@ -55,7 +55,7 @@
                 </button>
             </form>
         </div>
-        <div class="flex-1 bg-red-100 hidden md:block rounded-bl-[50px]">
+        <div class="flex-1 bg-gray-700 hidden md:block rounded-bl-[50px]">
 
         </div>
     </div>
