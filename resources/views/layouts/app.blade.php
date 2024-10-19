@@ -18,24 +18,32 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/luvi-ui.css', 'resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-
+    <div class="min-h-screen bg-gray-200">
         <!-- Page Content -->
         <main class="max-w-screen-2xl mx-auto min-h-screen bg-white">
+
+            @include('layouts.header')
+
             @include('layouts.navigation')
-            <div class="flex p-4 gap-x-4">
+
+            <div class="flex p-4 gap-4 flex-col md:flex-row">
+
                 @include('layouts.sidebar')
-                {{ $slot }}
+
+                <section class="w-full overflow-x-hidden">
+                    {{ Breadcrumbs::render() }}
+                    {{ $slot }}
+                </section>
+
             </div>
+
         </main>
+
     </div>
-    <script>
-        console.log("Hello World")
-    </script>
 </body>
 
 </html>

@@ -1,37 +1,47 @@
 {
     "menu": [
         {
-            "url": "/",
-            "name": "Dashboards",
-            "icon": "menu-icon tf-icons bx bx-home-smile",
-            "slug": "dashboard",
+            "name": "Menu Utama",
+            "icon": "",
             "submenu": [
                 {
                     "url": "/",
-                    "name": "Analytics",
-                    "slug": "dashboard-analytics"
+                    "name": "Beranda",
+                    "slug": "welcome"
+                },
+                {
+                    "url": "/laporan",
+                    "name": "Laporan",
+                    "slug": "laporan"
                 }
             ]
         },
         {
-            "name": "Account Settings",
-            "icon": "menu-icon tf-icons bx bx bx-dock-top",
-            "slug": "pages-account-settings",
+            "name": "Admin",
+            "icon": "",
             "submenu": [
                 {
-                    "url": "pages/account-settings-account",
-                    "name": "Account",
-                    "slug": "pages-account-settings-account"
+                    "url": "/tenaga-pengajar",
+                    "name": "Tenaga Pengajar"
                 },
                 {
-                    "url": "pages/account-settings-notifications",
-                    "name": "Notifications",
-                    "slug": "pages-account-settings-notifications"
+                    "url": "/mata-kuliah",
+                    "name": "Mata Kuliah"
+                }
+            ]
+        },
+        {
+            "name": "Pengaturan",
+            "icon": "",
+            "slug": "pengaturan",
+            "submenu": [
+                {
+                    "url": "/pengaturan/akun",
+                    "name": "Akun"
                 },
                 {
-                    "url": "pages/account-settings-connections",
-                    "name": "Connections",
-                    "slug": "pages-account-settings-connections"
+                    "url": "/logout",
+                    "name": "Keluar"
                 }
             ]
         }

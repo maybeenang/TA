@@ -6,9 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "diglactic/laravel-breadcrumbs": "^9.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
+        "luvi-ui/laravel-luvi": "^0.4.2",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {

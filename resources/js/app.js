@@ -1,7 +1,22 @@
-import './bootstrap';
+import "./bootstrap";
+//import Alpine from "alpinejs";
 
-import Alpine from 'alpinejs';
+//window.Alpine = Alpine;
+//
+//Alpine.start();
+import collapse from "@alpinejs/collapse";
+import anchor from "@alpinejs/anchor";
 
-window.Alpine = Alpine;
+document.addEventListener(
+    "alpine:init",
+    () => {
+        const modules = import.meta.glob("./plugins/**/*.js", { eager: true });
 
-Alpine.start();
+        for (const path in modules) {
+            window.Alpine.plugin(modules[path].default);
+        }
+        window.Alpine.plugin(collapse);
+        window.Alpine.plugin(anchor);
+    },
+    { once: true },
+);
