@@ -21,8 +21,9 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "/tenaga-pengajar",
-                    "name": "Tenaga Pengajar"
+                    "url": "/admin/tenaga-pengajar",
+                    "name": "Tenaga Pengajar",
+                    "slug": "tenaga-pengajar.index"
                 },
                 {
                     "url": "/mata-kuliah",

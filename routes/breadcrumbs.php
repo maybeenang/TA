@@ -13,8 +13,12 @@ Breadcrumbs::for('laporan', function (BreadcrumbTrail $trail) {
     $trail->push('Laporan', route('laporan'));
 });
 
-// Home > Blog > [Category]
-/*Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {*/
-/*    $trail->parent('blog');*/
-/*    $trail->push($category->title, route('category', $category));*/
-/*});*/
+Breadcrumbs::for('tenaga-pengajar.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Tenaga Pengajar', route('tenaga-pengajar.index'));
+});
+
+Breadcrumbs::for('tenaga-pengajar.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('tenaga-pengajar.index');
+    $trail->push('Tambah Tenaga Pengajar', route('tenaga-pengajar.create'));
+});
