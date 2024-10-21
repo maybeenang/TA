@@ -23,11 +23,17 @@
                 {
                     "url": "/admin/tenaga-pengajar",
                     "name": "Tenaga Pengajar",
-                    "slug": "tenaga-pengajar.index"
+                    "slug": "admin.tenaga-pengajar.index"
                 },
                 {
-                    "url": "/mata-kuliah",
-                    "name": "Mata Kuliah"
+                    "url": "/admin/mata-kuliah",
+                    "name": "Mata Kuliah",
+                    "slug": "admin.mata-kuliah.index"
+                },
+                {
+                    "url": "/admin/tahun-akademik",
+                    "name": "Tahun Akademik",
+                    "slug": "admin.tahun-akademik.index"
                 }
             ]
         },

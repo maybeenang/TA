@@ -1,5 +1,5 @@
 @props(['value'])
 
-<div>
+<div class="">
     {{ $value }}
 </div>

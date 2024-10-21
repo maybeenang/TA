@@ -1,25 +1,13 @@
 <div class="space-y-4">
 
-    <!--Entries dan Search-->
-    <div class="flex justify-between">
-        <div class="flex items-center gap-2">
-            <x-label htmlFor="perPage">Show</x-label>
-            <x-select class="w-[75px]" id="perPage" wire:model.live="perPage">
-                <option value="10">10</option>
-                <option value="20">20</option>
-            </x-select>
-            <x-label htmlFor="perPage">Entries</x-label>
-        </div>
-        <div class="flex items-center gap-2">
-            <x-label htmlFor="tahun-ajaran">Search</x-label>
-            <x-input wire:model.live.debounce.500ms="search" />
-        </div>
-    </div>
+    @includeWhen($this->componentBefore !== '', $this->componentBefore)
+
+    @include('livewire.table.partials.entries-and-search')
 
     <div class="overflow-x-auto">
         <table class="table-auto w-full whitespace-nowrap text-left border-collapse border border-zinc-50">
             <thead>
-                <tr class="">
+                <tr class="uppercase">
                     @foreach ($this->columns() as $column)
                         <th scope="col" @class([
                             'px-2 py-2 border border-zinc-100 ',
@@ -34,6 +22,8 @@
                                     @else
                                         <x-icons.down-icon />
                                     @endif
+                                @elseif ($column->sortable)
+                                    <x-icons.up-down-icon />
                                 @endif
                             </div>
                         </th>
@@ -41,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($this->data() as $row)
+                @forelse ($this->data() as $row)
                     <tr class="odd:bg-zinc-50 even:bg-white">
                         @foreach ($this->columns() as $column)
                             <td class="px-2 py-2 border border-zinc-100">
@@ -59,7 +49,13 @@
                             </td>
                         @endforeach
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td class="px-2 py-2 border border-zinc-100 text-center" colspan="{{ count($this->columns()) }}">
+                            Data tidak ditemukan
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

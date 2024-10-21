@@ -19,12 +19,13 @@
 
     <!-- Scripts -->
     @vite(['resources/css/luvi-ui.css', 'resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-200">
         <!-- Page Content -->
-        <main class="max-w-screen-2xl mx-auto min-h-screen bg-white">
+        <main class="max-w-screen-2xl mx-auto min-h-screen bg-white" x-data>
 
             @include('layouts.header')
 
@@ -34,7 +35,7 @@
 
                 @include('layouts.sidebar')
 
-                <section class="w-full overflow-x-hidden">
+                <section class="w-full overflow-x-hidden space-y-2">
                     {{ Breadcrumbs::render() }}
                     {{ $slot }}
                 </section>
@@ -44,6 +45,7 @@
         </main>
 
     </div>
+    @livewireScripts
 </body>
 
 </html>

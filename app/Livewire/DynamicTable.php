@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,11 +16,14 @@ abstract class DynamicTable extends Component
 
     public $sortDirection = 'asc';
 
+    #[Url()]
     public $search = '';
 
     public $searchColumns = [];
 
     public $relations = [];
+
+    public $componentBefore = '';
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 

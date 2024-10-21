@@ -4,18 +4,20 @@
 
         <span class="text-sm flex items-center gap-1">
             <x-icons.person-icon />
-            Tenaga Pengajar
+            Mata Kuliah
         </span>
 
         <div class="flex justify-end">
             <x-button class="bg-blue-500 hover:bg-blue-600" x-data
                 x-on:click="
-                    window.location.href = '{{ route('admin.tenaga-pengajar.create') }}'
+                    window.location.href = '{{ route('admin.mata-kuliah.create') }}'
                 ">
-                Tambah Tenaga Pengajar
+                Tambah Mata Kuliah
             </x-button>
         </div>
 
-        <livewire:table.tenaga-pengajar-table />
+        <livewire:table.mata-kuliah-table />
+
     </div>
+
 </x-app-layout>

@@ -8,7 +8,7 @@ Route::group(
         'middleware' => ['auth', 'verified']
     ],
     function () {
-        Route::get('/', fn() => view('welcome'))->name('welcome');
+        Route::get('/', fn() => view('pages.welcome'))->name('welcome');
         Route::get('/dashboard', [Controllers\DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/laporan', [Controllers\LaporanController::class, 'index'])->name('laporan');
