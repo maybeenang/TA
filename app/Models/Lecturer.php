@@ -19,10 +19,11 @@ class Lecturer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function courses()
+
+    public function classRooms()
     {
-        return $this->belongsToMany(Course::class, 'lecturer_courses')
-            ->withPivot('academic_year')
+        return $this->belongsToMany(ClassRoom::class, 'lecturer_teaches', 'lecturer_id', 'class_room_id')
+            ->withPivot('academic_year_id')
             ->withTimestamps();
     }
 }

@@ -13,11 +13,9 @@
                             'block py-2 px-4 cursor-pointer hover:bg-zinc-50 bg-white',
                             'rounded-b-md' => $loop->last,
                             'bg-yellow-100' =>
-                                isset($subitem->slug) && Route::currentRouteName() === $subitem->slug,
-                        ])
-                            @isset($subitem->slug)
-                            href="{{ route($subitem->slug) }}"
-                        @endisset>
+                                isset($subitem->slug) &&
+                                strpos(Route::currentRouteName(), $subitem->slug) !== false,
+                        ]) href="{{ route($subitem->url) }}">
                             {{ $subitem->name }}
                         </a>
                     @endforeach

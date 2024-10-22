@@ -14,14 +14,14 @@ class UserSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Super Admin',
-            'email' => 'superadmin@email.com',
+            'email' => 'superadmin@admin.com',
         ]);
 
         User::factory()->create([
             'name' => 'Admin',
-            'email' => 'admin@email.com',
+            'email' => 'admin@admin.com',
         ]);
 
-        User::factory(10)->create();
+        User::factory(20)->create();
     }
 }

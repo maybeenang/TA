@@ -5,12 +5,12 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "/",
+                    "url": "welcome",
                     "name": "Beranda",
                     "slug": "welcome"
                 },
                 {
-                    "url": "/laporan",
+                    "url": "laporan",
                     "name": "Laporan",
                     "slug": "laporan"
                 }
@@ -21,19 +21,24 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "/admin/tenaga-pengajar",
+                    "url": "admin.tenaga-pengajar.index",
                     "name": "Tenaga Pengajar",
-                    "slug": "admin.tenaga-pengajar.index"
+                    "slug": "admin.tenaga-pengajar"
                 },
                 {
-                    "url": "/admin/mata-kuliah",
+                    "url": "admin.kelas.index",
+                    "name": "Kelas",
+                    "slug": "admin.kelas"
+                },
+                {
+                    "url": "admin.mata-kuliah.index",
                     "name": "Mata Kuliah",
-                    "slug": "admin.mata-kuliah.index"
+                    "slug": "admin.mata-kuliah"
                 },
                 {
-                    "url": "/admin/tahun-akademik",
+                    "url": "admin.tahun-akademik.index",
                     "name": "Tahun Akademik",
-                    "slug": "admin.tahun-akademik.index"
+                    "slug": "admin.tahun-akademik"
                 }
             ]
         },
@@ -43,11 +48,11 @@
             "slug": "pengaturan",
             "submenu": [
                 {
-                    "url": "/pengaturan/akun",
+                    "url": "profile.edit",
                     "name": "Akun"
                 },
                 {
-                    "url": "/logout",
+                    "url": "logout",
                     "name": "Keluar"
                 }
             ]

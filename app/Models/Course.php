@@ -15,10 +15,8 @@ class Course extends Model
         'name',
     ];
 
-    public function lecturers()
+    public function classRooms()
     {
-        return $this->belongsToMany(Lecturer::class, 'lecturer_courses')
-            ->withPivot('academic_year')
-            ->withTimestamps();
+        return $this->hasMany(ClassRoom::class);
     }
 }
