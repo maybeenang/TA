@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KelasController extends Controller
 {
@@ -33,7 +34,38 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'course_id' => 'required|exists:courses,id',
+            'academic_year_id' => 'required|exists:academic_years,id',
+        ]);
+
+        $classRoomNames = array_map('trim', explode(',', $validated['name']));
+
+        // clean from empty string
+        $classRoomNames = array_filter($classRoomNames);
+
+        // implement db transaction
+        try {
+            DB::transaction(function () use ($classRoomNames, $validated) {
+                $course = Course::find($validated['course_id']);
+                $academicYear = AcademicYear::find($validated['academic_year_id']);
+
+                foreach ($classRoomNames as $name) {
+                    $course->classRooms()->create([
+                        'name' => $name,
+                        'code' => $course->code . '-' . $name,
+                        'academic_year_id' => $academicYear->id,
+                    ]);
+                }
+            });
+
+            return redirect()->route('admin.kelas.index')
+                ->with('success', 'Kelas berhasil dibuat');
+        } catch (\Throwable $th) {
+
+            return back()->with('error', 'Gagal membuat kelas : ' . $th->getMessage());
+        }
     }
 
     /**

@@ -15,15 +15,18 @@ class TenagaPengajarTable extends DynamicTable
 
     public function query(): Builder
     {
-        return User::query();
+        return User::query()
+            ->with(['lecturer', 'roles'])
+            ->orderBy('created_at', 'desc');
     }
 
     public function columns(): array
     {
         return [
             Column::make('name', 'Nama'),
-            Column::make(['lecturer', 'nip'], 'Nip')->sortable(false),
+            Column::make('lecturer.nip', 'Nip')->sortable(false),
             Column::make('email', 'Email'),
+            Column::make('roles', 'Roles')->component('columns.user-role')->sortable(false),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
             Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
         ];

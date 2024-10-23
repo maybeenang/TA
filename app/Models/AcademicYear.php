@@ -15,4 +15,10 @@ class AcademicYear extends Model
         'start_date',
         'end_date',
     ];
+
+
+    public function classRooms()
+    {
+        return $this->hasMany(ClassRoom::class);
+    }
 }

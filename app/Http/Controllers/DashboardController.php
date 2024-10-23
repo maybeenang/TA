@@ -9,6 +9,8 @@ class DashboardController extends Controller
     public function index()
     {
 
+        return redirect()->intended(route('welcome', absolute: false));
+
         return view('pages.dashboard');
     }
 }

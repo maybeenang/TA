@@ -13,6 +13,7 @@ class Course extends Model
     public $fillable = [
         'code',
         'name',
+        'credit'
     ];
 
     public function classRooms()

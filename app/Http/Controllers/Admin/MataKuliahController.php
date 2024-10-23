@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class MataKuliahController extends Controller
@@ -20,7 +21,7 @@ class MataKuliahController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.mata-kuliah.create');
     }
 
     /**
@@ -28,7 +29,26 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'credit' => 'required|numeric',
+        ]);
+
+        $code = strtoupper(substr($validated['name'], 0, 3)) . '-' . rand(100, 999);
+
+        try {
+            Course::create([
+                'name' => $validated['name'],
+                'code' => $code,
+                'credit' => $validated['credit'],
+            ]);
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat menambahkan mata kuliah');
+        }
+
+        return redirect()->route('admin.mata-kuliah.index')
+            ->with('success', 'Mata Kuliah berhasil ditambahkan');
     }
 
     /**

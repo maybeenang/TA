@@ -19,13 +19,18 @@ Breadcrumbs::for('admin.tenaga-pengajar.index', function (BreadcrumbTrail $trail
 });
 
 Breadcrumbs::for('admin.tenaga-pengajar.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('tenaga-pengajar.index');
+    $trail->parent('admin.tenaga-pengajar.index');
     $trail->push('Tambah Tenaga Pengajar', route('admin.tenaga-pengajar.create'));
 });
 
 Breadcrumbs::for('admin.mata-kuliah.index', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Mata Kuliah', route('admin.mata-kuliah.index'));
+});
+
+Breadcrumbs::for('admin.mata-kuliah.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.mata-kuliah.index');
+    $trail->push('Tambah Mata Kuliah', route('admin.mata-kuliah.create'));
 });
 
 Breadcrumbs::for('admin.tahun-akademik.index', function (BreadcrumbTrail $trail) {
@@ -36,4 +41,14 @@ Breadcrumbs::for('admin.tahun-akademik.index', function (BreadcrumbTrail $trail)
 Breadcrumbs::for('admin.tahun-akademik.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.tahun-akademik.index');
     $trail->push('Tambah Tahun Akademik', route('admin.tahun-akademik.create'));
+});
+
+Breadcrumbs::for('admin.kelas.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Kelas', route('admin.kelas.index'));
+});
+
+Breadcrumbs::for('admin.kelas.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.kelas.index');
+    $trail->push('Tambah Kelas', route('admin.kelas.create'));
 });

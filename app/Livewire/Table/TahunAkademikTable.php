@@ -16,7 +16,8 @@ class TahunAkademikTable extends DynamicTable
 
     public function query(): Builder
     {
-        return AcademicYear::query();
+        return AcademicYear::query()
+            ->orderBy('created_at', 'desc');
     }
 
     public function columns(): array

@@ -13,6 +13,8 @@ class ClassRoom extends Model
         'name',
         'code',
         'course_id',
+        'lecturer_id',
+        'academic_year_id',
     ];
 
     public function course()
@@ -20,10 +22,13 @@ class ClassRoom extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function lecturers()
+    public function lecturer()
     {
-        return $this->belongsToMany(Lecturer::class, 'lecturer_teaches', 'class_room_id', 'lecturer_id')
-            ->withPivot('academic_year_id')
-            ->withTimestamps();
+        return $this->belongsTo(Lecturer::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
     }
 }

@@ -6,12 +6,12 @@
             <x-icons.backpack-icon />
             Tambah Kelas
         </span>
-        <x-form class="max-w-md mx-auto" method="POST" action="{{ route('admin.tahun-akademik.store') }}">
+        <x-form class="max-w-md mx-auto" method="POST" action="{{ route('admin.kelas.store') }}">
             @csrf
 
-            <x-form.item name="tahun-ajaran">
+            <x-form.item name="academic_year_id">
                 <x-form.label>Tahun Ajaran</x-form.label>
-                <x-select class="">
+                <x-select class="" name="academic_year_id">
                     <option value="-" selected disabled>
                         Pilih Tahun Ajaran
                     </option>
@@ -28,9 +28,9 @@
                 <x-form.message />
             </x-form.item>
 
-            <x-form.item name="mata-kuliah">
+            <x-form.item name="course_id">
                 <x-form.label>Mata Kuliah</x-form.label>
-                <x-select class="">
+                <x-select class="" name="course_id">
                     <option value="-" selected disabled>
                         Pilih Mata Kuliah
                     </option>
@@ -49,7 +49,11 @@
 
             <x-form.item name="name">
                 <x-form.label>Nama Kelas</x-form.label>
-                <x-input x-form:control required name="name" placeholder="RA RB" :value="old('name')" />
+                <x-input x-form:control required name="name" placeholder="RA, RB" :value="old('name')" />
+                <x-form.description>
+                    Untuk membuat lebih dari satu kelas, pisahkan nama kelas dengan tanda koma, <span
+                        class="font-semibold">contoh: RA, RB, RC</span>
+                </x-form.description>
                 <x-form.message />
             </x-form.item>
 

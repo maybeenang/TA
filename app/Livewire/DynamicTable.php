@@ -21,8 +21,6 @@ abstract class DynamicTable extends Component
 
     public $searchColumns = [];
 
-    public $relations = [];
-
     public $componentBefore = '';
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
@@ -51,7 +49,6 @@ abstract class DynamicTable extends Component
     {
         return $this
             ->query()
-            ->with($this->relations)
             ->when($this->sortBy !== '', function ($query) {
                 $query->orderBy($this->sortBy, $this->sortDirection);
             })

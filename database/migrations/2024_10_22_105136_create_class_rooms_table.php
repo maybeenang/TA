@@ -16,6 +16,16 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
+            $table->foreignId('academic_year_id')->constrained('academic_years')->cascadeOnDelete();
+            $table->foreignId('lecturer_id')->nullable()->constrained('lecturers')->nullOnDelete();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
+            $table->text('content');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,5 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('class_rooms');
+        Schema::dropIfExists('reports');
     }
 };

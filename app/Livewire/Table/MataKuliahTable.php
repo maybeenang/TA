@@ -12,11 +12,12 @@ class MataKuliahTable extends DynamicTable
     public $searchColumns = ['name'];
     /*public $relations = ['lecturer'];*/
 
-    public $componentBefore = 'livewire.table.mata-kuliah';
+    /*public $componentBefore = 'livewire.table.mata-kuliah';*/
 
     public function query(): Builder
     {
-        return Course::query();
+        return Course::query()
+            ->orderBy('created_at', 'desc');
     }
 
     public function columns(): array
@@ -24,6 +25,7 @@ class MataKuliahTable extends DynamicTable
         return [
             Column::make('code', 'Kode Mata Kuliah'),
             Column::make('name', 'Nama Mata Kuliah'),
+            Column::make('credit', 'SKS'),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
             Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
         ];

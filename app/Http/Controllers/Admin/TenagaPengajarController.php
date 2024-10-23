@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TenagaPengajarController extends Controller
 {
@@ -28,7 +30,33 @@ class TenagaPengajarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'nip' => 'required|unique:lecturers,nip|digits_between:10,20',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated) {
+                $user = User::create([
+                    'email' => $validated['email'],
+                    'name' => $validated['name'],
+                    'password' => bcrypt($validated['password']),
+                ]);
+
+                $user->lecturer()->create([
+                    'nip' => $validated['nip'],
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat menambahkan tenaga pengajar');
+        }
+
+
+        return redirect()->route('admin.tenaga-pengajar.index')
+            ->with('success', 'Tenaga Pengajar berhasil ditambahkan');
     }
 
     /**

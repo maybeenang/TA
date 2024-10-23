@@ -32,18 +32,25 @@
             </thead>
             <tbody>
                 @forelse ($this->data() as $row)
-                    <tr class="odd:bg-zinc-50 even:bg-white">
+                    <tr class="odd:bg-zinc-50 even:bg-white align-top">
                         @foreach ($this->columns() as $column)
                             <td class="px-2 py-2 border border-zinc-100">
                                 @php
-                                    if (gettype($column->key) == 'array') {
+                                    if (Str::contains($column->key, '.')) {
+                                        $keys = explode('.', $column->key);
+
                                         $value = $row;
-                                        foreach ($column->key as $key) {
+
+                                        foreach ($keys as $key) {
                                             $value = $value[$key];
+                                            if (is_null($value)) {
+                                                break;
+                                            }
                                         }
                                     } else {
                                         $value = $row[$column->key];
                                     }
+
                                 @endphp
                                 <x-dynamic-component :component="$column->component" :value="$value" />
                             </td>
