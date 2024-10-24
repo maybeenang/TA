@@ -1,7 +1,7 @@
 <div x-data="{ dialog: false }">
-    <button x-on:click="dialog = true ">
+    <x-button.action x-on:click="dialog = true" class="p-0 max-h-fit">
         Kelola Role
-    </button>
+    </x-button.action>
     <x-dialog x-model="dialog">
         <x-dialog.content class="sm:max-w-[425px]">
             <div class="grid gap-4">

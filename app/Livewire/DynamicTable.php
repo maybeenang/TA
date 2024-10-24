@@ -12,9 +12,9 @@ abstract class DynamicTable extends Component
 
     public $perPage = 10;
 
-    public $sortBy = '';
+    public $sortBy = 'created_at';
 
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     #[Url()]
     public $search = '';
@@ -24,6 +24,8 @@ abstract class DynamicTable extends Component
     public $componentBefore = '';
 
     public array $partialActions = [];
+
+    public $routeName = '';
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 

@@ -14,10 +14,11 @@ class TahunAkademikTable extends DynamicTable
 
     /*public $componentBefore = 'livewire.table.mata-kuliah';*/
 
+    public $routeName = 'admin.tahun-akademik';
+
     public function query(): Builder
     {
-        return AcademicYear::query()
-            ->orderBy('created_at', 'desc');
+        return AcademicYear::query();
     }
 
     public function columns(): array
@@ -27,7 +28,7 @@ class TahunAkademikTable extends DynamicTable
             Column::make('start_date', 'Mulai')->component('columns.date')->sortable(false),
             Column::make('end_date', 'Selesai')->component('columns.date')->sortable(false),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
-            Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
+            Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }
 }

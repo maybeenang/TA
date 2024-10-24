@@ -14,7 +14,7 @@
                             'cursor-pointer' => $column->sortable,
                         ])
                             @if ($column->sortable) wire:click="sort('{{ $column->key }}')" @endif>
-                            <div class="flex items-center justify-center gap-2">
+                            <div class="flex items-center justify-between gap-2">
                                 {{ $column->label }}
                                 @if ($sortBy === $column->key)
                                     @if ($sortDirection === 'asc')

@@ -14,7 +14,7 @@ class KelasTable extends DynamicTable
     public $searchColumns = ['name',];
     public $relations = ['course', 'lecturer', 'academicYear'];
 
-    /*public $componentBefore = 'livewire.table.kelas';*/
+    public $routeName = 'admin.kelas';
 
     public function getAllLecturers()
     {
@@ -55,7 +55,7 @@ class KelasTable extends DynamicTable
             Column::make('course.credit', 'SKS')->sortable(false),
             Column::make('id', 'Nama Tenaga Pengajar')->component('columns.classroom-lecturers')->sortable(false),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
-            Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
+            Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }
 }

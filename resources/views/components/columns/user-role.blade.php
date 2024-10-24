@@ -1,11 +1,11 @@
 @props(['value'])
 
-<div class="grid gap-1 justify-center place-items-center">
+<div class="flex flex-wrap gap-1">
     @forelse ($value as $role)
         {{ App\Enums\RolesEnum::from($role->name)->badge() }}
     @empty
-        <div class="max-w-fit px-2 bg-gray-500 rounded-md text-white text-sm">
-            -
+        <div class="max-w-fit px-2 bg-zinc-100 border-zinc-300 border-2 rounded-full text-zinc-600 text-sm">
+            Tidak ada
         </div>
     @endforelse
 </div>

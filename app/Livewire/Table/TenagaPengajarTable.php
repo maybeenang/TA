@@ -12,15 +12,16 @@ class TenagaPengajarTable extends DynamicTable
 {
     public $searchColumns = ['user.name', 'user.email', 'nip'];
 
+    public $routeName = 'admin.tenaga-pengajar';
+
     public function query(): Builder
     {
         return Lecturer::query()
             ->with('user')
             // for sorting cheat
             ->join('users', 'lecturers.user_id', '=', 'users.id')
-            ->select('lecturers.*')
-            // default sort
-            ->orderBy('created_at', 'desc');
+            ->select('lecturers.*');
+        // default sort
     }
 
     public function columns(): array
@@ -31,7 +32,7 @@ class TenagaPengajarTable extends DynamicTable
             Column::make('user.email', 'Email'),
             /*Column::make('roles', 'Role')->component('columns.user-role')->sortable(false),*/
             /*Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),*/
-            Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
+            Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }
 }

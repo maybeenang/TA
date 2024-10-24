@@ -14,10 +14,11 @@ class MataKuliahTable extends DynamicTable
 
     /*public $componentBefore = 'livewire.table.mata-kuliah';*/
 
+    public $routeName = 'admin.mata-kuliah';
+
     public function query(): Builder
     {
-        return Course::query()
-            ->orderBy('created_at', 'desc');
+        return Course::query();
     }
 
     public function columns(): array
@@ -27,7 +28,7 @@ class MataKuliahTable extends DynamicTable
             Column::make('name', 'Nama Mata Kuliah'),
             Column::make('credit', 'SKS'),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
-            Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
+            Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }
 }
