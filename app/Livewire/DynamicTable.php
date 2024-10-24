@@ -23,9 +23,14 @@ abstract class DynamicTable extends Component
 
     public $componentBefore = '';
 
+    public array $partialActions = [];
+
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 
     public abstract function columns(): array;
+
+
+
 
     public function updatedSearch()
     {

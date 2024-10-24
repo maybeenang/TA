@@ -11,6 +11,8 @@ class UserTable extends DynamicTable
 {
     public $searchColumns = ['name', 'email'];
 
+    public array $partialActions = ['columns.partials.user-action'];
+
     public function query(): Builder
     {
         return User::query()
