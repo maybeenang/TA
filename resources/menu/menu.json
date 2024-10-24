@@ -21,6 +21,11 @@
             "icon": "",
             "submenu": [
                 {
+                    "url": "admin.user.index",
+                    "name": "Pengguna",
+                    "slug": "admin.user"
+                },
+                {
                     "url": "admin.tenaga-pengajar.index",
                     "name": "Tenaga Pengajar",
                     "slug": "admin.tenaga-pengajar"

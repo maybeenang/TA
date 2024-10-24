@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RolesEnum;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -13,15 +14,18 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Role::create(['name' => 'admin']);
-        $lecture = Role::create(['name' => 'lecture']);
+        /*$admin = Role::create(['name' => 'admin']);*/
+        /*$lecture = Role::create(['name' => 'tenaga-pengajar']);*/
+
+        $admin = app(Role::class)->findOrCreate(RolesEnum::ADMIN->value, 'web');
+        $tenagaPengajar = app(Role::class)->findOrCreate(RolesEnum::TENAGAPENGAJAR->value, 'web');
 
         $users = User::get();
 
         /*chec if user is not empty*/
         if ($users->isNotEmpty()) {
-            $users->each(function ($user) use ($lecture) {
-                $user->assignRole($lecture);
+            $users->each(function ($user) use ($tenagaPengajar) {
+                $user->assignRole($tenagaPengajar);
             });
 
             // Assign admin to user who have email contain admin

@@ -4,30 +4,33 @@ namespace App\Livewire\Table;
 
 use App\Dynamics\Column;
 use App\Livewire\DynamicTable;
+use App\Models\Lecturer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-/*use Livewire\Component;*/
 
 class TenagaPengajarTable extends DynamicTable
 {
-    public $searchColumns = ['name', 'email'];
-    public $relations = ['lecturer'];
+    public $searchColumns = ['user.name', 'user.email', 'nip'];
 
     public function query(): Builder
     {
-        return User::query()
-            ->with(['lecturer', 'roles'])
+        return Lecturer::query()
+            ->with('user')
+            // for sorting cheat
+            ->join('users', 'lecturers.user_id', '=', 'users.id')
+            ->select('lecturers.*')
+            // default sort
             ->orderBy('created_at', 'desc');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('name', 'Nama'),
-            Column::make('lecturer.nip', 'Nip')->sortable(false),
-            Column::make('email', 'Email'),
-            Column::make('roles', 'Roles')->component('columns.user-role')->sortable(false),
-            Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
+            Column::make('user.name', 'Nama'),
+            Column::make('nip', 'Nip'),
+            Column::make('user.email', 'Email'),
+            /*Column::make('roles', 'Role')->component('columns.user-role')->sortable(false),*/
+            /*Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),*/
             Column::make('id', 'Aksi')->component('columns.actions')->sortable(false),
         ];
     }

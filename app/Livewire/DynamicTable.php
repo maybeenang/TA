@@ -50,12 +50,25 @@ abstract class DynamicTable extends Component
         return $this
             ->query()
             ->when($this->sortBy !== '', function ($query) {
-                $query->orderBy($this->sortBy, $this->sortDirection);
+                if (str_contains($this->sortBy, '.')) {
+                    $relationship = explode('.', $this->sortBy);
+                    $query->orderBy($relationship[0] . 's' . '.' . $relationship[1], $this->sortDirection);
+                } else {
+                    $query->orderBy($this->sortBy, $this->sortDirection);
+                }
+                /*$query->orderBy($this->sortBy, $this->sortDirection);*/
             })
             ->when($this->search !== '', function ($query) {
                 $query->where(function ($query) {
                     foreach ($this->searchColumns as $column) {
-                        $query->orWhere($column, 'like', '%' . $this->search . '%');
+                        if (str_contains($column, '.')) {
+                            $relationship = explode('.', $column);
+                            $query->orWhereHas($relationship[0], function ($query) use ($relationship) {
+                                $query->where($relationship[1], 'like', '%' . $this->search . '%');
+                            });
+                        } else {
+                            $query->orWhere($column, 'like', '%' . $this->search . '%');
+                        }
                     }
                 });
             })

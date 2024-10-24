@@ -9,6 +9,7 @@ Route::group(
         'middleware' => ['auth'],
     ],
     function () {
+        Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('tenaga-pengajar', \App\Http\Controllers\Admin\TenagaPengajarController::class);
         Route::resource('mata-kuliah', \App\Http\Controllers\Admin\MataKuliahController::class);
         Route::resource('kelas', \App\Http\Controllers\Admin\KelasController::class);
