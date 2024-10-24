@@ -19,7 +19,7 @@
                 tenagaPengajar: {{ old('tenaga_pengajar', 'false') === 'on' ? 'true' : 'false' }}
             }" class="space-y-2">
 
-                <div class=" flex items-center space-x-4 rounded-md border p-4">
+                <x-form.item class=" flex items-center space-x-4 rounded-md border p-4">
                     <div class="flex-1 space-y-1">
                         <p class="text-sm font-medium leading-none">Tenaga Pengajar</p>
                         <p class="text-sm text-muted-foreground">
@@ -27,7 +27,7 @@
                         </p>
                     </div>
                     <x-switch x-model="tenagaPengajar" name="tenaga_pengajar" :value="old('tenaga_pengajar')" />
-                </div>
+                </x-form.item>
 
                 <x-form.item name="nip" x-show="tenagaPengajar" x-cloak
                     x-transition:enter="transition ease-out duration-300"
@@ -58,6 +58,7 @@
                 <x-input type="password" required x-form:control name="password_confirmation" />
                 <x-form.message />
             </x-form.item>
+
             <div class="flex flex-col space-y-4 rounded-md border p-4">
                 <div class="flex-1 space-y-1">
                     <p class="text-sm font-medium leading-none">Role</p>
@@ -77,6 +78,7 @@
 
                 </div>
             </div>
+
             <x-button type="submit">Submit</x-button>
         </x-form>
     </div>
