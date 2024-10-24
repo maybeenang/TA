@@ -83,6 +83,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user = $user->load(['roles', 'lecturer']);
+        // hide crucial information
+        $user->makeHidden(['email_verified_at', 'password', 'remember_token', 'id', 'deleted_at']);
         return view('pages.admin.user.show', compact('user'));
     }
 

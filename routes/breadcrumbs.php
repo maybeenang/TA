@@ -1,5 +1,6 @@
 <?php // routes/breadcrumbs.php
 
+use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
@@ -61,4 +62,9 @@ Breadcrumbs::for('admin.user.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('admin.user.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.user.index');
     $trail->push('Tambah Pengguna', route('admin.user.create'));
+});
+
+Breadcrumbs::for('admin.user.show', function (BreadcrumbTrail $trail, User $user) {
+    $trail->parent('admin.user.index');
+    $trail->push('Detail Pengguna', route('admin.user.show', $user));
 });
