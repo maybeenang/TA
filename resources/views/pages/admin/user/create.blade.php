@@ -1,7 +1,9 @@
 <x-app-layout>
     <x-alert.flash />
-    <div
-        class="border-zinc-100 border p-2 rounded-md border-t-red-500 border-t-4 border-b-yellow-500 border-b-4 space-y-4">
+    <div class="border-zinc-100 border p-2 rounded-md border-t-red-500 border-t-4 border-b-yellow-500 border-b-4 space-y-4"
+        x-data="{
+            tenagaPengajar: {{ old('tenaga_pengajar', 'false') === 'on' ? 'true' : 'false' }}
+        }">
         <span class="text-sm flex items-center gap-1">
             <x-icons.person-icon />
             Tambah Pengguna
@@ -15,9 +17,7 @@
                 <x-form.message />
             </x-form.item>
 
-            <div x-data="{
-                tenagaPengajar: {{ old('tenaga_pengajar', 'false') === 'on' ? 'true' : 'false' }}
-            }" class="space-y-2">
+            <div class="space-y-2">
 
                 <x-form.item class=" flex items-center space-x-4 rounded-md border p-4">
                     <div class="flex-1 space-y-1">
@@ -59,7 +59,7 @@
                 <x-form.message />
             </x-form.item>
 
-            <div class="flex flex-col space-y-4 rounded-md border p-4">
+            <x-form.item class="flex flex-col space-y-4 rounded-md border p-4" name="roles[]">
                 <div class="flex-1 space-y-1">
                     <p class="text-sm font-medium leading-none">Role</p>
                     <p class="text-sm text-muted-foreground">
@@ -70,14 +70,16 @@
 
                     @foreach ($roles as $role)
                         <div class="flex items-center space-x-2">
-                            <x-checkbox id="{{ $role->value }}" />
+                            <x-checkbox id="{{ $role->value }}" x-form:control name="roles[]"
+                                value="{{ $role->value }}" :checked="in_array($role->value, old('roles', []))" />
                             <x-label htmlFor="{{ $role->value }}"
                                 class="whitespace-nowrap">{{ $role->label() }}</x-label>
                         </div>
                     @endforeach
 
                 </div>
-            </div>
+                <x-form.message />
+            </x-form.item>
 
             <x-button type="submit">Submit</x-button>
         </x-form>

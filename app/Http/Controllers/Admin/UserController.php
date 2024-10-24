@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,9 +35,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         // check if tenaga_pengajar is checked
         $isTenagaPengajar = $request->has('tenaga_pengajar');
+
+        $hasRoles = $request->has('roles');
 
         /*dd($request->all());*/
         $validated = $request->validate([
@@ -44,11 +46,12 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             $isTenagaPengajar ? 'nip' : '' => $isTenagaPengajar ? 'required|unique:lecturers,nip|digits_between:10,20' : '',
+            // check if roles is exists in database
+            'roles.*' => 'exists:roles,name',
         ]);
 
-
         try {
-            DB::transaction(function () use ($validated, $isTenagaPengajar) {
+            DB::transaction(function () use ($validated, $isTenagaPengajar, $hasRoles) {
                 $user = User::create([
                     'email' => $validated['email'],
                     'name' => $validated['name'],
@@ -59,6 +62,11 @@ class UserController extends Controller
                     $user->lecturer()->create([
                         'nip' => $validated['nip'],
                     ]);
+                }
+
+                if ($hasRoles) {
+                    $roles = Role::whereIn('name', $validated['roles'])->get();
+                    $user->assignRole($roles);
                 }
             });
         } catch (\Throwable $th) {

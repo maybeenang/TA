@@ -52,3 +52,13 @@ Breadcrumbs::for('admin.kelas.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.kelas.index');
     $trail->push('Tambah Kelas', route('admin.kelas.create'));
 });
+
+Breadcrumbs::for('admin.user.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Pengguna', route('admin.user.index'));
+});
+
+Breadcrumbs::for('admin.user.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.user.index');
+    $trail->push('Tambah Pengguna', route('admin.user.create'));
+});
