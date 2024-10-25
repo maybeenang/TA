@@ -5,12 +5,17 @@
             <x-icons.person-icon />
             Detail Pengguna
         </span>
-        <div class="flex flex-col md:flex-row">
-            <section class="flex-[0.5] rounded-md min-h-[calc(100vh - 20vh)]">
-                <div class="h-[200px] w-[200px] rounded-full bg-zinc-200">
+        <div class="flex flex-col md:flex-row gap-4">
+
+            <section
+                class="flex-[0.5] rounded-md min-h-[40vh] flex items-center justify-center md:justify-start flex-col gap-2">
+                <div class="h-[300px] w-[300px] md:h-[200px] md:w-[200px] rounded-md bg-zinc-200 mx-auto">
 
                 </div>
+                <x-button>Update Foto</x-button>
+                <a href="{{ route('admin.user.edit', $user) }}">Edit Informasi Pengguna</a>
             </section>
+
             <section class="flex-1 rounded-md">
                 <table class="border-collapse  w-full">
                     @foreach ($user->toArray() as $key => $value)

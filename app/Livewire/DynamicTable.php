@@ -12,7 +12,7 @@ abstract class DynamicTable extends Component
 
     public $perPage = 10;
 
-    public $sortBy = 'created_at';
+    public $sortBy = 'updated_at';
 
     public $sortDirection = 'desc';
 

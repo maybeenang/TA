@@ -68,3 +68,8 @@ Breadcrumbs::for('admin.user.show', function (BreadcrumbTrail $trail, User $user
     $trail->parent('admin.user.index');
     $trail->push('Detail Pengguna', route('admin.user.show', $user));
 });
+
+Breadcrumbs::for('admin.user.edit', function (BreadcrumbTrail $trail, User $user) {
+    $trail->parent('admin.user.index');
+    $trail->push('Edit Informasi Pengguna', route('admin.user.edit', $user));
+});

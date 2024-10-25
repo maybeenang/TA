@@ -92,9 +92,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = RolesEnum::cases();
+
+        return view('pages.admin.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -102,7 +104,54 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $user = User::findOrFail($id);
+
+        $hasRoles = $request->has('roles');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'nip' => 'nullable|unique:lecturers,nip' . ($user->lecturer ? ',' . $user->lecturer->id : '') . '|digits_between:10,20',
+            'roles.*' => 'exists:roles,name',
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated, $user, $hasRoles) {
+                $user->update([
+                    'email' => $validated['email'],
+                    'name' => $validated['name'],
+                    // check if password is not null
+                    'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+                ]);
+
+                // check if nip input is not null
+                if ($validated['nip']) {
+                    if ($user->lecturer) {
+                        $user->lecturer->update([
+                            'nip' => $validated['nip'],
+                        ]);
+                    } else {
+                        $user->lecturer()->create([
+                            'nip' => $validated['nip'],
+                        ]);
+                    }
+                }
+
+
+                if ($hasRoles) {
+                    $roles = Role::whereIn('name', $validated['roles'])->get();
+                    $user->syncRoles($roles);
+                }
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat mengupdate user ' . $th->getMessage());
+        }
+
+        return redirect()->route('admin.user.index')
+            ->with('success', 'User berhasil diupdate');
     }
 
     /**

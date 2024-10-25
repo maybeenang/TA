@@ -7,7 +7,8 @@
         <x-dropdown-menu.content>
             <x-dropdown-menu.item
                 @click="window.location.href = '{{ route($this->routeName . '.show', $value) }}'">Detail</x-dropdown-menu.item>
-            <x-dropdown-menu.item>Edit</x-dropdown-menu.item>
+            <x-dropdown-menu.item
+                @click="window.location.href = '{{ route($this->routeName . '.edit', $value) }}'">Edit</x-dropdown-menu.item>
             <x-dropdown-menu.item>Delete</x-dropdown-menu.item>
         </x-dropdown-menu.content>
     </x-dropdown-menu>
