@@ -10,7 +10,7 @@
             @csrf
 
             <x-form.item name="academic_year_id">
-                <x-form.label>Tahun Ajaran</x-form.label>
+                <x-form.label>Tahun Akademik</x-form.label>
                 <x-select class="" name="academic_year_id">
                     <option value="-" selected disabled>
                         Pilih Tahun Ajaran

@@ -15,7 +15,7 @@
                 <x-form.message />
             </x-form.item>
             <x-form.item name="credit">
-                <x-form.label>Total SKS</x-form.label>
+                <x-form.label>Jumlah SKS</x-form.label>
                 <x-input x-form:control required placeholder="2" name="credit" :value="old('credit')" />
                 <x-form.message />
             </x-form.item>

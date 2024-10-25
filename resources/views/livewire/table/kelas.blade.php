@@ -1,7 +1,7 @@
 <div class="">
     <x-form class="max-w-sm mx-auto" wire:submit="filterWithAcademicYear">
         <x-form.item name="academic_year_id">
-            <x-form.label>Tahun Ajaran</x-form.label>
+            <x-form.label>Tahun Akademik</x-form.label>
             <x-select class="" name="academic_year_id" wire:model="academicYearId">
                 <option value="-" selected disabled>
                     Pilih Tahun Ajaran
