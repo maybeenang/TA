@@ -15,7 +15,7 @@ class AlertCvaService
             [
                 'variants' => [
                     'variant' => [
-                        'default' => 'bg-background text-foreground',
+                        'default' => 'bg-green-100 text-green-700 border-green-500',
                         'destructive' => 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
                     ],
                 ],

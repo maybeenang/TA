@@ -36,25 +36,24 @@
                         <x-form.message />
                     </x-form.item>
 
-                    <x-form.item class="flex flex-col space-y-4 rounded-md border p-4" name="roles[]">
+                    <x-form.item class="flex flex-col space-y-4 rounded-md border p-4">
                         <div class="flex-1 space-y-1">
                             <p class="text-sm font-medium leading-none">Role</p>
                             <p class="text-sm text-muted-foreground">
                                 Pilih role yang sesuai dengan pengguna yang anda edit
                             </p>
                         </div>
-                        <div class="grid grid-cols-4">
+                        <div class="flex gap-4">
 
                             @foreach ($roles as $role)
-                                <div class="flex items-center space-x-2">
+                                <x-form.item class="">
                                     <x-checkbox id="{{ $role->value }}" x-form:control name="roles[]"
                                         value="{{ $role->value }}" :checked="in_array(
                                             $role->value,
                                             old('roles', $user->roles->pluck('name')->toArray()),
                                         )" />
-                                    <x-label htmlFor="{{ $role->value }}"
-                                        class="whitespace-nowrap">{{ $role->label() }}</x-label>
-                                </div>
+                                    <x-form.label class="whitespace-nowrap">{{ $role->label() }}</x-form.label>
+                                </x-form.item>
                             @endforeach
 
                         </div>

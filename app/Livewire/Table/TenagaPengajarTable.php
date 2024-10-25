@@ -20,8 +20,8 @@ class TenagaPengajarTable extends DynamicTable
             ->with('user')
             // for sorting cheat
             ->join('users', 'lecturers.user_id', '=', 'users.id')
+            ->whereHas('user')
             ->select('lecturers.*');
-        // default sort
     }
 
     public function columns(): array
@@ -30,8 +30,6 @@ class TenagaPengajarTable extends DynamicTable
             Column::make('user.name', 'Nama'),
             Column::make('nip', 'Nip'),
             Column::make('user.email', 'Email'),
-            /*Column::make('roles', 'Role')->component('columns.user-role')->sortable(false),*/
-            /*Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),*/
             Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }

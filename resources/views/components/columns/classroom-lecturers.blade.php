@@ -25,7 +25,7 @@
                     $lecturers = $lecturers->map(function ($lecturer) {
                         return [
                             'id' => $lecturer->id,
-                            'name' => $lecturer->user->name,
+                            'name' => $lecturer?->user?->name,
                         ];
                     });
 

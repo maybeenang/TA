@@ -159,6 +159,18 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        try {
+            DB::transaction(function () use ($user) {
+                $user->delete();
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat menghapus user ' . $th->getMessage());
+        }
+
+        return redirect()->route('admin.user.index')
+            ->with('success', 'User berhasil dihapus');
     }
 }
