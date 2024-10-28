@@ -15,9 +15,7 @@ class LaporanTable extends DynamicTable
 {
     public $searchColumns = ['name'];
 
-    public $relations = ['classRoom'];
-
-    /*public $routeName = 'tenaga-pengajar.kelas';*/
+    public $relations = ['classRoom', 'reportStatus'];
 
     public $componentBefore = 'livewire.table.kelas';
 
@@ -56,6 +54,7 @@ class LaporanTable extends DynamicTable
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
             Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
+            Column::make('reportStatus.name', 'Status'),
         ];
     }
 }

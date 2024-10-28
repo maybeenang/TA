@@ -9,10 +9,19 @@ class Report extends Model
 {
     use SoftDeletes;
 
-    public $fillable = [];
+    public $fillable = [
+        'report_status_id',
+        'content',
+        'notes',
+    ];
 
     public function classRoom()
     {
         return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function reportStatus()
+    {
+        return $this->belongsTo(ReportStatus::class);
     }
 }

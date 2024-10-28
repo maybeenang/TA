@@ -22,10 +22,18 @@ return new class extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('report_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
+            $table->foreignId('report_status_id')->constrained('report_statuses')->cascadeOnDelete();
             $table->text('content')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +45,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('class_rooms');
+        Schema::dropIfExists('report_statuses');
         Schema::dropIfExists('reports');
     }
 };

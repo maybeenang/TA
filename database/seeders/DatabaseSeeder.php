@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
                 LecturerSeeder::class,
                 AcademicYearSeeder::class,
                 CourseSeeder::class,
+                ReportStatusSeeder::class,
             ]
         );
     }

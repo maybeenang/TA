@@ -11,7 +11,11 @@ class ClassRoomObserver
      */
     public function created(ClassRoom $classRoom): void
     {
-        $classRoom->report()->create();
+        $classRoom->report()->create(
+            [
+                'report_status_id' => 1,
+            ]
+        );
     }
 
     /**
