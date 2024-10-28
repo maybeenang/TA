@@ -36,8 +36,9 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "welcome",
-                    "name": "Laporan"
+                    "url": "admin.laporan.index",
+                    "name": "Laporan",
+                    "slug": "admin.laporan"
                 },
                 {
                     "url": "admin.user.index",

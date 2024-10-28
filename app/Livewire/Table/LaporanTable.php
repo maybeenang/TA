@@ -2,12 +2,59 @@
 
 namespace App\Livewire\Table;
 
-use Livewire\Component;
+use App\Dynamics\Column;
+use App\Livewire\DynamicTable;
+use App\Models\AcademicYear;
+use App\Models\ClassRoom;
+use App\Models\Report;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
-class LaporanTable extends Component
+
+class LaporanTable extends DynamicTable
 {
-    public function render()
+    public $searchColumns = ['name'];
+
+    public $relations = ['classRoom', 'reportStatus'];
+
+    public $componentBefore = 'livewire.table.kelas';
+
+    public $routeName = 'admin.laporan';
+
+    public $academicYearId;
+
+    public function filterWithAcademicYear()
     {
-        return view('livewire.table.laporan-table');
+        $this->resetPage();
+    }
+
+    public function getAllAcademicYears()
+    {
+        return AcademicYear::query()->get();
+    }
+
+    public function query(): Builder
+    {
+        return Report::query()
+            ->with($this->relations)
+            ->when($this->academicYearId, function ($query) {
+                $query->whereHas('classRoom', function ($query) {
+                    $query->where('academic_year_id', $this->academicYearId);
+                });
+            });
+    }
+
+    public function columns(): array
+    {
+        return [
+            Column::make('id', 'Kode'),
+            Column::make('content', 'Isi'),
+            Column::make('classRoom.id', 'Kode Kelas'),
+            Column::make('classRoom.name', 'Nama Kelas'),
+            Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
+            Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
+            Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
+            Column::make('id', ' ')->component('columns.actions')->sortable(false),
+        ];
     }
 }
