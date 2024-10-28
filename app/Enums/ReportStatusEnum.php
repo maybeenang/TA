@@ -24,13 +24,13 @@ enum ReportStatusEnum: string
         };
     }
 
-    public function badge(): View
+    public function color(): string
     {
         return match ($this) {
-            static::DRAFT => view('components.badges.report-status'),
-            static::DIKIRIM => view('components.badges.report-status'),
-            static::TERVERIFIKASI => view('components.badges.report-status'),
-            static::DITOLAK => view('components.badges.report-status'),
+            static::DRAFT => 'amber',
+            static::DIKIRIM => 'primary',
+            static::TERVERIFIKASI => 'success',
+            static::DITOLAK => 'danger',
         };
     }
 }
