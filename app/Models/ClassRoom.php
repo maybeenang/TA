@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\ClassRoomObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy(ClassRoomObserver::class)]
 class ClassRoom extends Model
 {
     use SoftDeletes;
@@ -30,5 +33,10 @@ class ClassRoom extends Model
     public function academicYear()
     {
         return $this->belongsTo(AcademicYear::class);
+    }
+
+    public function report()
+    {
+        return $this->hasOne(Report::class);
     }
 }
