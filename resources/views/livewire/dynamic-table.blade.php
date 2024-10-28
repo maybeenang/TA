@@ -50,7 +50,6 @@
                                     } else {
                                         $value = $row[$column->key];
                                     }
-
                                 @endphp
                                 <x-dynamic-component :component="$column->component" :value="$value" />
                             </td>

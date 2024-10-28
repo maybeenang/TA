@@ -12,6 +12,30 @@
             ]
         },
         {
+            "name": "Tenaga Pengajar",
+            "icon": "",
+            "submenu": [
+                {
+                    "url": "welcome",
+                    "name": "Buat Laporan"
+                },
+                {
+                    "url": "welcome",
+                    "name": "Laporan"
+                },
+                {
+                    "url": "tenaga-pengajar.kelas.index",
+                    "name": "Kelas",
+                    "slug": "tenaga-pengajar.kelas"
+                },
+                {
+                    "url": "tenaga-pengajar.mata-kuliah.index",
+                    "name": "Mata Kuliah",
+                    "slug": "tenaga-pengajar.mata-kuliah"
+                }
+            ]
+        },
+        {
             "name": "Admin",
             "icon": "",
             "submenu": [
@@ -43,30 +67,6 @@
                     "url": "admin.tahun-akademik.index",
                     "name": "Tahun Akademik",
                     "slug": "admin.tahun-akademik"
-                }
-            ]
-        },
-        {
-            "name": "Tenaga Pengajar",
-            "icon": "",
-            "submenu": [
-                {
-                    "url": "welcome",
-                    "name": "Buat Laporan"
-                },
-                {
-                    "url": "welcome",
-                    "name": "Laporan"
-                },
-                {
-                    "url": "tenaga-pengajar.kelas.index",
-                    "name": "Kelas",
-                    "slug": "tenaga-pengajar.kelas"
-                },
-                {
-                    "url": "tenaga-pengajar.mata-kuliah.index",
-                    "name": "Mata Kuliah",
-                    "slug": "tenaga-pengajar.mata-kuliah"
                 }
             ]
         },
