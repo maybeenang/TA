@@ -28,9 +28,9 @@ enum ReportStatusEnum: string
     {
         return match ($this) {
             static::DRAFT => 'amber',
-            static::DIKIRIM => 'primary',
-            static::TERVERIFIKASI => 'success',
-            static::DITOLAK => 'danger',
+            static::DIKIRIM => 'blue',
+            static::TERVERIFIKASI => 'green',
+            static::DITOLAK => 'red',
         };
     }
 

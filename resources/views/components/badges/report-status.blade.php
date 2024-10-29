@@ -12,6 +12,7 @@
         'yellow' => 'bg-yellow-100 border-yellow-300 text-yellow-600',
         'blue' => 'bg-blue-100 border-blue-300 text-blue-600',
         'amber' => 'bg-amber-100 border-amber-300 text-amber-600',
+        'green' => 'bg-green-100 border-green-300 text-green-600',
         default => 'bg-zinc-100 border-zinc-300 text-zinc-600',
     },
 ])>

@@ -29,11 +29,22 @@ class LaporanTable extends DynamicTable
     public $academicYearId;
 
     // forms
-    public $reportStatusId;
+    public $reportStatusName;
 
     public function getAllReportStatuses()
     {
         return ReportStatusEnum::toSelectArray();
+    }
+
+    public function changeReportStatus($reportId)
+    {
+        $report = Report::find($reportId);
+        $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
+        $report->report_status_id = $reportStatusId;
+        $report->save();
+
+        $this->reset('reportStatusName');
+        $this->dispatch('close-modal');
     }
 
     public function filterWithAcademicYear()
