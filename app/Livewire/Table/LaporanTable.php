@@ -4,10 +4,12 @@ namespace App\Livewire\Table;
 
 use App\Dynamics\Column;
 use App\Dynamics\Dialog;
+use App\Enums\ReportStatusEnum;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
+use App\Models\ReportStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +27,14 @@ class LaporanTable extends DynamicTable
     public $routeName = 'admin.laporan';
 
     public $academicYearId;
+
+    // forms
+    public $reportStatusId;
+
+    public function getAllReportStatuses()
+    {
+        return ReportStatusEnum::toSelectArray();
+    }
 
     public function filterWithAcademicYear()
     {
@@ -63,7 +73,7 @@ class LaporanTable extends DynamicTable
     public function dialogs()
     {
         return [
-            Dialog::make('dialog.dialogs.index', 'laporan')
+            Dialog::make('dialog.dialogs.ubah-status-laporan', 'laporan')
         ];
     }
 }

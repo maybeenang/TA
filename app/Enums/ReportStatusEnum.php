@@ -33,4 +33,12 @@ enum ReportStatusEnum: string
             static::DITOLAK => 'danger',
         };
     }
+
+    public static function toSelectArray(): array
+    {
+        foreach (self::cases() as $case) {
+            $selectArray[$case->value] = $case->label();
+        }
+        return $selectArray;
+    }
 }

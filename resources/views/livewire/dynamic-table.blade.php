@@ -5,7 +5,7 @@
     @include('livewire.table.partials.entries-and-search')
 
     <div class="overflow-x-auto">
-        <table class="table-auto w-full whitespace-nowrap text-left border-collapse border border-zinc-50">
+        <table class="table-auto w-full whitespace-nowrap text-left border-collapse border border-zinc-50 pb-8">
             <thead>
                 <tr class="uppercase">
                     @foreach ($this->columns() as $column)
@@ -64,6 +64,9 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="h-[40px]">
+
+        </div>
     </div>
     {{ $this->data()->links() }}
 </div>

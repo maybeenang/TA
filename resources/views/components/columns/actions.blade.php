@@ -41,7 +41,7 @@
 
     @if (method_exists($this, 'dialogs'))
         @foreach ($this->dialogs() as $dialog)
-            <x-dynamic-component :component="$dialog->component" :model="$dialog->model" />
+            <x-dynamic-component :component="$dialog->component" :model="$dialog->model" :$value />
         @endforeach
     @endif
 
