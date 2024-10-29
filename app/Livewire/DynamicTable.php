@@ -21,17 +21,19 @@ abstract class DynamicTable extends Component
 
     public $searchColumns = [];
 
+    // custom component
+
     public $componentBefore = '';
 
-    public array $partialActions = [];
+    public $customActionBunttons = '';
+
+    // end custom component
 
     public $routeName = '';
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 
     public abstract function columns(): array;
-
-
 
 
     public function updatedSearch()

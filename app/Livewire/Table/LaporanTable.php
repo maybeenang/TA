@@ -3,6 +3,7 @@
 namespace App\Livewire\Table;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
@@ -18,6 +19,8 @@ class LaporanTable extends DynamicTable
     public $relations = ['classRoom', 'reportStatus'];
 
     public $componentBefore = 'livewire.table.kelas';
+
+    public $customActionBunttons = 'components.columns.partials.actions.laporan';
 
     public $routeName = 'admin.laporan';
 
@@ -48,13 +51,19 @@ class LaporanTable extends DynamicTable
     {
         return [
             Column::make('id', 'Kode'),
-            Column::make('content', 'Isi'),
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
             Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
             Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
             Column::make('id', ' ')->component('columns.actions')->sortable(false),
+        ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.index', 'laporan')
         ];
     }
 }

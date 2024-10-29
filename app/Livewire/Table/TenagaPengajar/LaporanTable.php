@@ -19,6 +19,7 @@ class LaporanTable extends DynamicTable
 
     public $componentBefore = 'livewire.table.kelas';
 
+
     public $academicYearId;
 
     public function filterWithAcademicYear()

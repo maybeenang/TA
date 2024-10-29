@@ -13,7 +13,6 @@ class UserTable extends DynamicTable
 
     public $routeName = 'admin.user';
 
-    public array $partialActions = ['columns.partials.user-action'];
 
     public function query(): Builder
     {
