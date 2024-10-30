@@ -16,8 +16,9 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "welcome",
-                    "name": "Buat Laporan"
+                    "url": "tenaga-pengajar.laporan.create",
+                    "name": "Buat Laporan",
+                    "slug": "tenaga-pengajar.laporan.create"
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",

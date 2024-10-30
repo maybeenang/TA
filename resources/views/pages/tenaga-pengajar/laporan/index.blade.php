@@ -8,9 +8,17 @@
         </span>
 
         <div class="flex justify-end">
+            <x-button class="bg-blue-500 hover:bg-blue-600"
+                x-on:click="
+                    window.location.href = '{{ route('tenaga-pengajar.laporan.create') }}'
+                ">
+                Buat Laporan
+            </x-button>
+        </div>
+
+        <div class="flex justify-end">
         </div>
 
         <livewire:table.tenaga-pengajar.laporan-table />
-
     </div>
 </x-app-layout>

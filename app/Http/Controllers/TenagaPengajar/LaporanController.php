@@ -20,7 +20,7 @@ class LaporanController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.tenaga-pengajar.laporan.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class LaporanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('pages.tenaga-pengajar.laporan.edit');
     }
 
     /**

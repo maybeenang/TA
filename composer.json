@@ -8,6 +8,7 @@
         "php": "^8.2",
         "diglactic/laravel-breadcrumbs": "^9.0",
         "laravel/framework": "^11.9",
+        "laravel/octane": "^2.5",
         "laravel/tinker": "^2.9",
         "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",

@@ -15,6 +15,9 @@
                             'bg-yellow-100' =>
                                 isset($subitem->slug) &&
                                 strpos(Route::currentRouteName(), $subitem->slug) !== false,
+                            'bg-yellow-100' =>
+                                isset($subitem->url) &&
+                                strpos(Route::currentRouteName(), $subitem->url) !== false,
                         ]) href="{{ route($subitem->url) }}">
                             {{ $subitem->name }}
                         </a>
