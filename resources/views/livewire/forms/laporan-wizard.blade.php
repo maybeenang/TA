@@ -1,17 +1,9 @@
 <div>
     <!--wizard header-->
-    <ul>
-        @foreach ($this->steps() as $step)
-            <li>
-                <button wire:click="goToStep({{ $loop->index }})">
-                    {{ $step->title }}
-                </button>
-            </li>
-        @endforeach
-    </ul>
+    <x-wizard.wizard-header :steps="$this->steps()" :currentStep="$this->currentStep" />
     <!--end wizard header-->
 
-    {{ $this->currentStep }}
+    {{ $this->getCurrentStep()->title }}
 
     <!--wizard forms-->
     <x-dynamic-component :component="$this->getCurrentStep()->component" />
