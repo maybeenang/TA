@@ -1,14 +1,12 @@
 @props(['steps', 'currentStep'])
-<div class="bg-red-50 w-fit mx-auto">
-    <ul class="flex">
+<div class="mx-auto w-fit ">
+    <ul class="flex md:gap-10 text-center">
         @foreach ($steps as $step)
-            <li>
-                @php
-                    $isLastIndex = $loop->last;
-                    $isCurrentStep = $currentStep === $loop->index;
-                @endphp
-                <x-wizard.step-button :$step :$isLastIndex :$isCurrentStep />
-            </li>
+            @php
+                $isLastIndex = $loop->last;
+                $isCurrentStep = $currentStep === $loop->index;
+            @endphp
+            <x-wizard.step-button :$step :$isLastIndex :$isCurrentStep />
         @endforeach
     </ul>
 </div>

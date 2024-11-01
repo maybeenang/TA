@@ -12,11 +12,14 @@ class LaporanWizard extends Component
     public function steps(): array
     {
         return [
-            Step::make('Step 1'),
-            Step::make('Step 2'),
-            Step::make('Step 3'),
-            Step::make('Step 4'),
-            Step::make('Step 5'),
+            Step::make('Pilih Mata Kuliah'),
+            Step::make('Tahap 1'),
+            Step::make('Tahap 2'),
+            Step::make('Tahap 3'),
+            Step::make('Tahap 4'),
+            Step::make('Tahap 5'),
+            Step::make('Tahap 5'),
+            Step::make('Tahap 5'),
         ];
     }
 
@@ -44,12 +47,7 @@ class LaporanWizard extends Component
     }
 
     #[Url()]
-    public $currentStep;
-
-    public function mount(int $currentStep = 0)
-    {
-        $this->currentStep = $currentStep;
-    }
+    public $currentStep = 0;
 
 
     public function render()

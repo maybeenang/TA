@@ -1,19 +1,24 @@
 @props(['step', 'isLastIndex', 'isCurrentStep'])
-<div class="flex flex-col gap-2 justify-center">
-    <div class="flex items-center justify-start">
+<li class="relative z-10">
+    <div @class([
+        "flex justify-center after:content-['']",
+        'after:absolute after:top-5 after:-right-12 after:-z-10' => !$isLastIndex,
+        'after:bg-gray-900 after:w-full after:h-[2px]' => !$isLastIndex,
+    ])>
         <button @class([
-            'bg-red-400 rounded-full w-10 h-10',
+            'rounded-full w-10 h-10',
             'bg-green-400' => $isCurrentStep,
+            'bg-red-400' => !$isCurrentStep,
         ])>
             a
         </button>
 
-        @if (!$isLastIndex)
-            <div class="flex-1 bg-black h-2 min-w-10">
-
-            </div>
-        @endif
-
     </div>
-    {{ $step->title }}
-</div>
+
+    <div>
+        <span>
+            {{ $step->title }}
+        </span>
+    </div>
+
+</li>
