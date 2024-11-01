@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Forms;
 
-use App\Dynamics\Step;
+use App\Dynamics\Steps;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -12,14 +13,9 @@ class LaporanWizard extends Component
     public function steps(): array
     {
         return [
-            Step::make('Pilih Mata Kuliah'),
-            Step::make('Tahap 1'),
-            Step::make('Tahap 2'),
-            Step::make('Tahap 3'),
-            Step::make('Tahap 4'),
-            Step::make('Tahap 5'),
-            Step::make('Tahap 5'),
-            Step::make('Tahap 5'),
+            Steps\PilihKelasStep::make('Pilih Kelas'),
+            Steps\FirstStep::make('Tahap 1'),
+            Steps\SecondStep::make('Tahap 2'),
         ];
     }
 
@@ -28,6 +24,7 @@ class LaporanWizard extends Component
         return $this->steps()[$this->currentStep];
     }
 
+    #[On('nextStep')]
     public function nextStep()
     {
         if ($this->currentStep < count($this->steps()) - 1) {
