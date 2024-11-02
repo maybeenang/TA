@@ -15,7 +15,10 @@ class LaporanWizard extends Component
         return [
             Steps\PilihKelasStep::make('Pilih Kelas'),
             Steps\FirstStep::make('Tahap 1'),
-            Steps\SecondStep::make('Tahap 2'),
+            Steps\SecondStep::make('Tahap 2')->component('step.laporan.second-step'),
+            Steps\ThirdStep::make('Tahap 3')->component('step.laporan.third-step'),
+            Steps\FourthStep::make('Tahap 4')->component('step.laporan.fourth-step'),
+            Steps\FifthStep::make('Tahap 5'),
         ];
     }
 

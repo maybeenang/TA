@@ -1,5 +1,5 @@
 @props(['label', 'name', 'value' => null])
-<div class="flex">
+<div class="flex flex-col md:flex-row">
 
     <label for="{{ $name }}" class="flex-1">
         {{ $label }}
