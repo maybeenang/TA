@@ -3,6 +3,8 @@
     <x-wizard.wizard-header :steps="$this->steps()" :currentStep="$this->currentStep" />
     <!--end wizard header-->
 
+    <x-wizard.wizard-footer />
+
     <!--wizard forms-->
     <x-dynamic-component :component="$this->getCurrentStep()->component" />
     <!--end wizard forms-->

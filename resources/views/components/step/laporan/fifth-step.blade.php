@@ -52,7 +52,7 @@
             </table>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 overflow-x-auto">
             <table class="table-auto w-full whitespace-nowrap text-left border-collapse border border-zinc-50 pb-8">
                 <thead class="uppercase">
                     <tr>
