@@ -15,6 +15,11 @@ class LaporanController extends Controller
         return view('pages.tenaga-pengajar.laporan.index');
     }
 
+    public function select()
+    {
+        return view('pages.tenaga-pengajar.laporan.select');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

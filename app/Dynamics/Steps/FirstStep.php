@@ -20,7 +20,7 @@ class FirstStep extends \App\Dynamics\Step
             \App\Dynamics\Field::make('chief_lecturer')
                 ->label('Dosen Penanggung Jawab'),
             \App\Dynamics\Field::make('lecturer')
-                ->label('Dosen Penanggung Jawab'),
+                ->label('Dosen Pengampu'),
             \App\Dynamics\Field::make('students_count')
                 ->label('Jumlah Mahasiswa'),
         ];

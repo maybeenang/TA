@@ -13,11 +13,10 @@ class LaporanWizard extends Component
     public function steps(): array
     {
         return [
-            Steps\PilihKelasStep::make('Pilih Kelas')->showNext(false),
             Steps\FirstStep::make('Tahap 1'),
-            Steps\SecondStep::make('Tahap 2')->component('step.laporan.second-step'),
-            Steps\ThirdStep::make('Tahap 3')->component('step.laporan.third-step'),
-            Steps\FourthStep::make('Tahap 4')->component('step.laporan.fourth-step'),
+            Steps\SecondStep::make('Tahap 2'),
+            Steps\ThirdStep::make('Tahap 3'),
+            Steps\FourthStep::make('Tahap 4'),
             Steps\FifthStep::make('Tahap 5'),
             Steps\SummaryStep::make('Ringkasan'),
         ];

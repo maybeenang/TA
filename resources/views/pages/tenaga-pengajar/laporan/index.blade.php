@@ -10,7 +10,7 @@
         <div class="flex justify-end">
             <x-button class="bg-blue-500 hover:bg-blue-600"
                 x-on:click="
-                    window.location.href = '{{ route('tenaga-pengajar.laporan.create') }}'
+                    window.location.href = '{{ route('tenaga-pengajar.laporan.select') }}'
                 ">
                 Buat Laporan
             </x-button>

@@ -16,14 +16,13 @@
             "icon": "",
             "submenu": [
                 {
-                    "url": "tenaga-pengajar.laporan.create",
-                    "name": "Buat Laporan",
-                    "slug": "tenaga-pengajar.laporan.create"
+                    "url": "tenaga-pengajar.laporan.select",
+                    "name": "Buat Laporan Portofolio Perkuliahan",
+                    "slug": "tenaga-pengajar.laporan.edit"
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",
-                    "name": "Laporan",
-                    "slug": "tenaga-pengajar.laporan"
+                    "name": "Laporan Portofolio Perkuliahan"
                 },
                 {
                     "url": "tenaga-pengajar.kelas.index",

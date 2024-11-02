@@ -10,7 +10,7 @@ class Column
 
     public string $label;
 
-    public bool $sortable = true;
+    public bool $sortable = false;
 
     public function __construct(string|array $key, string $label)
     {

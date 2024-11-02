@@ -73,3 +73,14 @@ Breadcrumbs::for('admin.user.edit', function (BreadcrumbTrail $trail, User $user
     $trail->parent('admin.user.index');
     $trail->push('Edit Informasi Pengguna', route('admin.user.edit', $user));
 });
+
+
+Breadcrumbs::for('tenaga-pengajar.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Laporan', route('tenaga-pengajar.laporan.index'));
+});
+
+Breadcrumbs::for('tenaga-pengajar.laporan.select', function (BreadcrumbTrail $trail) {
+    $trail->parent('tenaga-pengajar.laporan.index');
+    $trail->push('Pilih Kelas', route('tenaga-pengajar.laporan.select'));
+});

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->string('credit');
+            $table->string('grade');
             $table->timestamps();
             $table->softDeletes();
         });

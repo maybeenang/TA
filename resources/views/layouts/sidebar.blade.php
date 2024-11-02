@@ -9,15 +9,22 @@
                 </header>
                 @isset($item->submenu)
                     @foreach ($item->submenu as $subitem)
+                        @php
+
+                            $isActive =
+                                isset($subitem->url) && strpos(Route::currentRouteName(), $subitem->url) !== false;
+
+                            if (!$isActive) {
+                                $isActive =
+                                    isset($subitem->slug) &&
+                                    strpos(Route::currentRouteName(), $subitem->slug) !== false;
+                            }
+
+                        @endphp
                         <a @class([
-                            'block py-2 px-4 cursor-pointer hover:bg-zinc-50 bg-white',
+                            'block py-2 px-4 cursor-pointer hover:bg-zinc-50 bg-white text-sm',
                             'rounded-b-md' => $loop->last,
-                            'bg-yellow-100' =>
-                                isset($subitem->slug) &&
-                                strpos(Route::currentRouteName(), $subitem->slug) !== false,
-                            'bg-yellow-100' =>
-                                isset($subitem->url) &&
-                                strpos(Route::currentRouteName(), $subitem->url) !== false,
+                            'bg-yellow-100' => $isActive,
                         ]) href="{{ route($subitem->url) }}">
                             {{ $subitem->name }}
                         </a>
