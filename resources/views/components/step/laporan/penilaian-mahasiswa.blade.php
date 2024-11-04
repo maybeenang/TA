@@ -1,5 +1,5 @@
 <div class="min-h-2 space-y-2">
-    <h3 class="text-lg font-semibold" id="metode-perkuliahan">Penilaian Mahasiswa</h3>
+    <h3 class="text-lg font-semibold" id="penilaian-mahasiswa">Penilaian Mahasiswa</h3>
 
     <div class="mt-4 overflow-x-auto">
         <table class="w-full table-auto border-collapse whitespace-nowrap border border-zinc-50 pb-8 text-left">

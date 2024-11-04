@@ -15,7 +15,8 @@
         "luvi-ui/laravel-luvi": "^0.4.2",
         "mallardduck/blade-lucide-icons": "^1.23",
         "predis/predis": "^2.2",
-        "spatie/laravel-permission": "^6.9"
+        "spatie/laravel-permission": "^6.9",
+        "tightenco/ziggy": "^2.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lecturer;
 use App\Models\Report;
 use Illuminate\Http\Request;
 
@@ -50,15 +51,26 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
-        return view('pages.tenaga-pengajar.laporan.edit', compact('laporan'));
+        $lecturers = Lecturer::query()
+            ->with('user')
+            ->get()
+            // format to ['id' => $id, 'name' => $name]
+            ->map(function ($lecturer) {
+                return [
+                    'value' => $lecturer->id,
+                    'label' => $lecturer->user->name,
+                ];
+            });
+
+        return view('pages.tenaga-pengajar.laporan.edit', compact('laporan', 'lecturers'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Report $laporan)
     {
-        //
+        dd($laporan);
     }
 
     /**

@@ -7,10 +7,27 @@
             Buat Laporan Portofolio Perkuliahan
         </span>
 
+        <div class="space-y-2 rounded-md border-2 border-l-8 border-zinc-100 border-l-red-500 p-2">
+            <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur pariatur mollitia perspiciatis
+                sequi similique magni porro fuga et facere totam unde, id quibusdam perferendis quisquam fugit ex,
+                dolore illo cum.
+            </p>
+            <x-button.index>Unduh Template Laporan</x-button.index>
+            <x-button.index variant="secondary">Import Template Laporan</x-button.index>
+        </div>
+
         <section class="flex gap-8">
             <!--form-->
-            <form class="js-toc-content w-full space-y-8">
-                <x-step.laporan.informasi-umum :laporan="$laporan" />
+            <form
+                class="js-toc-content w-full space-y-8"
+                action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}"
+                method="post"
+            >
+                @csrf
+                @method("PUT")
+
+                <x-step.laporan.informasi-umum :$laporan :$lecturers />
 
                 <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
 
@@ -21,6 +38,9 @@
                 <x-step.laporan.kriteria-penilaian :laporan="$laporan" />
 
                 <x-step.laporan.penilaian-mahasiswa :laporan="$laporan" />
+
+                <x-step.laporan.kuisioner :laporan="$laporan" />
+                <button>pepek</button>
             </form>
 
             <!--navigasi-->
