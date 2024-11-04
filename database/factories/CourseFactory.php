@@ -20,6 +20,7 @@ class CourseFactory extends Factory
             'name' => $this->faker->sentence(1),
             'code' => $this->faker->randomNumber(5),
             'credit' => $this->faker->randomNumber(1, true),
+            'grade' => $this->faker->randomElement(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']),
         ];
     }
 }

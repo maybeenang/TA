@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Http\Controllers\Controller;
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -47,9 +48,9 @@ class LaporanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Report $laporan)
     {
-        return view('pages.tenaga-pengajar.laporan.edit');
+        return view('pages.tenaga-pengajar.laporan.edit', compact('laporan'));
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,11 +18,12 @@ class DatabaseSeeder extends Seeder
             [
                 UserSeeder::class,
                 RoleSeeder::class,
+                ReportStatusSeeder::class,
                 LecturerSeeder::class,
                 AcademicYearSeeder::class,
                 CourseSeeder::class,
-                ReportStatusSeeder::class,
             ]
         );
+        Student::factory(200)->create();
     }
 }

@@ -12,10 +12,13 @@ class Field
 
     public array $rules;
 
+    public string $key;
 
-    public function __construct(string $name)
+    public function __construct(string $name, string $key = null)
     {
         $this->name = $name;
+
+        $this->key = $key ?? $name;
 
         // default label is the name with Capitalized first letter
         $this->label = ucfirst($name);
@@ -42,8 +45,8 @@ class Field
         return $this;
     }
 
-    public static function make(string $name)
+    public static function make(string $name, string $key = null)
     {
-        return new static($name);
+        return new static($name, $key);
     }
 }

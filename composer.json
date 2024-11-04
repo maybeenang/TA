@@ -14,6 +14,7 @@
         "livewire/livewire": "^3.5",
         "luvi-ui/laravel-luvi": "^0.4.2",
         "mallardduck/blade-lucide-icons": "^1.23",
+        "predis/predis": "^2.2",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {

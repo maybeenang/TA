@@ -13,6 +13,18 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
+        // create 30 courses, each course has 3 classrooms
         Course::factory(30)->create();
+
+        // create 90 classrooms
+        Course::all()->each(function ($course) {
+            $course->classRooms()->createMany(
+                [
+                    ['name' => 'RA', 'academic_year_id' => 1],
+                    ['name' => 'RB', 'academic_year_id' => 1],
+                    ['name' => 'RC', 'academic_year_id' => 1],
+                ]
+            );
+        });
     }
 }

@@ -54,7 +54,8 @@ class LaporanTable extends DynamicTable
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
             Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
-            Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
+            Column::make('reportStatus.name', 'Status Laporan')->component('columns.report-status'),
+            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.date'),
             Column::make('id', ' '),
         ];
     }

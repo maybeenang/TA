@@ -14,7 +14,6 @@ class ClassRoom extends Model
 
     public $fillable = [
         'name',
-        'code',
         'course_id',
         'lecturer_id',
         'academic_year_id',
