@@ -22,6 +22,7 @@
             <!--form-->
             <div class="js-toc-content space-y-8">
                 <form
+                    id="form"
                     class="w-full space-y-8"
                     action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}"
                     method="post"
@@ -45,7 +46,13 @@
                 <x-step.laporan.kuisioner :laporan="$laporan" />
 
                 <div class="flex justify-end">
-                    <x-button.index type="submit">Simpan Laporan</x-button.index>
+                    <x-button.index
+                        x-on:click="
+                        document.getElementById('form').submit();
+                    "
+                    >
+                        Simpan Laporan
+                    </x-button.index>
                 </div>
             </div>
 

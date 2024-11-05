@@ -21,6 +21,11 @@ class CpmkTable extends DynamicTable
         $this->dispatch('close-modal');
     }
 
+    public function getRowData($id)
+    {
+        return Cpmk::find($id);
+    }
+
     public function query(): Builder
     {
         return Cpmk::query()

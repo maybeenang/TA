@@ -4,14 +4,14 @@
     @includeWhen($this->showSearchAndPerPage, "livewire.table.partials.entries-and-search")
 
     <div class="overflow-x-auto">
-        <table class="w-full table-auto border-collapse whitespace-nowrap border border-zinc-50 pb-8 text-left">
+        <table class="my-8 w-full table-auto border-collapse whitespace-nowrap border border-zinc-300 text-left">
             <thead>
                 <tr class="uppercase">
                     @foreach ($this->columns() as $column)
                         <th
                             scope="col"
                             @class([
-                                "px-2 py-2 border border-zinc-100 ",
+                                "px-2 py-2 border border-zinc-300 ",
                                 "cursor-pointer" => $column->sortable,
                             ])
                             @if ($column->sortable) wire:click="sort('{{ $column->key }}')" @endif
@@ -36,7 +36,7 @@
                 @forelse ($this->data() as $row)
                     <tr class="align-top odd:bg-zinc-50 even:bg-white">
                         @foreach ($this->columns() as $column)
-                            <td class="border border-zinc-100 px-2 py-2">
+                            <td class="border border-zinc-300 px-2 py-2">
                                 @php
                                     if (Str::contains($column->key, ".")) {
                                         $keys = explode(".", $column->key);

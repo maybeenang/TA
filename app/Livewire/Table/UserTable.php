@@ -13,7 +13,6 @@ class UserTable extends DynamicTable
 
     public $routeName = 'admin.user';
 
-
     public function query(): Builder
     {
         return User::query()
