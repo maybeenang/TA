@@ -8,7 +8,7 @@
 }
 .select2-container .select2-selection--single {
     /* Selection box itself */
-    @apply box-border block cursor-pointer select-none rounded border shadow;
+    @apply box-border block cursor-pointer select-none rounded-md border;
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
@@ -134,6 +134,7 @@
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     /* Selection bar - Text color of the item you selected from the results */
+    /*important*/
     @apply leading-normal text-gray-700 dark:text-gray-200;
 }
 
@@ -197,7 +198,7 @@
     @apply float-right mr-2 mt-1 cursor-pointer p-1;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    @apply float-left my-1 mr-1 cursor-default rounded border bg-white px-2 text-gray-700 dark:bg-slate-700 dark:text-gray-200;
+    @apply float-left my-1 mr-1 cursor-default rounded border bg-white text-gray-700 dark:bg-slate-700 dark:text-gray-200;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     @apply mr-1 inline-block cursor-pointer text-gray-700 dark:text-gray-200;

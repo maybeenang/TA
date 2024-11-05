@@ -24,4 +24,9 @@ class Lecturer extends Model
     {
         return $this->hasMany(ClassRoom::class);
     }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class, 'report_lecturers');
+    }
 }

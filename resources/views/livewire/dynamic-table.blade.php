@@ -1,23 +1,25 @@
 <div class="space-y-4">
+    @includeWhen($this->componentBefore !== "", $this->componentBefore)
 
-    @includeWhen($this->componentBefore !== '', $this->componentBefore)
-
-    @include('livewire.table.partials.entries-and-search')
+    @includeWhen($this->showSearchAndPerPage, "livewire.table.partials.entries-and-search")
 
     <div class="overflow-x-auto">
-        <table class="table-auto w-full whitespace-nowrap text-left border-collapse border border-zinc-50 pb-8">
+        <table class="w-full table-auto border-collapse whitespace-nowrap border border-zinc-50 pb-8 text-left">
             <thead>
                 <tr class="uppercase">
                     @foreach ($this->columns() as $column)
-                        <th scope="col" @class([
-                            'px-2 py-2 border border-zinc-100 ',
-                            'cursor-pointer' => $column->sortable,
-                        ])
-                            @if ($column->sortable) wire:click="sort('{{ $column->key }}')" @endif>
+                        <th
+                            scope="col"
+                            @class([
+                                "px-2 py-2 border border-zinc-100 ",
+                                "cursor-pointer" => $column->sortable,
+                            ])
+                            @if ($column->sortable) wire:click="sort('{{ $column->key }}')" @endif
+                        >
                             <div class="flex items-center justify-between gap-2">
                                 {{ $column->label }}
                                 @if ($sortBy === $column->key)
-                                    @if ($sortDirection === 'asc')
+                                    @if ($sortDirection === "asc")
                                         <x-icons.up-icon />
                                     @else
                                         <x-icons.down-icon />
@@ -32,12 +34,12 @@
             </thead>
             <tbody>
                 @forelse ($this->data() as $row)
-                    <tr class="odd:bg-zinc-50 even:bg-white align-top">
+                    <tr class="align-top odd:bg-zinc-50 even:bg-white">
                         @foreach ($this->columns() as $column)
-                            <td class="px-2 py-2 border border-zinc-100">
+                            <td class="border border-zinc-100 px-2 py-2">
                                 @php
-                                    if (Str::contains($column->key, '.')) {
-                                        $keys = explode('.', $column->key);
+                                    if (Str::contains($column->key, ".")) {
+                                        $keys = explode(".", $column->key);
 
                                         $value = $row;
 
@@ -51,22 +53,24 @@
                                         $value = $row[$column->key];
                                     }
                                 @endphp
+
                                 <x-dynamic-component :component="$column->component" :value="$value" />
                             </td>
                         @endforeach
                     </tr>
                 @empty
                     <tr>
-                        <td class="px-2 py-2 border border-zinc-100 text-center" colspan="{{ count($this->columns()) }}">
+                        <td
+                            class="border border-zinc-100 px-2 py-2 text-center"
+                            colspan="{{ count($this->columns()) }}"
+                        >
                             Data tidak ditemukan
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
-        <div class="h-[40px]">
-
-        </div>
+        <div class="h-[40px]"></div>
     </div>
     {{ $this->data()->links() }}
 </div>

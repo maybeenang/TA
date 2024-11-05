@@ -16,4 +16,10 @@
         class="flex-1 rounded-md border border-gray-300 disabled:cursor-not-allowed disabled:bg-zinc-100"
         {{ $attributes }}
     />
+
+    @error($name)
+        <p {{ $attributes->merge(["class" => "text-[0.8rem] font-medium text-destructive"]) }}>
+            {{ $message }}
+        </p>
+    @enderror
 </div>

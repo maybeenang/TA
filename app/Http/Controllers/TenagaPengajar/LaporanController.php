@@ -5,7 +5,10 @@ namespace App\Http\Controllers\TenagaPengajar;
 use App\Http\Controllers\Controller;
 use App\Models\Lecturer;
 use App\Models\Report;
+use App\Models\ReportLecturers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\TryCatch;
 
 class LaporanController extends Controller
 {
@@ -51,10 +54,12 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
+
         $lecturers = Lecturer::query()
             ->with('user')
+            // check if user is not null
+            ->whereHas('user')
             ->get()
-            // format to ['id' => $id, 'name' => $name]
             ->map(function ($lecturer) {
                 return [
                     'value' => $lecturer->id,
@@ -70,7 +75,30 @@ class LaporanController extends Controller
      */
     public function update(Request $request, Report $laporan)
     {
-        dd($laporan);
+        $validated = $request->validate([
+            'responsible_lecturer' => 'required',
+            'teaching_methods' => 'required',
+            'self_evaluation' => 'required',
+            'follow_up_plan' => 'required',
+            'report_lecturers' => 'array',
+        ]);
+
+        try {
+            DB::transaction(function () use ($laporan, $validated) {
+                $laporan->update($validated);
+
+                // check if report_lecturers is not null
+                if (isset($validated['report_lecturers'])) {
+                    $laporan->lecturers()->sync($validated['report_lecturers']);
+                } else {
+                    $laporan->lecturers()->sync([]);
+                }
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal mengubah laporan' . $th->getMessage());
+        }
+
+        return redirect()->route('tenaga-pengajar.laporan.select')->with('success', 'Berhasil mengubah laporan');
     }
 
     /**

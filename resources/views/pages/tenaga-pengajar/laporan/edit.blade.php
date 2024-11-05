@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-alert.flash />
     <div
         class="space-y-4 rounded-md border border-b-4 border-t-4 border-zinc-100 border-b-yellow-500 border-t-red-500 p-2"
     >
@@ -19,17 +20,19 @@
 
         <section class="flex gap-8">
             <!--form-->
-            <form
-                class="js-toc-content w-full space-y-8"
-                action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}"
-                method="post"
-            >
-                @csrf
-                @method("PUT")
+            <div class="js-toc-content space-y-8">
+                <form
+                    class="w-full space-y-8"
+                    action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}"
+                    method="post"
+                >
+                    @csrf
+                    @method("PUT")
 
-                <x-step.laporan.informasi-umum :$laporan :$lecturers />
+                    <x-step.laporan.informasi-umum :$laporan :$lecturers />
 
-                <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
+                    <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
+                </form>
 
                 <x-step.laporan.metode-evaluasi :laporan="$laporan" />
 
@@ -40,8 +43,11 @@
                 <x-step.laporan.penilaian-mahasiswa :laporan="$laporan" />
 
                 <x-step.laporan.kuisioner :laporan="$laporan" />
-                <button>pepek</button>
-            </form>
+
+                <div class="flex justify-end">
+                    <x-button.index type="submit">Simpan Laporan</x-button.index>
+                </div>
+            </div>
 
             <!--navigasi-->
             <div class="js-toc sticky top-5 hidden h-fit min-w-44 md:block"></div>

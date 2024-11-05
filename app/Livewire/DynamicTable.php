@@ -21,13 +21,13 @@ abstract class DynamicTable extends Component
 
     public $searchColumns = [];
 
+    public $showSearchAndPerPage = true;
+
     // custom component
-
     public $componentBefore = '';
-
     public $customActionBunttons = '';
-
     // end custom component
+
 
     public $routeName = '';
 
