@@ -25,5 +25,13 @@ class DatabaseSeeder extends Seeder
             ]
         );
         Student::factory(200)->create();
+
+        // assign random classrooms to random students
+        $students = Student::all();
+
+        $students->each(function ($student) {
+            $classrooms = \App\Models\ClassRoom::inRandomOrder()->limit(rand(1, 3))->get();
+            $student->classrooms()->attach($classrooms);
+        });
     }
 }

@@ -14,4 +14,9 @@ class Student extends Model
         'name',
         'nim'
     ];
+
+    public function classrooms()
+    {
+        return $this->belongsToMany(ClassRoom::class, 'students_class_rooms');
+    }
 }

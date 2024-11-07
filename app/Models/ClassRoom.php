@@ -38,4 +38,9 @@ class ClassRoom extends Model
     {
         return $this->hasOne(Report::class);
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'students_class_rooms');
+    }
 }
