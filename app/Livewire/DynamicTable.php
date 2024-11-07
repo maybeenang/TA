@@ -25,6 +25,7 @@ abstract class DynamicTable extends Component
 
     // custom component
     public $componentBefore = '';
+    public $componentAfter = '';
     public $customActionBunttons = '';
     // end custom component
 

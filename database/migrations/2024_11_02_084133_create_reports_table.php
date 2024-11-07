@@ -90,8 +90,8 @@ return new class extends Migration
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
             $table->integer('week');
             $table->string('meeting_name');
-            $table->string('student_present');
-            $table->string('student_active');
+            $table->integer('student_present');
+            $table->integer('student_active');
             $table->timestamps();
         });
     }

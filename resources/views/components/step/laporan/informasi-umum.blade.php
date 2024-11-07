@@ -1,5 +1,19 @@
-<div class="min-h-2 space-y-2">
-    <h3 class="text-2xl font-semibold" id="informasi-umum-kelas">Informasi Umum Kelas</h3>
+<form class="min-h-2 space-y-2" action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}" method="post">
+    @csrf
+    @method("PUT")
+
+    @if ($errors->any())
+        <x-alert variant="destructive" class="my-4 rounded-sm">
+            <ul class="list-inside list-disc">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </x-alert>
+    @endif
+
+    <input type="hidden" name="step" value="informasi-umum" />
+    <h3 class="text-2xl font-semibold" id="informasi-umum">Informasi Umum Kelas</h3>
     <x-fields.text :value="$laporan->classroom->name" name="" label="Nama Kelas" disabled />
     <x-fields.text :value="$laporan->classroom->course->name" name="" label="Nama Mata Kuliah" disabled />
     <x-fields.text :value="$laporan->classroom->course->code" name="" label="Kode MK" disabled />
@@ -23,4 +37,8 @@
         placeholder="Pilih Dosen Pengampu"
         :value="$laporan->lecturers->pluck('id')->toArray()"
     />
-</div>
+
+    <div class="flex justify-end">
+        <x-button type="submit">Simpan</x-button>
+    </div>
+</form>

@@ -1,10 +1,5 @@
 @props([
-    'variant' => 'outline',
+    "variant" => "outline",
 ])
 
-<x-button
-    :$variant
-    @click="dialogOpen = false"
->
-    Close
-</x-button>
+<x-button :$variant @click="dialogOpen = false">Close</x-button>

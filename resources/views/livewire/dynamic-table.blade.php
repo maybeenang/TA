@@ -1,12 +1,21 @@
-<div class="space-y-4">
+<div
+    class="space-y-4"
+    x-data="{
+   @if (method_exists($this, "dialogs"))
+       @foreach ($this->dialogs() as $dialog)
+           {{ $dialog->model }}: false,
+       @endforeach
+   @endif
+}"
+>
     @includeWhen($this->componentBefore !== "", $this->componentBefore)
 
     @includeWhen($this->showSearchAndPerPage, "livewire.table.partials.entries-and-search")
 
     <div class="overflow-x-auto">
-        <table class="my-8 w-full table-auto border-collapse whitespace-nowrap border border-zinc-300 text-left">
+        <table class="my-8 w-full table-auto border-collapse border border-zinc-300 text-left">
             <thead>
-                <tr class="uppercase">
+                <tr class="whitespace-nowrap uppercase">
                     @foreach ($this->columns() as $column)
                         <th
                             scope="col"
@@ -73,4 +82,6 @@
         <div class="h-[40px]"></div>
     </div>
     {{ $this->data()->links() }}
+
+    @includeWhen($this->componentAfter !== "", $this->componentAfter)
 </div>

@@ -39,4 +39,9 @@ class Report extends Model
     {
         return $this->hasMany(Cpmk::class);
     }
+
+    public function attendanceAndActivities()
+    {
+        return $this->hasMany(AttendanceAndActivity::class);
+    }
 }

@@ -20,6 +20,16 @@ class ReportObserver
                 'average_score' => 0,
             ]);
         }
+
+        // create 16 attendance and activity with loop
+        for ($i = 1; $i <= 16; $i++) {
+            $report->attendanceAndActivities()->create([
+                'week' => $i,
+                'meeting_name' => 'Minggu ke-' . $i,
+                'student_present' => 0,
+                'student_active' => 0,
+            ]);
+        }
     }
 
     /**

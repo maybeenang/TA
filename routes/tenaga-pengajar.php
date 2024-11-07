@@ -10,6 +10,7 @@ Route::group(
     ],
     function () {
         Route::get('laporan/select', [\App\Http\Controllers\TenagaPengajar\LaporanController::class, 'select'])->name('laporan.select');
+
         Route::resource('laporan', \App\Http\Controllers\TenagaPengajar\LaporanController::class);
 
         ROute::resource('cpmk', \App\Http\Controllers\TenagaPengajar\CpmkController::class);

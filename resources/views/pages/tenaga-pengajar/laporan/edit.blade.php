@@ -21,19 +21,9 @@
         <section class="flex gap-8">
             <!--form-->
             <div class="js-toc-content space-y-8">
-                <form
-                    id="form"
-                    class="w-full space-y-8"
-                    action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}"
-                    method="post"
-                >
-                    @csrf
-                    @method("PUT")
+                <x-step.laporan.informasi-umum :$laporan :$lecturers />
 
-                    <x-step.laporan.informasi-umum :$laporan :$lecturers />
-
-                    <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
-                </form>
+                <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
 
                 <x-step.laporan.metode-evaluasi :laporan="$laporan" />
 
@@ -44,16 +34,6 @@
                 <x-step.laporan.penilaian-mahasiswa :laporan="$laporan" />
 
                 <x-step.laporan.kuisioner :laporan="$laporan" />
-
-                <div class="flex justify-end">
-                    <x-button.index
-                        x-on:click="
-                        document.getElementById('form').submit();
-                    "
-                    >
-                        Simpan Laporan
-                    </x-button.index>
-                </div>
             </div>
 
             <!--navigasi-->

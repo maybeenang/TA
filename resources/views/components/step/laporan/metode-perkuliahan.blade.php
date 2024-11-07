@@ -1,4 +1,9 @@
-<div class="min-h-2 space-y-2">
+<form class="min-h-2 space-y-2" action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}" method="post">
+    @csrf
+    @method("PUT")
+
+    <input type="hidden" name="step" value="metode-perkuliahan" />
+
     <h3 class="text-2xl font-semibold" id="metode-perkuliahan">Metode Perkuliahan</h3>
     <x-fields.text-area
         :value="old('teaching_methods', $laporan->teaching_methods)"
@@ -17,4 +22,8 @@
         name="follow_up_plan"
         label="Rencana Tindak Lanjut Perkuliahan"
     />
-</div>
+
+    <div class="flex justify-end">
+        <x-button type="submit">Simpan</x-button>
+    </div>
+</form>

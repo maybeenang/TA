@@ -7,13 +7,7 @@
 >
     {{ $slot }}
 
-    <x-button
-        class="absolute right-0 top-0"
-        variant="ghost"
-        @click="
-        dialogOpen = false
-        "
-    >
+    <x-button class="absolute right-0 top-0" variant="ghost" @click="$dispatch('close-modal') ">
         <x-lucide-x class="size-4" />
         <span class="sr-only">Close</span>
     </x-button>

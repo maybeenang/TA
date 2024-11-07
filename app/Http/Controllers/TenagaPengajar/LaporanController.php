@@ -75,11 +75,27 @@ class LaporanController extends Controller
      */
     public function update(Request $request, Report $laporan)
     {
+
+        // check if request step is not null with match
+        $request->validate([
+            'step' => 'required|in:informasi-umum,metode-perkuliahan',
+        ]);
+
+        match ($request->step) {
+            'informasi-umum' => $this->updateInformasiUmum($request, $laporan),
+            'metode-perkuliahan' => $this->updateMetodePerkuliahan($request, $laporan),
+            default => abort(404),
+        };
+
+        return redirect()->route('tenaga-pengajar.laporan.edit', $laporan)
+            ->with('success', 'Berhasil mengubah laporan')
+            ->withFragment($request->step);
+    }
+
+    public function updateInformasiUmum(Request $request, Report $laporan)
+    {
         $validated = $request->validate([
-            'responsible_lecturer' => 'required',
-            'teaching_methods' => 'required',
-            'self_evaluation' => 'required',
-            'follow_up_plan' => 'required',
+            'responsible_lecturer' => 'nullable',
             'report_lecturers' => 'array',
         ]);
 
@@ -97,8 +113,23 @@ class LaporanController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal mengubah laporan' . $th->getMessage());
         }
+    }
 
-        return redirect()->route('tenaga-pengajar.laporan.select')->with('success', 'Berhasil mengubah laporan');
+    public function updateMetodePerkuliahan(Request $request, Report $laporan)
+    {
+        $validated = $request->validate([
+            'teaching_methods' => 'nullable',
+            'self_evaluation' => 'nullable',
+            'follow_up_plan' => 'nullable',
+        ]);
+
+        try {
+            DB::transaction(function () use ($laporan, $validated) {
+                $laporan->update($validated);
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal mengubah laporan' . $th->getMessage());
+        }
     }
 
     /**

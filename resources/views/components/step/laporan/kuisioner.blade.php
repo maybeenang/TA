@@ -2,7 +2,7 @@
     <h3 class="text-2xl font-semibold" id="kuisioner">Kuisioner</h3>
 
     <div class="overflow-x-auto">
-        <table class="w-full table-auto border-collapse whitespace-nowrap border border-zinc-50 pb-8 text-left">
+        <table class="w-full table-auto border-collapse border border-zinc-50 pb-8 text-left">
             <thead class="uppercase">
                 <tr>
                     <th class="border border-zinc-100 px-2 py-2">No</th>
