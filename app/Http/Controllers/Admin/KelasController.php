@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
+use App\Models\ClassRoom;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,9 +72,16 @@ class KelasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(ClassRoom $kelas)
     {
-        //
+        $informasiUmum = [
+            'Kode/Nama Kelas' => $kelas->id . '/' . $kelas->name,
+            'Kode Mata Kuliah' => $kelas->course->code,
+            'Dosen' => $kelas->lecturer->user->name ?? '-',
+            'SKS' => $kelas->course->credit,
+        ];
+
+        return view('pages.admin.kelas.show', compact('kelas', 'informasiUmum'));
     }
 
     /**

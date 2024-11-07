@@ -41,16 +41,6 @@
                     "slug": "admin.laporan"
                 },
                 {
-                    "url": "admin.user.index",
-                    "name": "Pengguna",
-                    "slug": "admin.user"
-                },
-                {
-                    "url": "admin.tenaga-pengajar.index",
-                    "name": "Tenaga Pengajar",
-                    "slug": "admin.tenaga-pengajar"
-                },
-                {
                     "url": "admin.kelas.index",
                     "name": "Kelas",
                     "slug": "admin.kelas"
@@ -61,9 +51,19 @@
                     "slug": "admin.mata-kuliah"
                 },
                 {
+                    "url": "admin.tenaga-pengajar.index",
+                    "name": "Tenaga Pengajar",
+                    "slug": "admin.tenaga-pengajar"
+                },
+                {
                     "url": "admin.tahun-akademik.index",
                     "name": "Tahun Akademik",
                     "slug": "admin.tahun-akademik"
+                },
+                {
+                    "url": "admin.user.index",
+                    "name": "Pengguna",
+                    "slug": "admin.user"
                 }
             ]
         },

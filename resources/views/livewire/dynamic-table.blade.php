@@ -13,7 +13,7 @@
     @includeWhen($this->showSearchAndPerPage, "livewire.table.partials.entries-and-search")
 
     <div class="overflow-x-auto">
-        <table class="my-8 w-full table-auto border-collapse border border-zinc-300 text-left">
+        <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
             <thead>
                 <tr class="whitespace-nowrap uppercase">
                     @foreach ($this->columns() as $column)
