@@ -44,4 +44,14 @@ class Report extends Model
     {
         return $this->hasMany(AttendanceAndActivity::class);
     }
+
+    public function quistionnaires()
+    {
+        return $this->hasMany(Quistionnaire::class);
+    }
+
+    public function gradeComponents()
+    {
+        return $this->hasMany(GradeComponent::class);
+    }
 }

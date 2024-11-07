@@ -49,14 +49,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('student_scores', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->float('score');
-            $table->timestamps();
-        });
-
         Schema::create('report_lecturers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
@@ -104,7 +96,6 @@ return new class extends Migration
         Schema::dropIfExists('students');
         Schema::dropIfExists('report_statuses');
         Schema::dropIfExists('reports');
-        Schema::dropIfExists('student_scores');
         Schema::dropIfExists('report_lecturers');
         Schema::dropIfExists('cpmks');
         Schema::dropIfExists('quistionnaires');

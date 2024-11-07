@@ -30,6 +30,62 @@ class ReportObserver
                 'student_active' => 0,
             ]);
         }
+
+        $defaultQuistionnaire = [
+            'agree' => 0,
+            'disagree' => 0,
+            'strongly_agree' => 0,
+            'strongly_disagree' => 0,
+        ];
+
+        $report->quistionnaires()->createMany(
+            [
+                [
+                    'statement' => 'Kontrak perkuliahan disampaikan dengan jelas pada awal kuliah/praktikum',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Materi kuliah/praktikum disampaikan sesuai jadwal di kontrak perkuliahan',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Tersedia bahan ajar kuliah/praktikum (handout/modul/penuntun praktikum) yang lengkap',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Tugas kuliah/praktikum sesuai dengan materi perkuliahan',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Tugas yang diberikan meningkatkan penguasaan materi kuliah',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Kuliah/praktikum dilaksanakan sesuai dengan jadwal yang ditetapkan',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Pemahaman mahasiswa meningkat setelah mengikuti perkuliahan',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Metode pengajaran dosen efektif meningkatkan pemahaman materi',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Nilai UTS/UAS diumumkan paling lambat dua minggu dari jadwal perkuliahan terakhir',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Absensi diedarkan pada pertemuan kuliah/praktikum secara teratur',
+                    ...$defaultQuistionnaire,
+                ],
+                [
+                    'statement' => 'Soal ujian sesuai dengan materi kuliah yang disampaikan',
+                    ...$defaultQuistionnaire,
+                ],
+            ]
+        );
     }
 
     /**
