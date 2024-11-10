@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Table;
 
+use App\Events\StudentGradeUpdated;
 use App\Models\Report;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
@@ -42,17 +43,10 @@ class StudentGradeTable extends Component
             ]);
         }
 
-        // calculate total score from grade components score and weight
-        $totalScore = $gradeComponents->reduce(function ($carry, $gradeComponent) use ($studentGrades) {
-            $studentGrade = $studentGrades->get($gradeComponent->id);
-            return $carry + ($studentGrade->score * $gradeComponent->getRawOriginal('weight'));
-        }, 0);
-
-        $student->update([
-            'total_score' => $totalScore,
-        ]);
+        event(new StudentGradeUpdated($this->editingId, $this->laporan));
 
         $this->cancelEditing();
+        $this->refresh();
     }
 
     public function gradeComponents()
