@@ -18,6 +18,11 @@ class Grade extends Model
         'total_score'
     ];
 
+    public function getTotalScoreAttribute($value)
+    {
+        return $value * 100;
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class);

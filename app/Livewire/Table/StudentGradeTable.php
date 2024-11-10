@@ -14,6 +14,46 @@ class StudentGradeTable extends Component
 
     public Report $laporan;
 
+    public $editingId;
+    public $editingData = [];
+
+    public function startEditing($student_id)
+    {
+        $this->editingId = $student_id;
+        $this->editingData = $this->data()->firstWhere('student_id', $student_id);
+    }
+
+    public function cancelEditing()
+    {
+        $this->editingId = null;
+        $this->editingData = [];
+    }
+
+    public function saveEdit()
+    {
+        $this->validate([
+            'editingData.NIM' => 'required',
+            'editingData.Nama' => 'required',
+            'editingData.Total Nilai' => 'required',
+        ]);
+
+        $student = $this->laporan->grades->firstWhere('student_id', $this->editingId);
+        $student->update([
+            'total_score' => $this->editingData['Total Nilai'],
+        ]);
+
+        $studentGrades = $student->studentGrades->keyBy('grade_component_id');
+        $gradeComponents = $this->gradeComponents();
+        foreach ($gradeComponents as $gradeComponent) {
+            $studentGrade = $studentGrades->get($gradeComponent->id);
+            $studentGrade->update([
+                'score' => $this->editingData[$gradeComponent->name] / 100,
+            ]);
+        }
+
+        $this->cancelEditing();
+    }
+
     public function gradeComponents()
     {
         return $this->laporan->gradeComponents;
@@ -39,16 +79,21 @@ class StudentGradeTable extends Component
             $totalScore = $grade->total_score;
             $gradeComponents = $this->gradeComponents();
             $data = [
+                'student_id' => $student->id,
                 'NIM' => $student->nim,
                 'Nama' => $student->name,
                 'Total Nilai' => $totalScore,
             ];
             foreach ($gradeComponents as $gradeComponent) {
                 $data[$gradeComponent->name] = $studentGrades->get($gradeComponent->id)->score ?? 0;
+                // get student grade id
+                $data[$gradeComponent->name . '_id'] = $studentGrades->get($gradeComponent->id)->id ?? null;
             }
             return $data;
         });
     }
+
+
 
     public function mount(Report $laporan)
     {

@@ -12,6 +12,11 @@ class StudentGrade extends Model
         'score',
     ];
 
+    public function getScoreAttribute($value)
+    {
+        return $value * 100;
+    }
+
     public function grade()
     {
         return $this->belongsTo(Grade::class);

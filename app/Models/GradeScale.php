@@ -14,6 +14,18 @@ class GradeScale extends Model
         'letter',
     ];
 
+    // convert the max_score to 100
+    public function getMaxScoreAttribute($value)
+    {
+        return $value * 100;
+    }
+
+    // convert the min_score to 100
+    public function getMinScoreAttribute($value)
+    {
+        return $value * 100;
+    }
+
     public function report()
     {
         return $this->belongsTo(Report::class);

@@ -63,31 +63,31 @@ class ReportObserver
 
         $defaultGradeScale  = [
             'A' => [
-                'max_score' => 100,
-                'min_score' => 85,
+                'max_score' => 1,
+                'min_score' => 0.85,
             ],
             'AB' => [
-                'max_score' => 84,
-                'min_score' => 70,
+                'max_score' => 0.84,
+                'min_score' => 0.75,
             ],
             'B' => [
-                'max_score' => 69,
-                'min_score' => 60,
+                'max_score' => 0.74,
+                'min_score' => 0.65,
             ],
             'BC' => [
-                'max_score' => 59,
-                'min_score' => 50,
+                'max_score' => 0.64,
+                'min_score' => 0.55,
             ],
             'C' => [
-                'max_score' => 49,
-                'min_score' => 40,
+                'max_score' => 0.54,
+                'min_score' => 0.45,
             ],
             'D' => [
-                'max_score' => 39,
-                'min_score' => 30,
+                'max_score' => 0.44,
+                'min_score' => 0.25,
             ],
             'E' => [
-                'max_score' => 29,
+                'max_score' => 0.24,
                 'min_score' => 0,
             ],
         ];
