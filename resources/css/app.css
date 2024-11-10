@@ -306,3 +306,7 @@
     @apply block cursor-default;
     padding: 6px;
 }
+
+.is-active-link {
+    @apply bg-gray-200 font-normal;
+}

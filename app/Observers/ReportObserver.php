@@ -61,6 +61,42 @@ class ReportObserver
             ],
         ]);
 
+        $defaultGradeScale  = [
+            'A' => [
+                'max_score' => 100,
+                'min_score' => 85,
+            ],
+            'B' => [
+                'max_score' => 84,
+                'min_score' => 70,
+            ],
+            'C' => [
+                'max_score' => 69,
+                'min_score' => 60,
+            ],
+            'D' => [
+                'max_score' => 59,
+                'min_score' => 50,
+            ],
+            'E' => [
+                'max_score' => 49,
+                'min_score' => 0,
+            ],
+        ];
+
+        $report->gradeScales()->createMany(
+            array_map(
+                fn($letter, $score) => [
+                    'letter' => $letter,
+                    'max_score' => $score['max_score'],
+                    'min_score' => $score['min_score'],
+                ],
+                array_keys($defaultGradeScale),
+                $defaultGradeScale
+            )
+        );
+
+
         $defaultQuistionnaire = [
             'agree' => 0,
             'disagree' => 0,

@@ -35,6 +35,15 @@ return new class extends Migration
             $table->decimal('score', 5, 2)->default(0);
             $table->timestamps();
         });
+
+        Schema::create('grading_scale', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->string('letter');
+            $table->decimal('max_score', 5, 2);
+            $table->decimal('min_score', 5, 2);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -45,5 +54,6 @@ return new class extends Migration
         Schema::dropIfExists('grades');
         Schema::dropIfExists('grade_components');
         Schema::dropIfExists('student_grades');
+        Schema::dropIfExists('grading_scale');
     }
 };

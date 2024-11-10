@@ -35,6 +35,7 @@ class GradeComponentTable extends DynamicTable
     {
         GradeComponent::find($id)->delete();
         $this->dispatch('close-modal');
+        $this->dispatch('refresh-student-grade-table');
     }
 
     public function query(): Builder

@@ -59,4 +59,9 @@ class Report extends Model
     {
         return $this->hasMany(GradeComponent::class);
     }
+
+    public function gradeScales()
+    {
+        return $this->hasMany(GradeScale::class);
+    }
 }

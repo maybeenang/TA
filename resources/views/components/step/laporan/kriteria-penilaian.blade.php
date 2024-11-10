@@ -5,7 +5,7 @@
         <x-button.index @click="$dispatch('open-create-grade-component')">Tambah Komponen Penilaian</x-button.index>
     </div>
 
-    <div class="flex">
+    <div class="flex justify-between">
         <div class="max-w-fit">
             <livewire:table.tenaga-pengajar.grade-component-table :laporan="$laporan" />
         </div>
