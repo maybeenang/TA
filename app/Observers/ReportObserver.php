@@ -66,20 +66,28 @@ class ReportObserver
                 'max_score' => 100,
                 'min_score' => 85,
             ],
-            'B' => [
+            'AB' => [
                 'max_score' => 84,
                 'min_score' => 70,
             ],
-            'C' => [
+            'B' => [
                 'max_score' => 69,
                 'min_score' => 60,
             ],
-            'D' => [
+            'BC' => [
                 'max_score' => 59,
                 'min_score' => 50,
             ],
-            'E' => [
+            'C' => [
                 'max_score' => 49,
+                'min_score' => 40,
+            ],
+            'D' => [
+                'max_score' => 39,
+                'min_score' => 30,
+            ],
+            'E' => [
+                'max_score' => 29,
                 'min_score' => 0,
             ],
         ];

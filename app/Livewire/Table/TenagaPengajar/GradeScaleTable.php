@@ -6,8 +6,6 @@ use App\Dynamics\Column;
 use App\Dynamics\Dialog;
 use App\Livewire\DynamicTable;
 use App\Livewire\Forms;
-use App\Models\Cpmk;
-use App\Models\GradeComponent;
 use App\Models\GradeScale;
 use App\Models\Report;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,13 +15,35 @@ class GradeScaleTable extends DynamicTable
 {
     public $relations = ['report'];
     public $showSearchAndPerPage = false;
-    /*public $componentAfter = 'livewire.table.after.cpmk-after';*/
+    public $componentAfter = 'livewire.table.after.cpmk-after';
 
     public $perPage = 100;
 
     public Report $laporan;
 
-    /*public Forms\FormsCreateGradeComponent $createForm;*/
+    public Forms\FormsEditGradeScale $form;
+
+    #[On('open-edit-grade-scale')]
+    public function openEditGradeScale($id)
+    {
+        $gradeScale = GradeScale::find($id);
+        $this->form->mount($gradeScale);
+    }
+
+    public function save()
+    {
+        $this->form->save();
+        $this->dispatch('close-modal');
+    }
+
+    #[On('close-modal')]
+    public function closeEditGradeScale()
+    {
+        $this->form->reset();
+    }
+
+
+
     /**/
     /*public function saveCreate()*/
     /*{*/
@@ -55,16 +75,16 @@ class GradeScaleTable extends DynamicTable
     {
         return [
             Column::make('letter', 'Penilaian'),
-            Column::make('max_score', 'Nilai Maximal'),
+            Column::make('max_score', 'Nilai Maksimal'),
             Column::make('min_score', 'Nilai Minimal'),
-            Column::make('id', ' ')->component('columns.partials.actions.grade-component'),
+            Column::make('id', ' ')->component('columns.partials.actions.grade-scale'),
         ];
     }
 
-    /*public function dialogs()*/
-    /*{*/
-    /*    return [*/
-    /*        Dialog::make('dialog.dialogs.create-grade-component', 'createGradeComponent')*/
-    /*    ];*/
-    /*}*/
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.edit-grade-scale', 'editGradeScale')
+        ];
+    }
 }

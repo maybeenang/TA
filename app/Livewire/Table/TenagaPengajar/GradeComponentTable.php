@@ -23,6 +23,7 @@ class GradeComponentTable extends DynamicTable
     public Report $laporan;
 
     public Forms\FormsCreateGradeComponent $createForm;
+    public Forms\FormsEditGradeComponent $editForm;
 
     public function saveCreate()
     {
@@ -36,6 +37,25 @@ class GradeComponentTable extends DynamicTable
         GradeComponent::find($id)->delete();
         $this->dispatch('close-modal');
         $this->dispatch('refresh-student-grade-table');
+    }
+
+    #[On('open-edit-grade-component')]
+    public function openEdit($id)
+    {
+        $this->editForm->mount(GradeComponent::find($id));
+    }
+
+    public function saveEdit()
+    {
+        $this->editForm->save();
+        $this->dispatch('close-modal');
+        $this->dispatch('refresh-student-grade-table');
+    }
+
+    #[On('close-modal')]
+    public function closeEdit()
+    {
+        $this->editForm->reset();
     }
 
     public function query(): Builder
@@ -62,7 +82,8 @@ class GradeComponentTable extends DynamicTable
     public function dialogs()
     {
         return [
-            Dialog::make('dialog.dialogs.create-grade-component', 'createGradeComponent')
+            Dialog::make('dialog.dialogs.create-grade-component', 'createGradeComponent'),
+            Dialog::make('dialog.dialogs.edit-grade-component', 'eidtGradeComponent')
         ];
     }
 }
