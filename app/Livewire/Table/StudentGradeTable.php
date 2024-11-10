@@ -31,25 +31,26 @@ class StudentGradeTable extends Component
 
     public function saveEdit()
     {
-        $this->validate([
-            'editingData.NIM' => 'required',
-            'editingData.Nama' => 'required',
-            'editingData.Total Nilai' => 'required',
-        ]);
-
         $student = $this->laporan->grades->firstWhere('student_id', $this->editingId);
-        $student->update([
-            'total_score' => $this->editingData['Total Nilai'],
-        ]);
 
         $studentGrades = $student->studentGrades->keyBy('grade_component_id');
         $gradeComponents = $this->gradeComponents();
         foreach ($gradeComponents as $gradeComponent) {
             $studentGrade = $studentGrades->get($gradeComponent->id);
             $studentGrade->update([
-                'score' => $this->editingData[$gradeComponent->name] / 100,
+                'score' => $this->editingData[$gradeComponent->name],
             ]);
         }
+
+        // calculate total score from grade components score and weight
+        $totalScore = $gradeComponents->reduce(function ($carry, $gradeComponent) use ($studentGrades) {
+            $studentGrade = $studentGrades->get($gradeComponent->id);
+            return $carry + ($studentGrade->score * $gradeComponent->getRawOriginal('weight'));
+        }, 0);
+
+        $student->update([
+            'total_score' => $totalScore,
+        ]);
 
         $this->cancelEditing();
     }

@@ -14,7 +14,7 @@ class StudentGrade extends Model
 
     public function getScoreAttribute($value)
     {
-        return $value * 100;
+        return (int) $value == $value ? number_format($value, 0) : number_format($value, 2);
     }
 
     public function grade()
