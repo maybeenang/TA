@@ -65,7 +65,8 @@ class CpmkTable extends DynamicTable
     {
         return Cpmk::query()
             ->with($this->relations)
-            ->where('report_id', $this->laporan->id);
+            ->where('report_id', $this->laporan->id)
+            ->orderBy('created_at', 'asc');
     }
 
     public function mount(Report $laporan)

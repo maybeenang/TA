@@ -31,6 +31,36 @@ class ReportObserver
             ]);
         }
 
+        // spek penilaian
+        $report->gradeComponents()->createMany([
+            [
+                'name' => "UTS",
+                'weight' => 0.25,
+            ],
+            [
+                'name' => "UAS",
+                'weight' => 0.25,
+            ],
+            [
+                'name' => "Kuis",
+            ],
+            [
+                'name' => "Tugas",
+                'weight' => 0.2,
+            ],
+            [
+                'name' => "Praktikum",
+                'weight' => 0.1,
+            ],
+            [
+                'name' => "RBL",
+            ],
+            [
+                'name' => "Kehadiran",
+                'weight' => 0.1,
+            ],
+        ]);
+
         $defaultQuistionnaire = [
             'agree' => 0,
             'disagree' => 0,

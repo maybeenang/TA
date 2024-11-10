@@ -1,5 +1,5 @@
 <div
-    class="space-y-4"
+    class="relative w-full space-y-4"
     x-data="{
    @if (method_exists($this, "dialogs"))
        @foreach ($this->dialogs() as $dialog)

@@ -12,6 +12,8 @@ class ClassroomStudentTable extends DynamicTable
 {
     public ClassRoom $kelas;
 
+    public $searchColumns = ['student.name', 'student.nim'];
+
     public function query(): Builder
     {
         return StudentClassroom::query()

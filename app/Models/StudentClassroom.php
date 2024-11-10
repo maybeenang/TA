@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\StudentClassroomObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy(StudentClassroomObserver::class)]
 class StudentClassroom extends Model
 {
     use HasFactory;

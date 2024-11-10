@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_id')->nullable()->constrained('reports')->cascadeOnDelete();
-            $table->decimal('total_score', 5, 2);
+            $table->decimal('total_score', 5, 2)->default(0);
             $table->timestamps();
         });
 
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('name');
-            $table->decimal('weight', 5, 2);
+            $table->decimal('weight', 5, 2)->default(0);
             $table->timestamps();
         });
 
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('grade_component_id')->constrained('grade_components')->cascadeOnDelete();
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete();
-            $table->decimal('score', 5, 2);
+            $table->decimal('score', 5, 2)->default(0);
             $table->timestamps();
         });
     }

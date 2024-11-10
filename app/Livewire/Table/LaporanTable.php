@@ -38,6 +38,9 @@ class LaporanTable extends DynamicTable
 
     public function changeReportStatus($reportId)
     {
+        if ($this->reportStatusName === null) {
+            return;
+        }
         $report = Report::find($reportId);
         $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
         $report->report_status_id = $reportStatusId;

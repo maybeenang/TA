@@ -74,10 +74,18 @@ class KelasController extends Controller
      */
     public function show(ClassRoom $kelas)
     {
+        $classroomLecturers = $kelas->report->lecturers->map(function ($lecturer) {
+            return $lecturer->user->name;
+        })->implode(', ');
+
+        if ($kelas->report->lecturers->isEmpty()) {
+            $classroomLecturers = $kelas->lecturer->user->name ?? '-';
+        }
+
         $informasiUmum = [
             'Kode/Nama Kelas' => $kelas->id . '/' . $kelas->name,
             'Kode Mata Kuliah' => $kelas->course->code,
-            'Dosen' => $kelas->lecturer->user->name ?? '-',
+            'Dosen' => $classroomLecturers,
             'SKS' => $kelas->course->credit,
         ];
 

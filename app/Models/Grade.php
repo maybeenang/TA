@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\GradeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
+
+#[ObservedBy(GradeObserver::class)]
 class Grade extends Model
 {
     //
@@ -14,15 +18,23 @@ class Grade extends Model
         'total_score'
     ];
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
 
     public function studentGrades()
     {
         return $this->hasMany(StudentGrade::class);
-    }
-
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
     }
 }

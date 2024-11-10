@@ -19,4 +19,14 @@ class Student extends Model
     {
         return $this->belongsToMany(ClassRoom::class, 'students_class_rooms');
     }
+
+    public function studentClassrooms()
+    {
+        return $this->hasMany(StudentClassroom::class);
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
 }

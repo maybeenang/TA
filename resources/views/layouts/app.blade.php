@@ -38,7 +38,7 @@
                 <div class="flex flex-col gap-4 p-4 md:flex-row">
                     @include("layouts.sidebar")
 
-                    <section class="w-full space-y-2">
+                    <section class="min-w-0 flex-1 space-y-2">
                         {{ Breadcrumbs::render() }}
                         {{ $slot }}
                     </section>

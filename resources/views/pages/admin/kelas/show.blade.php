@@ -16,11 +16,11 @@
             <table class="w-full border-collapse">
                 @foreach ($informasiUmum as $key => $value)
                     <tr class="w-full">
-                        <td class="w-44 border border-x-0 border-y-2 border-zinc-300 px-2 py-2 capitalize">
+                        <td class="w-44 border border-x-0 border-y-2 border-zinc-200 px-2 py-2 capitalize">
                             {{ $key }}
                         </td>
-                        <td class="w-2 border border-x-0 border-y-2 border-zinc-300 px-2 py-2">:</td>
-                        <td class="border border-x-0 border-y-2 border-zinc-300 px-2 py-2">
+                        <td class="w-2 border border-x-0 border-y-2 border-zinc-200 px-2 py-2">:</td>
+                        <td class="border border-x-0 border-y-2 border-zinc-200 px-2 py-2">
                             <div class="flex gap-1">
                                 {{ $value }}
                             </div>

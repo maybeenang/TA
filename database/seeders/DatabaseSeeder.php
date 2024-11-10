@@ -31,7 +31,11 @@ class DatabaseSeeder extends Seeder
 
         $students->each(function ($student) {
             $classrooms = \App\Models\ClassRoom::inRandomOrder()->limit(rand(1, 3))->get();
-            $student->classrooms()->attach($classrooms);
+            $student->studentClassrooms()->createMany(
+                $classrooms->map(function ($classroom) {
+                    return ['class_room_id' => $classroom->id];
+                })->toArray()
+            );
         });
     }
 }

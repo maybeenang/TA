@@ -16,6 +16,8 @@ class KuisionerTable extends DynamicTable
     public $showSearchAndPerPage = false;
     public Report $laporan;
 
+    public $perPage = 100;
+
     public function query(): Builder
     {
         return Quistionnaire::query()

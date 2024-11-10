@@ -20,7 +20,7 @@
 
         <section class="flex gap-8">
             <!--form-->
-            <div class="js-toc-content space-y-8">
+            <div class="js-toc-content min-w-0 flex-1 space-y-8">
                 <x-step.laporan.informasi-umum :$laporan :$lecturers />
 
                 <x-step.laporan.metode-perkuliahan :laporan="$laporan" />
@@ -48,6 +48,8 @@
             contentSelector: '.js-toc-content',
             headingSelector: 'h3',
             hasInnerContainers: true,
+            headingsOffset: 80,
+            scrollSmoothOffset: -80,
         });
     </script>
     @endPushOnce

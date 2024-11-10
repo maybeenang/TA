@@ -50,6 +50,11 @@ class Report extends Model
         return $this->hasMany(Quistionnaire::class);
     }
 
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
     public function gradeComponents()
     {
         return $this->hasMany(GradeComponent::class);

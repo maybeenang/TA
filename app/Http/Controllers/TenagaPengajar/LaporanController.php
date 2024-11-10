@@ -8,6 +8,7 @@ use App\Models\Report;
 use App\Models\ReportLecturers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
 
 class LaporanController extends Controller
@@ -54,7 +55,6 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
-
         $lecturers = Lecturer::query()
             ->with('user')
             // check if user is not null
@@ -67,7 +67,10 @@ class LaporanController extends Controller
                 ];
             });
 
-        return view('pages.tenaga-pengajar.laporan.edit', compact('laporan', 'lecturers'));
+        return view('pages.tenaga-pengajar.laporan.edit', compact(
+            'laporan',
+            'lecturers',
+        ));
     }
 
     /**
