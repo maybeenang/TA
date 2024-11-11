@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_id')->nullable()->constrained('reports')->cascadeOnDelete();
+            $table->string('letter')->nullable()->default('E');
             $table->decimal('total_score', 5, 2)->default(0);
             $table->timestamps();
         });

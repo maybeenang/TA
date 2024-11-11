@@ -15,6 +15,7 @@ class Grade extends Model
         'student_id',
         'class_room_id',
         'report_id',
+        'letter',
         'total_score'
     ];
 

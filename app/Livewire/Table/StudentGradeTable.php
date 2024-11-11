@@ -7,6 +7,7 @@ use App\Events\StudentGradeUpdated;
 use App\Models\Report;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Lazy]
@@ -16,6 +17,20 @@ class StudentGradeTable extends Component
     public Report $laporan;
 
     public $editingId;
+
+    #[Validate([
+        'editingData.*' => [
+            'required',
+            'numeric',
+            'min:0',
+            'max:200',
+        ],
+        'editingData.NIM' => 'required',
+        'editingData.Nama' => 'required',
+        'editingData.Nilai' => 'required',
+        'editingData.Total Nilai' => 'required',
+        'editingData.student_id' => 'required',
+    ])]
     public $editingData = [];
 
     public function startEditing($student_id)
@@ -32,6 +47,8 @@ class StudentGradeTable extends Component
 
     public function saveEdit()
     {
+        $this->validate();
+
         $student = $this->laporan->grades->firstWhere('student_id', $this->editingId);
 
         $studentGrades = $student->studentGrades->keyBy('grade_component_id');
@@ -47,6 +64,8 @@ class StudentGradeTable extends Component
 
         $this->cancelEditing();
         $this->refresh();
+
+        session()->flash('message', 'Data berhasil diperbarui!');
     }
 
     public function gradeComponents()
@@ -67,11 +86,14 @@ class StudentGradeTable extends Component
             $student = $grade->student;
             $studentGrades = $grade->studentGrades->keyBy('grade_component_id');
             $totalScore = $grade->total_score;
+            $letterScore = $grade->letter ?? '-';
             $gradeComponents = $this->gradeComponents();
+
             $data = [
                 'student_id' => $student->id,
                 'NIM' => $student->nim,
                 'Nama' => $student->name,
+                'Nilai' => $letterScore,
                 'Total Nilai' => $totalScore,
             ];
             foreach ($gradeComponents as $gradeComponent) {
@@ -86,6 +108,7 @@ class StudentGradeTable extends Component
         return [
             'NIM',
             'Nama',
+            'Nilai',
             'Total Nilai',
             ...$this->gradeComponents()->pluck('name')->toArray(),
         ];

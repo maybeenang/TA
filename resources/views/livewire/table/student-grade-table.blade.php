@@ -1,4 +1,23 @@
 <div class="w-full">
+
+    @if (session()->has("message"))
+        <div class="relative mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700" role="alert">
+            <span class="block sm:inline">{{ session("message") }}</span>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="relative mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700" role="alert">
+            <span class="block sm:inline">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </span>
+        </div>
+    @endif
+
     <div class="overflow-x-auto">
         <div class="min-w-max">
             <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
@@ -23,7 +42,7 @@
                                 @endif
 
                                 <td class="border border-zinc-300 p-2">
-                                    @if ($editingId === $row["student_id"] && $key !== "NIM" && $key !== "Nama" && $key !== "Total Nilai")
+                                    @if ($editingId === $row["student_id"] && $key !== "NIM" && $key !== "Nama" && $key !== "Total Nilai" && $key !== "Nilai")
                                         <input
                                             type="text"
                                             wire:model="editingData.{{ $key }}"
