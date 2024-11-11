@@ -23,6 +23,11 @@ class GradeComponent extends Model
         return $value . '%';
     }
 
+    public function getWeightRawAttribute()
+    {
+        return $this->attributes['weight'];
+    }
+
     public function report()
     {
         return $this->belongsTo(Report::class);

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\StudentGradeUpdated;
-use App\Listeners\RecalculateStudentGrade;
+use App\Events;
+use App\Listeners;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(StudentGradeUpdated::class, RecalculateStudentGrade::class);
+        Event::listen(Events\StudentGradeUpdated::class, Listeners\RecalculateStudentGrade::class);
+        Event::listen(Events\GradeComponentUpdated::class, Listeners\RecalculateGradeComponent::class);
     }
 }

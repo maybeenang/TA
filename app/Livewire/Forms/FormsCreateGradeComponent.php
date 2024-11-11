@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Events\GradeComponentUpdated;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 

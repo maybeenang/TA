@@ -4,7 +4,7 @@
             <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
                 <thead>
                     <tr class="whitespace-nowrap uppercase">
-                        @foreach ($headers as $header)
+                        @foreach ($this->headers() as $header)
                             <th class="border border-zinc-300 px-2 py-2">{{ $header }}</th>
                         @endforeach
 

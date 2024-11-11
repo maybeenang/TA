@@ -36,10 +36,5 @@ class RecalculateStudentGrade
         $event->report->grades()->where('student_id', $event->student->id)->update([
             'total_score' => $totalScore,
         ]);
-
-        Log::info('Student grade recalculated', [
-            'student_id' => $event->student->id,
-            'total_score' => $totalScore,
-        ]);
     }
 }

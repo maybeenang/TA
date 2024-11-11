@@ -4,6 +4,7 @@ namespace App\Livewire\Table\TenagaPengajar;
 
 use App\Dynamics\Column;
 use App\Dynamics\Dialog;
+use App\Events\GradeComponentUpdated;
 use App\Livewire\DynamicTable;
 use App\Livewire\Forms;
 use App\Models\Cpmk;

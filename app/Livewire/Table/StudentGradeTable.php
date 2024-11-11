@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Table;
 
+use App\Events\GradeComponentUpdated;
 use App\Events\StudentGradeUpdated;
 use App\Models\Report;
 use Livewire\Attributes\Lazy;
@@ -11,7 +12,6 @@ use Livewire\Component;
 #[Lazy]
 class StudentGradeTable extends Component
 {
-    public array $headers = [];
 
     public Report $laporan;
 
@@ -57,13 +57,8 @@ class StudentGradeTable extends Component
     #[On('refresh-student-grade-table')]
     public function refresh()
     {
+        event(new GradeComponentUpdated($this->laporan));
         $this->laporan->refresh();
-        $this->headers = [
-            'NIM',
-            'Nama',
-            'Total Nilai',
-            ...$this->gradeComponents()->pluck('name')->toArray(),
-        ];
     }
 
     public function data()
@@ -81,11 +76,19 @@ class StudentGradeTable extends Component
             ];
             foreach ($gradeComponents as $gradeComponent) {
                 $data[$gradeComponent->name] = $studentGrades->get($gradeComponent->id)->score ?? 0;
-                // get student grade id
-                $data[$gradeComponent->name . '_id'] = $studentGrades->get($gradeComponent->id)->id ?? null;
             }
             return $data;
         });
+    }
+
+    public function headers()
+    {
+        return [
+            'NIM',
+            'Nama',
+            'Total Nilai',
+            ...$this->gradeComponents()->pluck('name')->toArray(),
+        ];
     }
 
 
@@ -93,12 +96,6 @@ class StudentGradeTable extends Component
     public function mount(Report $laporan)
     {
         $this->laporan = $laporan;
-        $this->headers = [
-            'NIM',
-            'Nama',
-            'Total Nilai',
-            ...$this->gradeComponents()->pluck('name')->toArray(),
-        ];
     }
 
     public function placeholder()
@@ -108,8 +105,6 @@ class StudentGradeTable extends Component
 
     public function render()
     {
-        return view('livewire.table.student-grade-table', [
-            'headers' => $this->headers,
-        ]);
+        return view('livewire.table.student-grade-table', []);
     }
 }
