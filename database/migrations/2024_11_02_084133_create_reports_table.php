@@ -59,10 +59,10 @@ return new class extends Migration
         Schema::create('cpmks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
-            $table->string('code');
-            $table->text('description');
-            $table->string('criteria');
-            $table->float('average_score');
+            $table->string('code')->nullable();
+            $table->text('description')->nullable();
+            $table->string('criteria')->nullable();
+            $table->decimal('average_score', 5, 2)->nullable();
             $table->timestamps();
         });
 
@@ -82,8 +82,8 @@ return new class extends Migration
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
             $table->integer('week');
             $table->string('meeting_name');
-            $table->integer('student_present');
-            $table->integer('student_active');
+            $table->integer('student_present')->nullable();
+            $table->integer('student_active')->nullable();
             $table->timestamps();
         });
     }

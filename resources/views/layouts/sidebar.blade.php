@@ -1,9 +1,13 @@
 <div class="h-fit min-w-72 space-y-4">
     @isset($menuData)
         @foreach ($menuData[0]->menu as $item)
-            <div
-                class="divide-y-zinc-200 w-full divide-y-2 rounded-md border border-zinc-200"
-            >
+            @isset($item->role)
+                @if (! auth()->user()->hasRole($item->role))
+                    @continue
+                @endif
+            @endisset
+
+            <div class="divide-y-zinc-200 w-full divide-y-2 rounded-md border border-zinc-200">
                 <header class="rounded-t-md bg-zinc-100 px-4 py-2">
                     <h3 class="">
                         {{ $item->name ?? "Menu" }}

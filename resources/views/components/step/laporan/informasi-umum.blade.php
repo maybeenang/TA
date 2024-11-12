@@ -18,7 +18,7 @@
     <x-fields.text :value="$laporan->classroom->course->name" name="" label="Nama Mata Kuliah" disabled />
     <x-fields.text :value="$laporan->classroom->course->code" name="" label="Kode MK" disabled />
     <x-fields.text :value="$laporan->classroom->course->credit" name="" label="SKS" disabled />
-    <x-fields.text :value="$laporan->classroom->course->grade" name="" label="Semester" disabled />
+    <x-fields.text :value="$laporan->classroom->academicYear->semester" name="" label="Semester" disabled />
 
     <x-fields.text :value="$laporan->classroom->academicYear->name" name="" label="Tahun Ajaran" disabled />
 

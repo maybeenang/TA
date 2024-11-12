@@ -12,7 +12,7 @@ use App\Models\Report;
 use App\Models\ReportStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
@@ -48,6 +48,12 @@ class LaporanTable extends DynamicTable
 
         $this->reset('reportStatusName');
         $this->dispatch('close-modal');
+    }
+
+    #[On('close-modal')]
+    public function closeModal()
+    {
+        $this->reset('reportStatusName');
     }
 
     public function filterWithAcademicYear()

@@ -58,6 +58,8 @@
                                                 break;
                                             }
                                         }
+                                    } elseif ($column->key === "") {
+                                        $value = $row;
                                     } else {
                                         $value = $row[$column->key];
                                     }

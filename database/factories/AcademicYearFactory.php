@@ -16,8 +16,10 @@ class AcademicYearFactory extends Factory
      */
     public function definition(): array
     {
+        // create academic year from now to next year
         return [
             'name' => $this->faker->sentence(2),
+            'semester' => $this->faker->randomElement(['Spring', 'Summer', 'Fall', 'Winter']),
             'start_date' => now()->toDateString(),
             'end_date' => now()->addYear()->toDateString(),
         ];

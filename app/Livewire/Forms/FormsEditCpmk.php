@@ -46,9 +46,9 @@ class FormsEditCpmk extends Form
     public function mount($cpmk)
     {
         $this->id = $cpmk->id;
-        $this->code = $cpmk->code;
-        $this->description = $cpmk->description;
-        $this->criteria = $cpmk->criteria;
-        $this->average_score = $cpmk->average_score;
+        $this->code = $cpmk->code ?? '';
+        $this->description = $cpmk->description ?? '';
+        $this->criteria = $cpmk->criteria ?? '';
+        $this->average_score = $cpmk->average_score ?? '';
     }
 }

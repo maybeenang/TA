@@ -5,5 +5,4 @@
         <x-card />
         <x-card />
     </div>
-    <livewire:user-table />
 </x-app-layout>

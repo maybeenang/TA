@@ -27,8 +27,8 @@ class FormsEditPresensi extends Form
 
         $attendance = AttendanceAndActivity::find($this->id);
         $attendance->update([
-            'student_present' => $this->student_present,
-            'student_active' => $this->student_active,
+            'student_present' => $this->student_present ?? 0,
+            'student_active' => $this->student_active ?? 0,
         ]);
     }
 
@@ -36,7 +36,7 @@ class FormsEditPresensi extends Form
     {
         $this->id = $data->id;
         $this->meeting_name = $data->meeting_name;
-        $this->student_present = $data->student_present;
-        $this->student_active = $data->student_active;
+        $this->student_present = $data->student_present ?? 0;
+        $this->student_active = $data->student_active ?? 0;
     }
 }

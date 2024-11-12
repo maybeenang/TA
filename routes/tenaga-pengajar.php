@@ -6,7 +6,10 @@ Route::group(
     [
         'prefix' => 'tenaga-pengajar',
         'as' => 'tenaga-pengajar.',
-        'middleware' => ['auth'],
+        'middleware' => [
+            'auth',
+            'role:tenaga-pengajar'
+        ],
     ],
     function () {
         Route::get('laporan/select', [\App\Http\Controllers\TenagaPengajar\LaporanController::class, 'select'])->name('laporan.select');

@@ -52,7 +52,7 @@
                                             @keydown.escape="$wire.cancelEditing()"
                                         />
                                     @else
-                                        {{ $cell }}
+                                        {{ $cell }}%
                                     @endif
                                 </td>
                             @endforeach
@@ -81,9 +81,7 @@
                             <tr class="bg-zinc-100">
                                 <td colspan="2" class="border border-zinc-300 p-2">Rata Rata</td>
                                 @foreach ($this->averages() as $average)
-                                    <td class="border border-zinc-300 p-2">
-                                        {{ $average }}
-                                    </td>
+                                    <td class="border border-zinc-300 p-2">{{ $average }}%</td>
                                 @endforeach
                             </tr>
                         @endif

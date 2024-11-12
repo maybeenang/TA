@@ -63,7 +63,7 @@ class RecalculateStudentGrade
         // update the grade
         $event->report->grades()->where('student_id', $event->student->id)->update([
             'total_score' => $totalScore,
-            'letter' => $gradeScale->letter,
+            'letter' => $gradeScale->letter ?? null,
         ]);
     }
 }

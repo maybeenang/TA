@@ -6,7 +6,10 @@ Route::group(
     [
         'prefix' => 'admin',
         'as' => 'admin.',
-        'middleware' => ['auth'],
+        'middleware' => [
+            'auth',
+            'role:admin'
+        ],
     ],
     function () {
         Route::resource('user', \App\Http\Controllers\Admin\UserController::class);

@@ -15,9 +15,6 @@ class ReportObserver
         for ($i = 1; $i <= 3; $i++) {
             $report->cpmks()->create([
                 'code' => 'CPMK' . $i,
-                'description' => 'Competency ' . $i,
-                'criteria' => 'Criteria ' . $i,
-                'average_score' => 0,
             ]);
         }
 
@@ -26,8 +23,6 @@ class ReportObserver
             $report->attendanceAndActivities()->create([
                 'week' => $i,
                 'meeting_name' => 'Minggu ke-' . $i,
-                'student_present' => 0,
-                'student_active' => 0,
             ]);
         }
 

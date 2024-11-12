@@ -12,6 +12,7 @@ class AcademicYear extends Model
 
     public $fillable = [
         'name',
+        'semester',
         'start_date',
         'end_date',
     ];

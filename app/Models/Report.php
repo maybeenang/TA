@@ -6,6 +6,7 @@ use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 #[ObservedBy(ReportObserver::class)]
 class Report extends Model
@@ -63,5 +64,37 @@ class Report extends Model
     public function gradeScales()
     {
         return $this->hasMany(GradeScale::class);
+    }
+
+    public function progres()
+    {
+        $informasiUmum = $this->responsible_lecturer !== null && $this->lecturers->count() > 0;
+
+        $metodePerkuliahan = $this->teaching_methods !== null && $this->self_evaluation !== null && $this->follow_up_plan !== null;
+
+        $metodeEvaluasi = $this->cpmks()->each(function ($cpmk) {
+            return $cpmk->code !== null && $cpmk->description !== null && $cpmk->criteria !== null && $cpmk->average_score !== null;
+        });
+
+
+        $presensiDanKeaktifan = $this->attendanceAndActivities()->each(function ($attendanceAndActivity) {
+            return $attendanceAndActivity->attendance !== null && $attendanceAndActivity->activity !== null;
+        });
+
+        $kriteriaPenilaian = $this->gradeComponents->count() > 0 && $this->gradeScales->count() > 0;
+
+        $penilaianMahasiswa = $this->grades->count() > 0;
+
+        $kuisioner = $this->quistionnaires->count() > 0;
+
+        return compact(
+            'informasiUmum',
+            'metodePerkuliahan',
+            'metodeEvaluasi',
+            'presensiDanKeaktifan',
+            'kriteriaPenilaian',
+            'penilaianMahasiswa',
+            'kuisioner',
+        );
     }
 }
