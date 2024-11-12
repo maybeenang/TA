@@ -1,17 +1,17 @@
-@if (session('success'))
+@if (session("success"))
     <x-alert>
         <x-alert.title>Berhasil !</x-alert.title>
         <x-alert.description>
-            {{ session('success') }}
+            {{ session("success") }}
         </x-alert.description>
     </x-alert>
 @endif
 
-@if (session('error'))
+@if (session("error"))
     <x-alert variant="destructive">
         <x-alert.title>Perhatian !</x-alert.title>
         <x-alert.description>
-            {{ session('error') }}
+            {{ session("error") }}
         </x-alert.description>
     </x-alert>
 @endif
