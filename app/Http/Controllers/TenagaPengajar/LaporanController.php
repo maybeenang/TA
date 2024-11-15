@@ -111,7 +111,16 @@ class LaporanController extends Controller
             'simpangan_baku' => $laporan->standarDeviation,
         ]);
 
-        Pdf::view('pdfs.pdf-laporan', compact('laporan', 'distribusiNilai'))
+        $rentangNilai = $laporan->gradeScales->map(function ($gradeScale) use ($laporan) {
+            return [
+                'letter' => $gradeScale->letter,
+                'min' => $gradeScale->min_score + 0,
+                'max' => $gradeScale->max_score + 0,
+                'count' => $laporan->grades->where('letter', $gradeScale->letter)->count(),
+            ];
+        });
+
+        Pdf::view('pdfs.pdf-laporan', compact('laporan', 'distribusiNilai', 'rentangNilai'))
             ->format(Format::A4)
             ->margins(3, 3, 3, 4, Unit::Centimeter)
             ->save(storage_path('app/public/sampul.pdf'));

@@ -152,5 +152,26 @@
                 </tr>
             </tbody>
         </table>
+
+        <table class="w-full table-fixed border-collapse border">
+            <thead>
+                <tr>
+                    <th class="border border-black font-normal">Nilai</th>
+                    <th class="border border-black font-normal">Nilai Maksimal</th>
+                    <th class="border border-black font-normal">Nilai Minimal</th>
+                    <th class="border border-black font-normal">Jumlah</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach ($rentangNilai as $rentang)
+                    <tr>
+                        <td class="border border-black align-top">{{ $rentang["letter"] }}</td>
+                        <td class="border border-black align-top">{{ $rentang["max"] }}</td>
+                        <td class="border border-black align-top">{{ $rentang["min"] }}</td>
+                        <td class="border border-black align-top">{{ $rentang["count"] }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </section>
 </div>

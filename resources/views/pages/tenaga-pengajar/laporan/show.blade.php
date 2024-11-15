@@ -14,7 +14,7 @@
     <script src="https://unpkg.com/pdfobject"></script>
     <script>
         PDFObject.embed('{{ asset("storage/sampul.pdf") }}', '#pdf-view', {
-            page: 2,
+            page: 4,
         });
     </script>
     @endPushOnce
