@@ -21,9 +21,16 @@ class Report extends Model
         'follow_up_plan',
     ];
 
+
     public function classRoom()
     {
         return $this->belongsTo(ClassRoom::class);
+    }
+
+
+    public function responsibleLecturer()
+    {
+        return $this->belongsTo(Lecturer::class, 'responsible_lecturer');
     }
 
     public function reportStatus()
@@ -83,7 +90,10 @@ class Report extends Model
 
         $kriteriaPenilaian = $this->gradeComponents->count() > 0 && $this->gradeScales->count() > 0;
 
-        $penilaianMahasiswa = $this->grades->count() > 0;
+        $penilaianMahasiswa = $this->grades()->each(function ($grade) {
+            return $grade->letter !== null;
+        });
+
 
         $kuisioner = $this->quistionnaires->count() > 0;
 
@@ -96,5 +106,18 @@ class Report extends Model
             'penilaianMahasiswa',
             'kuisioner',
         );
+    }
+
+    public function getStandarDeviationAttribute()
+    {
+        $scores = $this->grades->pluck('total_score');
+        $mean = $scores->avg();
+        $count = $scores->count();
+        $sum = $scores->sum();
+        $squaredSum = $scores->map(function ($score) {
+            return pow($score, 2);
+        })->sum();
+        $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+        return sqrt($variance);
     }
 }

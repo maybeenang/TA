@@ -8,7 +8,7 @@
             <li class="flex items-center gap-2 whitespace-nowrap">
                 <input type="checkbox" disabled @checked($item) />
                 <a
-                    href="#"
+                    href="{{ route("tenaga-pengajar.laporan.edit", $value) . "#{$this->convertKebabCase($key)}" }}"
                     @class([
                         "text-blue-800 hover:underline" => ! $item,
                         "line-through" => $item,

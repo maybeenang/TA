@@ -66,6 +66,24 @@ class LaporanTable extends DynamicTable
         return AcademicYear::query()->get();
     }
 
+
+    function convertCamelCase($camelCaseString)
+    {
+        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
+        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
+        // Ubah kata pertama dari setiap kata menjadi huruf besar
+        return ucwords($result);
+    }
+
+
+    function convertKebabCase($camelCaseString)
+    {
+        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
+        $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
+        // Ubah semua huruf menjadi kecil
+        return strtolower($result);
+    }
+
     public function query(): Builder
     {
         return Report::query()
@@ -80,12 +98,13 @@ class LaporanTable extends DynamicTable
     public function columns(): array
     {
         return [
-            Column::make('id', 'Kode'),
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
             Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
             Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
+            Column::make('', 'Progres')->component('columns.progres-laporan-admin'),
+            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
             Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }

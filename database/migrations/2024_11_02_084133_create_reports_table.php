@@ -39,9 +39,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('responsible_lecturer')->nullable();
-            $table->string('teaching_methods')->nullable();
-            $table->string('self_evaluation')->nullable();
-            $table->string('follow_up_plan')->nullable();
+            $table->longText('teaching_methods')->nullable();
+            $table->longText('self_evaluation')->nullable();
+            $table->longText('follow_up_plan')->nullable();
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_status_id')->constrained('report_statuses')->cascadeOnDelete();
@@ -60,7 +60,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('code')->nullable();
-            $table->text('description')->nullable();
+            $table->longtext('description')->nullable();
             $table->string('criteria')->nullable();
             $table->decimal('average_score', 5, 2)->nullable();
             $table->timestamps();

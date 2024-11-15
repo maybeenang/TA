@@ -37,4 +37,17 @@ class GradeComponent extends Model
     {
         return $this->hasMany(StudentGrade::class);
     }
+
+    public function standardDeviation()
+    {
+        $scores = $this->studentGrades->pluck('score');
+        $mean = $scores->avg();
+        $count = $scores->count();
+        $sum = $scores->sum();
+        $squaredSum = $scores->map(function ($score) {
+            return pow($score, 2);
+        })->sum();
+        $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+        return sqrt($variance);
+    }
 }

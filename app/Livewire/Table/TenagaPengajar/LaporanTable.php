@@ -40,6 +40,16 @@ class LaporanTable extends DynamicTable
         return ucwords($result);
     }
 
+
+    function convertKebabCase($camelCaseString)
+    {
+        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
+        $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
+        // Ubah semua huruf menjadi kecil
+        return strtolower($result);
+    }
+
+
     public function query(): Builder
     {
         return Report::query()
@@ -63,8 +73,8 @@ class LaporanTable extends DynamicTable
             Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
             Column::make('reportStatus.name', 'Status Laporan')->component('columns.report-status'),
             Column::make('', 'Progres')->component('columns.progres-laporan'),
-            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.date'),
-            Column::make('id', ' ')->component('columns.pilih-laporan'),
+            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
+            Column::make('id', ' ')->component('columns.partials.actions.laporan-tenaga-pengajar'),
         ];
     }
 }

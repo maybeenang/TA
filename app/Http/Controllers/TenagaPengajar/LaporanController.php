@@ -7,9 +7,14 @@ use App\Models\Lecturer;
 use App\Models\Report;
 use App\Models\ReportLecturers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
+use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Enums\Format;
+use Spatie\LaravelPdf\Enums\Unit;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class LaporanController extends Controller
 {
@@ -31,7 +36,22 @@ class LaporanController extends Controller
      */
     public function create()
     {
-        return view('pages.tenaga-pengajar.laporan.create');
+        $classrooms = Lecturer::query()
+            ->with('classrooms')
+            ->where('user_id', Auth::id())
+            ->get()
+            ->map(function ($lecturer) {
+                return $lecturer->classrooms;
+            })
+            ->flatten()
+            ->map(function ($classroom) {
+                return [
+                    'value' => $classroom->id,
+                    'label' => $classroom->full_name,
+                ];
+            });
+
+        return view('pages.tenaga-pengajar.laporan.create', compact('classrooms'));
     }
 
     /**
@@ -39,15 +59,63 @@ class LaporanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'classroom' => 'required|exists:class_rooms,id',
+        ]);
+
+        try {
+            // check if classroom has report
+            if (Report::where('class_room_id', $validated['classroom'])->exists()) {
+                return redirect()->back()->with('error', 'Kelas ini sudah memiliki laporan');
+            }
+
+            DB::transaction(function () use ($validated) {
+                $report = Report::create([
+                    'class_room_id' => $validated['classroom'],
+                ]);
+
+                $report->lecturers()->attach(Auth::id());
+            });
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return redirect()->back()->with('error', 'Gagal membuat laporan');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Report $laporan)
     {
-        //
+        // get min, max, range (max-min), average, from each graadecomponent score
+        $distribusiNilai = $laporan->gradeComponents
+            ->map(function ($gradeComponent) {
+                $scores = $gradeComponent->studentGrades->pluck('score');
+                return [
+                    'name' => $gradeComponent->name,
+                    'min' => $scores->min(),
+                    'max' => $scores->max(),
+                    'range' => $scores->max() - $scores->min(),
+                    'average' => $scores->average(),
+                    'simpangan_baku' => $gradeComponent->standardDeviation(),
+                ];
+            });
+
+        // append new value to distribusiNilai
+        $distribusiNilai->push([
+            'name' => 'Nilai',
+            'min' => $laporan->grades->min('total_score'),
+            'max' => $laporan->grades->max('total_score'),
+            'range' => $laporan->grades->max('total_score') - $laporan->grades->min('total_score'),
+            'average' => $laporan->grades->avg('total_score'),
+            'simpangan_baku' => $laporan->standarDeviation,
+        ]);
+
+        Pdf::view('pdfs.pdf-laporan', compact('laporan', 'distribusiNilai'))
+            ->format(Format::A4)
+            ->margins(3, 3, 3, 4, Unit::Centimeter)
+            ->save(storage_path('app/public/sampul.pdf'));
+        return view('pages.tenaga-pengajar.laporan.show', compact('laporan'));
     }
 
     /**

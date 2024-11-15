@@ -62,6 +62,7 @@ export default {
             },
             fontFamily: {
                 sans: ["Inter", ...defaultTheme.fontFamily.sans],
+                serif: ["Tinos", ...defaultTheme.fontFamily.serif],
             },
             keyframes: {
                 "accordion-down": {

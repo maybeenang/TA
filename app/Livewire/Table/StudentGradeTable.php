@@ -63,7 +63,8 @@ class StudentGradeTable extends Component
         event(new StudentGradeUpdated($this->editingId, $this->laporan));
 
         $this->cancelEditing();
-        $this->refresh();
+
+        $this->laporan->refresh();
 
         session()->flash('message', 'Data berhasil diperbarui!');
     }
