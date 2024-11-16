@@ -38,16 +38,20 @@
                     <td colspan="2" class="border border-black text-center font-medium">Rata-rata</td>
 
                     <td class="border border-black text-center font-medium">
-                        {{ $laporan->quistionnaires->avg("strongly_agree") }}%
+                        @round($laporan->quistionnaires->avg("strongly_agree"))
+                        %
                     </td>
                     <td class="border border-black text-center font-medium">
-                        {{ $laporan->quistionnaires->avg("agree") }}%
+                        @round($laporan->quistionnaires->avg("agree"))
+                        %
                     </td>
                     <td class="border border-black text-center font-medium">
-                        {{ $laporan->quistionnaires->avg("disagree") }}%
+                        @round($laporan->quistionnaires->avg("disagree"))
+                        %
                     </td>
                     <td class="border border-black text-center font-medium">
-                        {{ $laporan->quistionnaires->avg("strongly_disagree") }}%
+                        @round($laporan->quistionnaires->avg("strongly_disagree"))
+                        %
                     </td>
                 </tr>
             </tbody>

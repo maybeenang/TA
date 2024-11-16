@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events;
 use App\Listeners;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,5 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Event::listen(Events\StudentGradeUpdated::class, Listeners\RecalculateStudentGrade::class);
         Event::listen(Events\GradeComponentUpdated::class, Listeners\RecalculateGradeComponent::class);
+
+
+        Blade::directive('round', function ($expression) {
+            return "<?php echo number_format($expression, 2); ?>";
+        });
     }
 }

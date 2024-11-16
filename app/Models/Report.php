@@ -118,7 +118,8 @@ class Report extends Model
             return pow($score, 2);
         })->sum();
         $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
-        return sqrt($variance);
+        // get two decimal
+        return round(sqrt($variance), 2);
     }
 
     public function convertToGradeScale($score)

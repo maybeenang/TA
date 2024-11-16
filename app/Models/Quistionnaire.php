@@ -21,4 +21,9 @@ class Quistionnaire extends Model
     {
         return $this->belongsTo(Report::class);
     }
+
+    public function avg($column)
+    {
+        return round($this->avg($column), 2);
+    }
 }

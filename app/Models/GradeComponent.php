@@ -48,6 +48,7 @@ class GradeComponent extends Model
             return pow($score, 2);
         })->sum();
         $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
-        return sqrt($variance);
+
+        return round(sqrt($variance), 2);
     }
 }
