@@ -49,7 +49,6 @@ class PilihLaporanTable extends DynamicTable
     public function columns(): array
     {
         return [
-            Column::make('id', 'Kode'),
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode Mata Kuliah'),

@@ -8,14 +8,34 @@
             Laporan
         </span>
 
+        <div class="flex justify-end">
+            <div>
+                <x-button
+                    class="bg-blue-500 hover:bg-blue-600"
+                    x-on:click="
+                    window.location.href = '{{ route('tenaga-pengajar.laporan.print', $laporan) }}'
+                "
+                >
+                    Unduh Laporan
+                </x-button>
+
+                <x-button
+                    class="bg-blue-500 hover:bg-blue-600"
+                    x-on:click="
+                    window.location.href = '{{ route('tenaga-pengajar.laporan.edit', $laporan) }}'
+                "
+                >
+                    Edit Laporan
+                </x-button>
+            </div>
+        </div>
+
         <section id="pdf-view" class="mx-auto h-[1000px]"></section>
     </div>
     @pushOnce("scripts")
     <script src="https://unpkg.com/pdfobject"></script>
     <script>
-        PDFObject.embed('{{ asset("storage/sampul.pdf") }}', '#pdf-view', {
-            page: 4,
-        });
+        PDFObject.embed('{{ route("tenaga-pengajar.laporan.pdf", $laporan) }}', '#pdf-view', {});
     </script>
     @endPushOnce
 </x-app-layout>

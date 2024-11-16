@@ -84,3 +84,8 @@ Breadcrumbs::for('tenaga-pengajar.laporan.select', function (BreadcrumbTrail $tr
     $trail->parent('tenaga-pengajar.laporan.index');
     $trail->push('Pilih Kelas', route('tenaga-pengajar.laporan.select'));
 });
+
+Breadcrumbs::for('tenaga-pengajar.laporan.edit', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('tenaga-pengajar.laporan.select');
+    $trail->push('Edit Laporan', route('tenaga-pengajar.laporan.edit', $laporan));
+});

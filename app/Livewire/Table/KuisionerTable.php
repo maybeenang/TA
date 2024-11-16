@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Table;
 
+use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -49,6 +50,7 @@ class KuisionerTable extends Component
             'disagree' => $this->editingData['disagree'],
             'strongly_disagree' => $this->editingData['strongly_disagree'],
         ]);
+
 
         $this->cancelEditing();
     }

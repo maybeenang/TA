@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\GradeComponentUpdated;
 use App\Events\StudentGradeUpdated;
+use App\Jobs\GenerateReportPDF;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;

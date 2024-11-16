@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Jobs\GenerateReportPDF;
 use App\Models\Cpmk;
 use App\Models\Report;
 use Livewire\Attributes\Validate;
@@ -37,6 +38,7 @@ class FormsCreateCpmk extends Form
             'criteria' => $this->criteria,
             'average_score' => $this->average_score,
         ]);
+
 
         $this->reset();
     }

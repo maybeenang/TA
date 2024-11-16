@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
 
 class AttendanceAndActivity extends Model
 {
+
+    use ReportRelatedModel;
     //
     protected $table = 'attendance_and_activity';
 

@@ -140,7 +140,7 @@
                 <tr>
                     <td class="border border-black text-left font-normal">Rata-Rata Nilai</td>
                     @foreach ($distribusiNilai as $key => $value)
-                        <td class="border border-black">{{ $value["average"] }}</td>
+                        <td class="border border-black">@round($value["average"])</td>
                     @endforeach
                 </tr>
 

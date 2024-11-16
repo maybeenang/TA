@@ -34,6 +34,7 @@ class GradeScaleTable extends DynamicTable
     {
         $this->form->save();
         $this->dispatch('close-modal');
+        $this->dispatch('refresh-student-grade-table');
     }
 
     #[On('close-modal')]
@@ -41,23 +42,6 @@ class GradeScaleTable extends DynamicTable
     {
         $this->form->reset();
     }
-
-
-
-    /**/
-    /*public function saveCreate()*/
-    /*{*/
-    /*    $this->createForm->save($this->laporan);*/
-    /*    $this->dispatch('close-modal');*/
-    /*    $this->dispatch('refresh-student-grade-table');*/
-    /*}*/
-    /**/
-    /*public function delete($id)*/
-    /*{*/
-    /*    GradeComponent::find($id)->delete();*/
-    /*    $this->dispatch('close-modal');*/
-    /*    $this->dispatch('refresh-student-grade-table');*/
-    /*}*/
 
     public function query(): Builder
     {

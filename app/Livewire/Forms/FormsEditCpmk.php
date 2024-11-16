@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Jobs\GenerateReportPDF;
 use App\Models\Cpmk;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;

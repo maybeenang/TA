@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GenerateReportPDF;
 use App\Models\Lecturer;
 use App\Models\Report;
-use App\Models\ReportLecturers;
+use App\Services\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\TryCatch;
-use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Enums\Format;
-use Spatie\LaravelPdf\Enums\Unit;
-use Spatie\LaravelPdf\Facades\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+
+    protected $reportService;
+
+    public function __construct(ReportService $reportService)
+    {
+        $this->reportService = $reportService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -65,18 +69,10 @@ class LaporanController extends Controller
         ]);
 
         try {
-            // check if classroom has report
-            if (Report::where('class_room_id', $validated['classroom'])->exists()) {
-                return redirect()->back()->with('error', 'Kelas ini sudah memiliki laporan');
-            }
+            $this->reportService->store($validated);
 
-            DB::transaction(function () use ($validated) {
-                $report = Report::create([
-                    'class_room_id' => $validated['classroom'],
-                ]);
-
-                $report->lecturers()->attach(Auth::id());
-            });
+            return redirect()->route('tenaga-pengajar.laporan.edit', Report::where('class_room_id', $validated['classroom'])->first())
+                ->with('success', 'Berhasil membuat laporan');
         } catch (\Throwable $th) {
             Log::error($th);
             return redirect()->back()->with('error', 'Gagal membuat laporan');
@@ -88,44 +84,6 @@ class LaporanController extends Controller
      */
     public function show(Report $laporan)
     {
-        // get min, max, range (max-min), average, from each graadecomponent score
-        $distribusiNilai = $laporan->gradeComponents
-            ->map(function ($gradeComponent) {
-                $scores = $gradeComponent->studentGrades->pluck('score');
-                return [
-                    'name' => $gradeComponent->name,
-                    'min' => $scores->min(),
-                    'max' => $scores->max(),
-                    'range' => $scores->max() - $scores->min(),
-                    'average' => $scores->average(),
-                    'simpangan_baku' => $gradeComponent->standardDeviation(),
-                ];
-            });
-
-        // append new value to distribusiNilai
-        $distribusiNilai->push([
-            'name' => 'Nilai',
-            'min' => $laporan->grades->min('total_score'),
-            'max' => $laporan->grades->max('total_score'),
-            'range' => $laporan->grades->max('total_score') - $laporan->grades->min('total_score'),
-            'average' => $laporan->grades->avg('total_score'),
-            'simpangan_baku' => $laporan->standarDeviation,
-        ]);
-
-        $rentangNilai = $laporan->gradeScales->map(function ($gradeScale) use ($laporan) {
-            return [
-                'letter' => $gradeScale->letter,
-                'min' => $gradeScale->min_score + 0,
-                'max' => $gradeScale->max_score + 0,
-                'count' => $laporan->grades->where('letter', $gradeScale->letter)->count(),
-            ];
-        });
-
-        Pdf::view('pdfs.pdf-laporan', compact('laporan', 'distribusiNilai', 'rentangNilai'))
-            ->format(Format::A4)
-            ->margins(3, 3, 3, 4, Unit::Centimeter)
-            ->save(storage_path('app/public/sampul.pdf'));
-
         return view('pages.tenaga-pengajar.laporan.show', compact('laporan'));
     }
 
@@ -157,62 +115,27 @@ class LaporanController extends Controller
      */
     public function update(Request $request, Report $laporan)
     {
-
-        // check if request step is not null with match
-        $request->validate([
-            'step' => 'required|in:informasi-umum,metode-perkuliahan',
-        ]);
-
-        match ($request->step) {
-            'informasi-umum' => $this->updateInformasiUmum($request, $laporan),
-            'metode-perkuliahan' => $this->updateMetodePerkuliahan($request, $laporan),
-            default => abort(404),
-        };
-
-        return redirect()->route('tenaga-pengajar.laporan.edit', $laporan)
-            ->with('success', 'Berhasil mengubah laporan')
-            ->withFragment($request->step);
-    }
-
-    public function updateInformasiUmum(Request $request, Report $laporan)
-    {
-        $validated = $request->validate([
-            'responsible_lecturer' => 'nullable',
-            'report_lecturers' => 'array',
-        ]);
-
         try {
-            DB::transaction(function () use ($laporan, $validated) {
-                $laporan->update($validated);
 
-                // check if report_lecturers is not null
-                if (isset($validated['report_lecturers'])) {
-                    $laporan->lecturers()->sync($validated['report_lecturers']);
-                } else {
-                    $laporan->lecturers()->sync([]);
-                }
-            });
+            $request->validate([
+                'step' => 'required|in:informasi-umum,metode-perkuliahan',
+            ]);
+
+            match ($request->step) {
+                'informasi-umum' => $this->reportService->updateInformasiUmum($laporan, $request->all()),
+                'metode-perkuliahan' => $this->reportService->updateMetodePerkuliahan($laporan, $request->all()),
+                default => abort(404),
+            };
+
+            return redirect()->route('tenaga-pengajar.laporan.edit', $laporan)
+                ->with('success', 'Berhasil mengubah laporan')
+                ->withFragment($request->step);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Gagal mengubah laporan' . $th->getMessage());
+            Log::error($th);
+            return redirect()->back()->with('error', 'Gagal mengupdate laporan');
         }
     }
 
-    public function updateMetodePerkuliahan(Request $request, Report $laporan)
-    {
-        $validated = $request->validate([
-            'teaching_methods' => 'nullable',
-            'self_evaluation' => 'nullable',
-            'follow_up_plan' => 'nullable',
-        ]);
-
-        try {
-            DB::transaction(function () use ($laporan, $validated) {
-                $laporan->update($validated);
-            });
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Gagal mengubah laporan' . $th->getMessage());
-        }
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -220,5 +143,17 @@ class LaporanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print(Report $laporan)
+    {
+        GenerateReportPDF::dispatch($laporan);
+        return Storage::download('pdfs/' . $laporan->pdf_path);
+    }
+
+    public function pdf(Report $laporan)
+    {
+        GenerateReportPDF::dispatch($laporan);
+        return response()->file(Storage::path('pdfs/' . $laporan->pdf_path));
     }
 }

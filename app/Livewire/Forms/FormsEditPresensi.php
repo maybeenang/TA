@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Jobs\GenerateReportPDF;
 use App\Models\AttendanceAndActivity;
 use Livewire\Attributes\Validate;
 use Livewire\Form;

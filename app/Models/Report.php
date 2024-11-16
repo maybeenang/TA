@@ -19,6 +19,9 @@ class Report extends Model
         'teaching_methods',
         'self_evaluation',
         'follow_up_plan',
+        'class_room_id',
+        'pdf_path',
+        'pdf_status',
     ];
 
 
@@ -127,7 +130,7 @@ class Report extends Model
         $gradeScale = $this->gradeScales->first(function ($gradeScale) use ($score) {
 
             // round to upper score
-            $score = ceil($score);
+            $score = ceil($score ?? 0);
 
             // check if score is between min and max score
             if ($score >= $gradeScale->min_score && $score <= $gradeScale->max_score) {
@@ -161,5 +164,26 @@ class Report extends Model
         }
 
         return $gradeScale;
+    }
+
+    public function hasRelationChanges(array $relations): bool
+    {
+        return collect($relations)->some(function ($relation) {
+            return $this->wasRecentlyCreated ||
+                $this->isDirty() ||
+                $this->isRelationChanged($relation);
+        });
+    }
+
+    protected function isRelationChanged(string $relation): bool
+    {
+        if (!$this->relationLoaded($relation)) {
+            return false;
+        }
+
+        $originalRelation = $this->getOriginal($relation);
+        $currentRelation = $this->$relation;
+
+        return $originalRelation != $currentRelation;
     }
 }

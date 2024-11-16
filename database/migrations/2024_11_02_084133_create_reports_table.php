@@ -45,6 +45,8 @@ return new class extends Migration
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_status_id')->constrained('report_statuses')->cascadeOnDelete();
+            $table->string('pdf_path')->nullable();
+            $table->string('pdf_status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

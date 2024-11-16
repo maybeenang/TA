@@ -4,6 +4,7 @@ namespace App\Livewire\Table;
 
 use App\Events\GradeComponentUpdated;
 use App\Events\StudentGradeUpdated;
+use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
