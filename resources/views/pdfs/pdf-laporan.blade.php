@@ -16,5 +16,9 @@
         @include("pdfs.hal2")
         @pageBreak
         @include("pdfs.hal2-2")
+        @pageBreak
+        @include("pdfs.hal3")
+
+        @stack("scripts")
     </body>
 </html>

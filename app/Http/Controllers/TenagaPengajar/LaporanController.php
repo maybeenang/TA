@@ -8,6 +8,7 @@ use App\Models\Report;
 use App\Models\ReportLecturers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
@@ -124,6 +125,7 @@ class LaporanController extends Controller
             ->format(Format::A4)
             ->margins(3, 3, 3, 4, Unit::Centimeter)
             ->save(storage_path('app/public/sampul.pdf'));
+
         return view('pages.tenaga-pengajar.laporan.show', compact('laporan'));
     }
 

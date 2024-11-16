@@ -120,4 +120,45 @@ class Report extends Model
         $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
         return sqrt($variance);
     }
+
+    public function convertToGradeScale($score)
+    {
+        $gradeScale = $this->gradeScales->first(function ($gradeScale) use ($score) {
+
+            // round to upper score
+            $score = ceil($score);
+
+            // check if score is between min and max score
+            if ($score >= $gradeScale->min_score && $score <= $gradeScale->max_score) {
+                return $gradeScale;
+            }
+
+            // check if score is equal to min score
+            if ($score === $gradeScale->min_score) {
+                return $gradeScale;
+            }
+
+            // check if score is equal to max score
+            if ($score === $gradeScale->max_score) {
+                return $gradeScale;
+            }
+
+            return $score >= $gradeScale->min_score && $score <= $gradeScale->max_score;
+        });
+
+        if (!$gradeScale) {
+            $highestGradeScale = $this->gradeScales->sortByDesc('max_score')->first();
+            $lowestGradeScale = $this->gradeScales->sortBy('min_score')->first();
+
+            if ($score >= $highestGradeScale->max_score) {
+                $gradeScale = $highestGradeScale;
+            }
+
+            if ($score <= $lowestGradeScale->min_score) {
+                $gradeScale = $lowestGradeScale;
+            }
+        }
+
+        return $gradeScale;
+    }
 }

@@ -100,6 +100,7 @@ class ReportObserver
                     'letter' => $letter,
                     'max_score' => $score['max_score'],
                     'min_score' => $score['min_score'],
+                    'score' => $score['score'],
                 ],
                 array_keys($defaultGradeScale),
                 $defaultGradeScale

@@ -12,6 +12,7 @@ class GradeScale extends Model
         'min_score',
         'max_score',
         'letter',
+        'score',
     ];
 
     public function report()

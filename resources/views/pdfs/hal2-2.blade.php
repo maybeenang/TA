@@ -17,10 +17,14 @@
                         <td class="border border-black text-left align-top">{{ $cpmk->description }}</td>
                         <td class="border border-black align-top">{{ $cpmk->criteria }}</td>
                         <td class="border border-black align-top">{{ $cpmk->average_score + 0 }}</td>
-                        <td class="border border-black align-top">{{ $cpmk->criteria }}</td>
+                        <td class="border border-black align-top">
+                            {{ $laporan->convertToGradeScale($cpmk->average_score)->letter }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        @include("pdfs.chart-cpmk")
     </section>
 </div>
