@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
