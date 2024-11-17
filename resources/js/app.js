@@ -2,6 +2,7 @@ import "./bootstrap";
 
 import collapse from "@alpinejs/collapse";
 import anchor from "@alpinejs/anchor";
+import { embed, pdfobjectversion } from "pdfobject";
 
 document.addEventListener(
     "alpine:init",
@@ -13,6 +14,8 @@ document.addEventListener(
         }
         window.Alpine.plugin(collapse);
         window.Alpine.plugin(anchor);
+
+        window.embed = embed;
     },
     { once: true },
 );

@@ -30,12 +30,6 @@
             </div>
         </div>
 
-        <section id="pdf-view" class="mx-auto h-[1000px]"></section>
+        <livewire:pdf-viewer :report="$laporan" />
     </div>
-    @pushOnce("scripts")
-    <script src="https://unpkg.com/pdfobject"></script>
-    <script>
-        PDFObject.embed('{{ route("tenaga-pengajar.laporan.pdf", $laporan) }}', '#pdf-view', {});
-    </script>
-    @endPushOnce
 </x-app-layout>

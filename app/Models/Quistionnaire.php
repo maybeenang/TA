@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
 
 class Quistionnaire extends Model
 {
+    use ReportRelatedModel;
     protected $table = 'quistionnaires';
 
     protected $fillable = [

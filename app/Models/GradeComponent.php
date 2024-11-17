@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Observers\GradeComponentObserver;
+use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
 #[ObservedBy(GradeComponentObserver::class)]
 class GradeComponent extends Model
 {
+
+    use ReportRelatedModel;
 
     protected $fillable = [
         'report_id',

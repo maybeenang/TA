@@ -13,7 +13,8 @@ use App\Models\Lecturer;
 use App\Models\Quistionnaire;
 use App\Models\Report;
 use App\Models\ReportStatus;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\StudentGrade;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -77,6 +78,10 @@ trait ReportRelatedModel
             case GradeComponent::class:
             case GradeScale::class:
                 return Report::where('id', $model->report_id)->get();
+            case StudentGrade::class:
+                return Report::whereHas('grades', function ($query) use ($model) {
+                    $query->where('id', $model->grade_id);
+                })->get();
 
             default:
                 return collect();

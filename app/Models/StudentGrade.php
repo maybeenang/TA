@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentGrade extends Model
 {
+
+    use ReportRelatedModel;
     protected $fillable = [
         'grade_id',
         'grade_component_id',

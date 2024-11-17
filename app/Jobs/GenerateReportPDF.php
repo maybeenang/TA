@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\PDFGenerated;
 use App\Models\Report;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -90,6 +91,8 @@ class GenerateReportPDF implements ShouldQueue
                 'pdf_path' => $pdfName,
                 'pdf_status' => 'done',
             ]);
+
+            broadcast(new PDFGenerated($this->report->id));
         } catch (\Throwable $th) {
             Log::error($th);
             throw $th;
