@@ -29,7 +29,7 @@ class PDFGenerated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('pdf-generated'),
+            new Channel('pdf-generated-' . $this->id),
         ];
     }
 }

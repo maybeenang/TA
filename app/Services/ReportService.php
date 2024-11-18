@@ -7,6 +7,7 @@ use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Expr\Throw_;
 
 class ReportService
 {
@@ -180,7 +181,7 @@ class ReportService
         return DB::transaction(function () use ($validated) {
 
             if (Report::where('class_room_id', $validated['classroom'])->exists()) {
-                return redirect()->back()->with('error', 'Kelas ini sudah memiliki laporan');
+                throw new \Exception('Laporan sudah ada');
             }
 
             $report = Report::create([

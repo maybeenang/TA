@@ -4,6 +4,7 @@ use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+use Illuminate\Support\Facades\Log;
 
 Breadcrumbs::for('welcome', function (BreadcrumbTrail $trail) {
     $trail->push('Beranda', route('welcome'));
@@ -74,11 +75,29 @@ Breadcrumbs::for('admin.user.edit', function (BreadcrumbTrail $trail, User $user
     $trail->push('Edit Informasi Pengguna', route('admin.user.edit', $user));
 });
 
+Breadcrumbs::for('admin.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Laporan', route('admin.laporan.index'));
+});
+
+
+// ===================== TENAGA PENGAJAR =====================
 
 Breadcrumbs::for('tenaga-pengajar.laporan.index', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Laporan', route('tenaga-pengajar.laporan.index'));
 });
+
+Breadcrumbs::for('tenaga-pengajar.laporan.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('tenaga-pengajar.laporan.index');
+    $trail->push('Buat Laporan', route('tenaga-pengajar.laporan.create'));
+});
+
+Breadcrumbs::for('tenaga-pengajar.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('tenaga-pengajar.laporan.index');
+    $trail->push($laporan->classRoom->fullName, route('tenaga-pengajar.laporan.show', $laporan));
+});
+
 
 Breadcrumbs::for('tenaga-pengajar.laporan.select', function (BreadcrumbTrail $trail) {
     $trail->parent('tenaga-pengajar.laporan.index');
@@ -88,4 +107,9 @@ Breadcrumbs::for('tenaga-pengajar.laporan.select', function (BreadcrumbTrail $tr
 Breadcrumbs::for('tenaga-pengajar.laporan.edit', function (BreadcrumbTrail $trail, $laporan) {
     $trail->parent('tenaga-pengajar.laporan.select');
     $trail->push('Edit Laporan', route('tenaga-pengajar.laporan.edit', $laporan));
+});
+
+Breadcrumbs::for('tenaga-pengajar.kelas.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Kelas', route('tenaga-pengajar.kelas.index'));
 });

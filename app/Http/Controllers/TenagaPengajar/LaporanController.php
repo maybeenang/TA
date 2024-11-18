@@ -75,7 +75,7 @@ class LaporanController extends Controller
                 ->with('success', 'Berhasil membuat laporan');
         } catch (\Throwable $th) {
             Log::error($th);
-            return redirect()->back()->with('error', 'Gagal membuat laporan');
+            return redirect()->back()->with('error', 'Gagal membuat laporan ' . $th->getMessage());
         }
     }
 

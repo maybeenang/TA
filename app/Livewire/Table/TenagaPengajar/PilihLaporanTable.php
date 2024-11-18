@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PilihLaporanTable extends DynamicTable
 {
-    public $searchColumns = ['name'];
+    public $searchColumns = ['classRoom.name', 'classRoom.course.name', 'classRoom.course.code', 'reportStatus.name'];
 
-    public $relations = ['classRoom', 'reportStatus'];
+    public $relations = ['classRoom', 'reportStatus', 'classRoom.course'];
 
     public $componentBefore = 'livewire.table.kelas';
 

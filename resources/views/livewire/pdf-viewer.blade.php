@@ -23,8 +23,10 @@
 
     @script
         <script type="module">
-            console.log('pepek');
-            Echo.channel('pdf-generated').listen('PDFGenerated', (e) => {
+            const reportId = await $wire.$call('getReportIdProperty');
+            console.log('reportId', reportId);
+            Echo.channel(`pdf-generated-${reportId}`).listen('PDFGenerated', (e) => {
+                console.log('PDFGenerated', e);
                 $wire.$call('checkPdfStatus');
             });
 

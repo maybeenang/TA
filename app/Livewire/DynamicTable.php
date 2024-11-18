@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Traits\AdvanceSearchAndSort;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 abstract class DynamicTable extends Component
 {
-    use WithPagination;
+    use WithPagination, AdvanceSearchAndSort;
 
     public $perPage = 10;
 
@@ -55,10 +56,37 @@ abstract class DynamicTable extends Component
         $this->sortBy = $field;
     }
 
+
     public function data()
     {
-        return $this
-            ->query()
+
+        $query = $this->query();
+
+        if ($this->search !== '') {
+            $query->where(function ($query) {
+                foreach ($this->searchColumns as $column) {
+                    if (str_contains($column, '.')) {
+                        $relationship = explode('.', $column);
+
+                        // get last element of array, then get all element except the last element
+                        $lastElement = end($relationship);
+                        array_pop($relationship);
+
+                        // gabungkan semua element array yang sudah dihilangkan last element dengan sambungkan dengan titik
+                        $relationship = implode('.', $relationship);
+
+                        // cari data yang memiliki relasi dengan table lain
+                        $query->orWhereHas($relationship, function ($query) use ($lastElement) {
+                            $query->where($lastElement, 'like', '%' . $this->search . '%');
+                        });
+                    } else {
+                        $query->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
+                }
+            });
+        }
+
+        return $query
             ->when($this->sortBy !== '', function ($query) {
                 if (str_contains($this->sortBy, '.')) {
                     $relationship = explode('.', $this->sortBy);
@@ -66,21 +94,6 @@ abstract class DynamicTable extends Component
                 } else {
                     $query->orderBy($this->sortBy, $this->sortDirection);
                 }
-                /*$query->orderBy($this->sortBy, $this->sortDirection);*/
-            })
-            ->when($this->search !== '', function ($query) {
-                $query->where(function ($query) {
-                    foreach ($this->searchColumns as $column) {
-                        if (str_contains($column, '.')) {
-                            $relationship = explode('.', $column);
-                            $query->orWhereHas($relationship[0], function ($query) use ($relationship) {
-                                $query->where($relationship[1], 'like', '%' . $this->search . '%');
-                            });
-                        } else {
-                            $query->orWhere($column, 'like', '%' . $this->search . '%');
-                        }
-                    }
-                });
             })
             ->paginate($this->perPage);
     }

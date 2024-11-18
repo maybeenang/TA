@@ -23,11 +23,12 @@
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",
-                    "name": "Laporan Portofolio Perkuliahan"
+                    "name": "Laporan Portofolio Perkuliahan",
+                    "slug": ["tenaga-pengajar.laporan.index", "tenaga-pengajar.laporan.show"]
                 },
                 {
                     "url": "tenaga-pengajar.kelas.index",
-                    "name": "Kelas",
+                    "name": "Daftar Kelas",
                     "slug": "tenaga-pengajar.kelas"
                 }
             ]
@@ -39,32 +40,32 @@
             "submenu": [
                 {
                     "url": "admin.laporan.index",
-                    "name": "Laporan",
+                    "name": "Kelola Laporan",
                     "slug": "admin.laporan"
                 },
                 {
                     "url": "admin.kelas.index",
-                    "name": "Kelas",
+                    "name": "Kelola Kelas",
                     "slug": "admin.kelas"
                 },
                 {
                     "url": "admin.mata-kuliah.index",
-                    "name": "Mata Kuliah",
+                    "name": "Kelola Mata Kuliah",
                     "slug": "admin.mata-kuliah"
                 },
                 {
                     "url": "admin.tenaga-pengajar.index",
-                    "name": "Tenaga Pengajar",
+                    "name": "Kelola Tenaga Pengajar",
                     "slug": "admin.tenaga-pengajar"
                 },
                 {
                     "url": "admin.tahun-akademik.index",
-                    "name": "Tahun Akademik",
+                    "name": "Kelola Tahun Akademik",
                     "slug": "admin.tahun-akademik"
                 },
                 {
                     "url": "admin.user.index",
-                    "name": "Pengguna",
+                    "name": "Kelola Pengguna",
                     "slug": "admin.user"
                 }
             ]
@@ -77,10 +78,6 @@
                 {
                     "url": "profile.edit",
                     "name": "Akun"
-                },
-                {
-                    "url": "logout",
-                    "name": "Keluar"
                 }
             ]
         }

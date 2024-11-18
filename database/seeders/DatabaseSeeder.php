@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Student;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // delete all pdf files in storage
+        Storage::deleteDirectory('pdfs');
+
         $this->call(
             [
                 UserSeeder::class,

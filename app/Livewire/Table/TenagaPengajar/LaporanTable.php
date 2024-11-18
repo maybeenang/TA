@@ -69,8 +69,8 @@ class LaporanTable extends DynamicTable
         return [
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
-            Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
-            Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
+            Column::make('classRoom.course.code', 'Kode MK'),
+            Column::make('classRoom.course.name', 'Mata Kuliah'),
             Column::make('reportStatus.name', 'Status Laporan')->component('columns.report-status'),
             Column::make('', 'Progres')->component('columns.progres-laporan'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),

@@ -88,7 +88,7 @@ class Report extends Model
 
 
         $presensiDanKeaktifan = $this->attendanceAndActivities()->each(function ($attendanceAndActivity) {
-            return $attendanceAndActivity->attendance !== null && $attendanceAndActivity->activity !== null;
+            return $attendanceAndActivity->student_present !== null && $attendanceAndActivity->student_active !== null;
         });
 
         $kriteriaPenilaian = $this->gradeComponents->count() > 0 && $this->gradeScales->count() > 0;
