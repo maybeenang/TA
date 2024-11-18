@@ -18,18 +18,24 @@
                 Alpine.store('dialogLaporanVerifikasi').validationResults = e;
 
                 const resultDescEl = document.getElementById('result-desc');
+                // clear previous resultDescEl
+                resultDescEl.innerHTML = '';
+                resultDescEl.classList.remove('text-green-600', 'text-red-600', 'mt-2');
+                resultDescEl.innerHTML = e.result.message ?? 'Terjadi kesalahan saat melakukan validasi data laporan';
 
                 if (e.result.result) {
-                    resultDescEl.innerHTML = 'Selamat!, Pengajuan verifikasi laporan berhasil';
-                    resultDescEl.classList.add('text-green-600');
-                    resultDescEl.classList.remove('text-red-600');
-                    resultDescEl.classList.add('mt-2');
+                    resultDescEl.classList.add('text-green-600', 'mt-2');
                 } else {
-                    resultDescEl.innerHTML =
-                        'Mohon maaf, Pengajuan verifikasi laporan gagal, silahkan periksa kembali data laporan anda, Jika anda merasa ini adalah kesalahan, silahkan hubungi admin';
-                    resultDescEl.classList.add('text-red-600');
-                    resultDescEl.classList.remove('text-green-600');
-                    resultDescEl.classList.add('mt-2');
+                    resultDescEl.classList.add('text-red-600', 'mt-2');
+                    // add ul li
+                    const ul = document.createElement('ul');
+                    ul.classList.add('list-disc', 'list-inside', 'text-sm', 'text-red-600');
+                    e.result?.errors?.map((error) => {
+                        const li = document.createElement('li');
+                        li.textContent = error;
+                        ul.appendChild(li);
+                    });
+                    resultDescEl.appendChild(ul);
                 }
             });
         });
@@ -83,7 +89,7 @@
             class="my-8"
         >
             <section>
-                <div class="flex h-full items-center justify-center">
+                <div class="flex h-full items-center justify-center text-justify">
                     <div class="text-center">
                         <div x-show="$store.dialogLaporanVerifikasi.validationResults?.result?.result ?? false">
                             <x-icons.success-circle class="mx-auto h-8 w-8 fill-blue-600 text-gray-200" />
@@ -92,7 +98,7 @@
                         <div x-show="!$store.dialogLaporanVerifikasi.validationResults?.result?.result ?? true">
                             <x-icons.failed-circle class="mx-auto h-8 w-8 fill-blue-600 text-gray-200" />
                         </div>
-                        <p id="result-desc"></p>
+                        <div id="result-desc"></div>
                     </div>
                 </div>
             </section>

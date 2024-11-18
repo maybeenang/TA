@@ -218,4 +218,13 @@ class ReportService
             return $laporan;
         });
     }
+
+
+    public function convertCamelCase($camelCaseString)
+    {
+        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
+        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
+        // Ubah kata pertama dari setiap kata menjadi huruf besar
+        return ucwords($result);
+    }
 }

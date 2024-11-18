@@ -3,13 +3,15 @@
 namespace App\Livewire\Table\TenagaPengajar;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
+use App\Events\CheckingReport;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
@@ -19,6 +21,7 @@ class LaporanTable extends DynamicTable
 
     public $componentBefore = 'livewire.table.kelas';
 
+    public $componentAfter = 'livewire.table.after.cpmk-after';
 
     public $academicYearId;
 
@@ -30,6 +33,14 @@ class LaporanTable extends DynamicTable
     public function getAllAcademicYears()
     {
         return AcademicYear::query()->get();
+    }
+
+    #[On('checking-report')]
+    public function ajukanVerifikasi($id)
+    {
+        if ($id) {
+            broadcast(new CheckingReport($id));
+        }
     }
 
     function convertCamelCase($camelCaseString)
@@ -74,7 +85,14 @@ class LaporanTable extends DynamicTable
             Column::make('reportStatus.name', 'Status Laporan')->component('columns.report-status'),
             Column::make('', 'Progres')->component('columns.progres-laporan'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('id', ' ')->component('columns.partials.actions.laporan-tenaga-pengajar'),
+            Column::make('', ' ')->component('columns.partials.actions.laporan-tenaga-pengajar'),
+        ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.confirm-laporan-verifikasi', 'verifikasiLaporan'),
         ];
     }
 }
