@@ -22,6 +22,8 @@ class LaporanTable extends DynamicTable
 
     public $componentBefore = 'livewire.table.kelas';
 
+    public $componentAfter = 'livewire.table.after.cpmk-after';
+
     public $customActionBunttons = 'components.columns.partials.actions.laporan';
 
     public $routeName = 'admin.laporan';
@@ -30,20 +32,27 @@ class LaporanTable extends DynamicTable
 
     // forms
     public $reportStatusName;
+    public $selectedChangeReport;
+    public $reportNote;
 
     public function getAllReportStatuses()
     {
         return ReportStatusEnum::toSelectArray();
     }
 
-    public function changeReportStatus($reportId)
+    public function changeReportStatus()
     {
         if ($this->reportStatusName === null) {
             return;
         }
-        $report = Report::find($reportId);
+        $report = Report::find($this->selectedChangeReport);
         $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
         $report->report_status_id = $reportStatusId;
+
+        if ($this->reportNote && $this->reportStatusName === 'ditolak') {
+            $report->note = $this->reportNote;
+        }
+
         $report->save();
 
         $this->reset('reportStatusName');
@@ -54,6 +63,8 @@ class LaporanTable extends DynamicTable
     public function closeModal()
     {
         $this->reset('reportStatusName');
+        $this->reset('selectedChangeReport');
+        $this->reset('reportNote');
     }
 
     public function filterWithAcademicYear()
@@ -64,24 +75,6 @@ class LaporanTable extends DynamicTable
     public function getAllAcademicYears()
     {
         return AcademicYear::query()->get();
-    }
-
-
-    function convertCamelCase($camelCaseString)
-    {
-        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
-        // Ubah kata pertama dari setiap kata menjadi huruf besar
-        return ucwords($result);
-    }
-
-
-    function convertKebabCase($camelCaseString)
-    {
-        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
-        // Ubah semua huruf menjadi kecil
-        return strtolower($result);
     }
 
     public function query(): Builder
@@ -102,9 +95,9 @@ class LaporanTable extends DynamicTable
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode MK'),
             Column::make('classRoom.course.name', 'Mata Kuliah'),
-            Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
+            Column::make('', 'Status')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('id', ' ')->component('columns.actions')->sortable(false),
+            Column::make('', ' ')->component('columns.partials.actions.semua-laporan-admin'),
         ];
     }
 

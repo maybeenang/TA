@@ -22,6 +22,7 @@ class Report extends Model
         'class_room_id',
         'pdf_path',
         'pdf_status',
+        'note',
     ];
 
 

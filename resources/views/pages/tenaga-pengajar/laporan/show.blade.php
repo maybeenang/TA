@@ -13,7 +13,7 @@
                 <x-button
                     class="bg-blue-500 hover:bg-blue-600"
                     x-on:click="
-                    window.location.href = '{{ route('tenaga-pengajar.laporan.print', $laporan) }}'
+                    window.location.href = '{{ route('laporan.print', $laporan) }}'
                 "
                 >
                     Unduh Laporan

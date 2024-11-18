@@ -14,6 +14,9 @@ Route::group(
         Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('laporan/{laporan}/print', [\App\Http\Controllers\PDFController::class, 'print'])->name('laporan.print');
+        Route::get('laporan/{laporan}/pdf', [\App\Http\Controllers\PDFController::class, 'pdf'])->name('laporan.pdf');
     }
 );
 

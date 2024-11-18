@@ -10,14 +10,9 @@
             </div>
         </div>
     @else
-        <iframe
-            src="{{ route("tenaga-pengajar.laporan.pdf", $report) }}"
-            width="100%"
-            height="1000px"
-            style="border: none"
-        >
+        <iframe src="{{ route("laporan.pdf", $report) }}" width="100%" height="1000px" style="border: none">
             This browser does not support PDFs. Please download the PDF to view it:
-            <a href="{{ route("tenaga-pengajar.laporan.pdf", $report) }}">Download PDF</a>
+            <a href="{{ route("laporan.pdf", $report) }}">Download PDF</a>
         </iframe>
     @endif
 

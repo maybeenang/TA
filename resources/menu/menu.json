@@ -40,8 +40,8 @@
             "submenu": [
                 {
                     "url": "admin.laporan.index",
-                    "name": "Kelola Laporan",
-                    "slug": "admin.laporan"
+                    "name": "Semua Laporan",
+                    "slug": ["admin.laporan.index", "admin.laporan.show"]
                 },
                 {
                     "url": "admin.kelas.index",

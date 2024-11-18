@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -34,9 +35,9 @@ class LaporanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Report $laporan)
     {
-        //
+        return view('pages.admin.laporan.show', compact('laporan'));
     }
 
     /**

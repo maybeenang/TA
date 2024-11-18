@@ -34,7 +34,7 @@
                                 "bg-yellow-100" => $isActive,
                             ])
                             href="{{ route($subitem->url) }}"
-                            wire:navigate.hover
+                            wire:navigate
                         >
                             {{ $subitem->name }}
                         </a>
