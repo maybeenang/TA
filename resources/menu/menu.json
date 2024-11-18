@@ -29,7 +29,7 @@
                 {
                     "url": "tenaga-pengajar.kelas.index",
                     "name": "Daftar Kelas",
-                    "slug": "tenaga-pengajar.kelas"
+                    "slug": ["tenaga-pengajar.kelas.index", "tenaga-pengajar.kelas.show"]
                 }
             ]
         },

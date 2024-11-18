@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Event::listen(Events\StudentGradeUpdated::class, Listeners\RecalculateStudentGrade::class);
         Event::listen(Events\GradeComponentUpdated::class, Listeners\RecalculateGradeComponent::class);
-
+        Event::listen(Events\CheckingReport::class, Listeners\ProcessReportVerification::class);
 
         Blade::directive('round', function ($expression) {
             return "<?php echo number_format($expression, 2); ?>";

@@ -3,13 +3,15 @@
 namespace App\Livewire\Table\TenagaPengajar;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
+use App\Events\CheckingReport;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Livewire\Attributes\On;
 
 class PilihLaporanTable extends DynamicTable
 {
@@ -18,6 +20,8 @@ class PilihLaporanTable extends DynamicTable
     public $relations = ['classRoom', 'reportStatus', 'classRoom.course'];
 
     public $componentBefore = 'livewire.table.kelas';
+
+    public $componentAfter = 'livewire.table.after.cpmk-after';
 
 
     public $academicYearId;
@@ -30,6 +34,14 @@ class PilihLaporanTable extends DynamicTable
     public function getAllAcademicYears()
     {
         return AcademicYear::query()->get();
+    }
+
+    #[On('checking-report')]
+    public function ajukanVerifikasi($id)
+    {
+        if ($id) {
+            broadcast(new CheckingReport($id));
+        }
     }
 
     public function query(): Builder
@@ -56,6 +68,13 @@ class PilihLaporanTable extends DynamicTable
             Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir di Update')->component('columns.terakhir-di-update'),
             Column::make('id', ' ')->component('columns.pilih-laporan'),
+        ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.confirm-laporan-verifikasi', 'verifikasiLaporan'),
         ];
     }
 }

@@ -20,6 +20,7 @@ Route::group(
 
         ROute::resource('cpmk', \App\Http\Controllers\TenagaPengajar\CpmkController::class);
 
-        Route::resource('kelas', \App\Http\Controllers\TenagaPengajar\KelasController::class);
+        Route::resource('kelas', \App\Http\Controllers\TenagaPengajar\KelasController::class)
+            ->parameters(['kelas' => 'kelas']);
     }
 );

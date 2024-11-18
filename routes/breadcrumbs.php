@@ -113,3 +113,8 @@ Breadcrumbs::for('tenaga-pengajar.kelas.index', function (BreadcrumbTrail $trail
     $trail->parent('welcome');
     $trail->push('Kelas', route('tenaga-pengajar.kelas.index'));
 });
+
+Breadcrumbs::for('tenaga-pengajar.kelas.show', function (BreadcrumbTrail $trail, $kelas) {
+    $trail->parent('tenaga-pengajar.kelas.index');
+    $trail->push('Detail Kelas', route('tenaga-pengajar.kelas.show', $kelas));
+});

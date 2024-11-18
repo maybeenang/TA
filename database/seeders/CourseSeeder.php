@@ -20,9 +20,9 @@ class CourseSeeder extends Seeder
         Course::all()->each(function ($course) {
             $course->classRooms()->createMany(
                 [
-                    ['name' => 'RA', 'academic_year_id' => 1],
-                    ['name' => 'RB', 'academic_year_id' => 1],
-                    ['name' => 'RC', 'academic_year_id' => 1],
+                    ['name' => 'RA', 'academic_year_id' => 1, 'mode' => 'offline'],
+                    ['name' => 'RB', 'academic_year_id' => 1, 'mode' => 'offline'],
+                    ['name' => 'RC', 'academic_year_id' => 1, 'mode' => 'offline'],
                 ]
             );
         });
