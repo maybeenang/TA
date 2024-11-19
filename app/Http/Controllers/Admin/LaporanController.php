@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
@@ -14,6 +15,17 @@ class LaporanController extends Controller
     public function index()
     {
         return view('pages.admin.laporan.index');
+    }
+
+    public function verifikasiLaporan()
+    {
+        return view('pages.admin.laporan.verifikasi-laporan');
+    }
+
+    public function verifikasiLaporanEdit(Report $laporan)
+    {
+        $signatures = Auth::user()->signatures;
+        return view('pages.admin.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures'));
     }
 
     /**

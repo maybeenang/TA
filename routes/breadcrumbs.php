@@ -80,6 +80,11 @@ Breadcrumbs::for('admin.laporan.index', function (BreadcrumbTrail $trail) {
     $trail->push('Laporan', route('admin.laporan.index'));
 });
 
+Breadcrumbs::for('admin.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('admin.laporan.index');
+    $trail->push('Detail Laporan', route('admin.laporan.show', $laporan));
+});
+
 
 // ===================== TENAGA PENGAJAR =====================
 

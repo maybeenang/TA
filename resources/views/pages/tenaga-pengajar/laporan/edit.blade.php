@@ -5,7 +5,7 @@
     >
         <span class="flex items-center gap-1 text-sm">
             <x-icons.backpack-icon />
-            Buat Laporan Portofolio Perkuliahan
+            Edit Laporan
         </span>
 
         <div class="space-y-2 rounded-md border-2 border-l-8 border-zinc-100 border-l-red-500 p-2">

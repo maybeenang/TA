@@ -44,7 +44,6 @@ class GradeComponent extends Model
     public function standardDeviation()
     {
         $scores = $this->studentGrades->pluck('score');
-        $mean = $scores->avg();
         $count = $scores->count();
         $sum = $scores->sum();
         $squaredSum = $scores->map(function ($score) {

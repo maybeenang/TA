@@ -19,6 +19,11 @@ Route::group(
             ->parameters(['kelas' => 'kelas']);
 
         Route::resource('tahun-akademik', \App\Http\Controllers\Admin\TahunAkademikController::class);
+
+        Route::get('/laporan/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporan'])->name('laporan.verifikasi');
+        Route::get('/laporan/{laporan}/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporanEdit'])->name('laporan.verifikasi.edit');
         Route::resource('laporan', \App\Http\Controllers\Admin\LaporanController::class);
+
+        Route::resource('signature', \App\Http\Controllers\Admin\SignatureController::class);
     }
 );

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\ReportStatusEnum;
 use App\Events\PDFGenerated;
 use App\Models\Report;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,29 +37,38 @@ class GenerateReportPDF implements ShouldQueue
                 throw new \Exception('Tidak ada mahasiswa yang terdaftar di kelas ini');
             }
 
+            // check if laporan status is not draft or ditolak
+            /*if ($this->report->reportStatus->name !== ReportStatusEnum::DRAFT && $this->report->reportStatus->name !== ReportStatusEnum::DITOLAK) {*/
+            /*    throw new \Exception('Laporan sudah di verifikasi');*/
+            /*}*/
+
+
             // get min, max, range (max-min), average, from each graadecomponent score
             $distribusiNilai = $this->report->gradeComponents
                 ->map(function ($gradeComponent) {
                     $scores = $gradeComponent->studentGrades->pluck('score');
+
                     return [
                         'name' => $gradeComponent->name,
                         'min' => $scores->min(),
                         'max' => $scores->max(),
                         'range' => $scores->max() - $scores->min(),
-                        'average' => round($scores->avg(), 2),
-                        'simpangan_baku' => $gradeComponent->standardDeviation(),
+                        'average' => round($scores->avg(), 2) ?? 0,
+                        'simpangan_baku' => $gradeComponent->standardDeviation() ?? 0,
                     ];
                 });
+
 
             // append new value to distribusiNilai
             $distribusiNilai->push([
                 'name' => 'Nilai',
                 'min' => $this->report->grades->min('total_score') ?? 0,
                 'max' => $this->report->grades->max('total_score') ?? 0,
-                'range' => $this->report->grades->max('total_score') - $this->report->grades->min('total_score'),
-                'average' => $this->report->grades->avg('total_score') ?? 0,
+                'range' => $this->report?->grades?->max('total_score') - $this->report->grades->min('total_score'),
+                'average' => $this->report?->grades?->avg('total_score') ?? 0,
                 'simpangan_baku' => $this->report->standarDeviation ?? 0,
             ]);
+
 
             $rentangNilai = $this->report->gradeScales->map(function ($gradeScale) {
                 return [

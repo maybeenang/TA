@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TenagaPengajar;
 
+use App\Enums\ReportStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Lecturer;
@@ -92,6 +93,17 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
+
+        $reportStatus = $laporan->reportStatus->name;
+
+        Log::info('Report status: ' . $reportStatus);
+
+        if ($reportStatus !== ReportStatusEnum::DRAFT->value && $reportStatus !== ReportStatusEnum::DITOLAK->value) {
+            $msg = 'Laporan tidak dapat diedit karena sudah ' . $reportStatus . ', jika anda merasa ini adalah kesalahan, silahkan hubungi admin';
+            return view('pages.tenaga-pengajar.laporan.laporan-terverifikasi', compact('laporan', 'msg'));
+        }
+
+
         $lecturers = Lecturer::query()
             ->with('user')
             // check if user is not null

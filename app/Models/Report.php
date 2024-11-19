@@ -115,7 +115,6 @@ class Report extends Model
     public function getStandarDeviationAttribute()
     {
         $scores = $this->grades->pluck('total_score');
-        $mean = $scores->avg();
         $count = $scores->count();
         $sum = $scores->sum();
         $squaredSum = $scores->map(function ($score) {

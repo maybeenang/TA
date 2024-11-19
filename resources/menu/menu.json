@@ -44,6 +44,16 @@
                     "slug": ["admin.laporan.index", "admin.laporan.show"]
                 },
                 {
+                    "url": "admin.laporan.verifikasi",
+                    "name": "Verifikasi Laporan",
+                    "slug": ["admin.laporan.verifikasi"]
+                },
+                {
+                    "url": "admin.signature.index",
+                    "name": "Kelola Tanda Tangan",
+                    "slug": ["admin.signature.verifikasi"]
+                },
+                {
                     "url": "admin.kelas.index",
                     "name": "Kelola Kelas",
                     "slug": "admin.kelas"
