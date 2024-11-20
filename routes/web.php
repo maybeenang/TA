@@ -17,6 +17,8 @@ Route::group(
 
         Route::get('laporan/{laporan}/print', [\App\Http\Controllers\PDFController::class, 'print'])->name('laporan.print');
         Route::get('laporan/{laporan}/pdf', [\App\Http\Controllers\PDFController::class, 'pdf'])->name('laporan.pdf');
+
+        Route::get('signature/{signature}/get', [\App\Http\Controllers\PDFController::class, 'printSignature'])->name('signature.print');
     }
 );
 

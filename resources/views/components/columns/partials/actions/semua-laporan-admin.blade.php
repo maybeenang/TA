@@ -11,10 +11,10 @@
             <a wire:navigate href="{{ route("admin.laporan.show", $value) }}">
                 <x-dropdown-menu.item @click="">Detail</x-dropdown-menu.item>
             </a>
-            <x-dropdown-menu.item @click="">Berikan Notifikasi Pengingat</x-dropdown-menu.item>
             <x-dropdown-menu.item @click="$dispatch('open-ubah-status-laporan', {reportId: {{$value->id}}})">
                 Ubah Status
             </x-dropdown-menu.item>
+            <x-dropdown-menu.item @click="">Berikan Notifikasi Pengingat</x-dropdown-menu.item>
         </x-dropdown-menu.content>
     </x-dropdown-menu>
 </div>

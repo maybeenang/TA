@@ -19,5 +19,10 @@
         Verifikasi
     </a>
 
-    <button class="rounded bg-red-600 px-2 py-1 text-xs text-white">Tolak</button>
+    <button
+        class="rounded bg-red-600 px-2 py-1 text-xs text-white"
+        x-on:click="$dispatch('open-tolak-laporan', { reportId: {{ $value->id }} })"
+    >
+        Tolak
+    </button>
 </div>

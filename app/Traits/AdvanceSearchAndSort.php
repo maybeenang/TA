@@ -13,7 +13,6 @@ trait AdvanceSearchAndSort
     protected function searchThroughRelation($query, $relations, $column, $searchTerm)
     {
         $relation = array_shift($relations);
-        Log::info($relation);
 
         return $query->orWhereHas($relation, function ($q) use ($relations, $column, $searchTerm) {
             if (empty($relations)) {

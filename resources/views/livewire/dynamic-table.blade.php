@@ -12,6 +12,12 @@
 
     @includeWhen($this->showSearchAndPerPage, "livewire.table.partials.entries-and-search")
 
+    @if (session()->has("message"))
+        <div class="relative mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700" role="alert">
+            <span class="block sm:inline">{{ session("message") }}</span>
+        </div>
+    @endif
+
     <div class="overflow-x-auto">
         <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
             <thead>

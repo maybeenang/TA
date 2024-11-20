@@ -10,6 +10,7 @@ use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
 use App\Models\ReportStatus;
+use App\Services\ReportService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -30,41 +31,23 @@ class VerifikasiLaporanTable extends DynamicTable
 
     public $academicYearId;
 
+    private ReportService $reportService;
+
     // forms
-    public $reportStatusName;
-    public $selectedChangeReport;
-    public $reportNote;
+    public $catatan;
 
-    public function getAllReportStatuses()
+    public function tolakLaporan($id)
     {
-        return ReportStatusEnum::toSelectArray();
-    }
-
-    public function changeReportStatus()
-    {
-        if ($this->reportStatusName === null) {
-            return;
-        }
-        $report = Report::find($this->selectedChangeReport);
-        $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
-        $report->report_status_id = $reportStatusId;
-
-        if ($this->reportNote && $this->reportStatusName === 'ditolak') {
-            $report->note = $this->reportNote;
-        }
-
-        $report->save();
-
-        $this->reset('reportStatusName');
+        $this->reportService->tolakLaporan($id, $this->catatan ?? '');
         $this->dispatch('close-modal');
+
+        session()->flash('message', 'Laporan Berhasil Ditolak');
     }
 
     #[On('close-modal')]
     public function closeModal()
     {
-        $this->reset('reportStatusName');
-        $this->reset('selectedChangeReport');
-        $this->reset('reportNote');
+        $this->reset('catatan');
     }
 
     public function filterWithAcademicYear()
@@ -77,6 +60,7 @@ class VerifikasiLaporanTable extends DynamicTable
         return AcademicYear::query()->get();
     }
 
+
     public function query(): Builder
     {
         return Report::query()
@@ -87,11 +71,14 @@ class VerifikasiLaporanTable extends DynamicTable
                     $query->where('name', ReportStatusEnum::DIKIRIM);
                 }
             )
-            ->when($this->academicYearId, function ($query) {
-                $query->whereHas('classRoom', function ($query) {
-                    $query->where('academic_year_id', $this->academicYearId);
-                });
-            });
+            ->when(
+                $this->academicYearId,
+                function ($query) {
+                    $query->whereHas('classRoom', function ($query) {
+                        $query->where('academic_year_id', $this->academicYearId);
+                    });
+                },
+            );
     }
 
     public function columns(): array
@@ -110,7 +97,12 @@ class VerifikasiLaporanTable extends DynamicTable
     public function dialogs()
     {
         return [
-            Dialog::make('dialog.dialogs.ubah-status-laporan', 'laporan')
+            Dialog::make('dialog.dialogs.tolak-laporan', 'tolakLaporan')
         ];
+    }
+
+    public function boot(ReportService $reportService)
+    {
+        $this->reportService = $reportService;
     }
 }

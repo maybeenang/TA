@@ -43,7 +43,10 @@
 
                 <template x-if="showNote">
                     <div class="">
-                        <x-label class="text-right">Catatan</x-label>
+                        <x-label class="text-right">
+                            Catatan
+                            <span class="text-xs">(optional)</span>
+                        </x-label>
                         <x-textarea class="col-span-3" wire:model="reportNote"></x-textarea>
                     </div>
                 </template>

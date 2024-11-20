@@ -33,8 +33,7 @@ class ReportObserver
     public function updated(Report $report): void
     {
         // check apakah yang di update adalah pdf_path atau pdf_status
-        if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status') || $report->isDirty('report_status_id')) {
-            Log::info("PDF Path atau PDF Status berubah pada report id: {$report->id}");
+        if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status')) {
             return;
         }
 

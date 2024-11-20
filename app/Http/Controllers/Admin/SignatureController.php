@@ -22,11 +22,11 @@ class SignatureController extends Controller
     public function show(Signature $signature)
     {
         // check if file is exist
-        if (!Storage::exists('signatures/' . $signature->path)) {
+        if (!Storage::disk('public')->exists('signatures/' . $signature->path)) {
             return response()->json(['message' => 'File tidak ditemukan'], 404);
         }
 
-        return response()->file(Storage::path('signatures/' . $signature->path));
+        return response()->file(Storage::disk('public')->path('signatures/' . $signature->path));
     }
 
     public function create()
@@ -47,12 +47,7 @@ class SignatureController extends Controller
         // randon string generator
         $imageName = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
 
-        // check if dir signatures is not exist
-        if (!Storage::exists('signatures')) {
-            Storage::makeDirectory('signatures');
-        }
-
-        $request->file('image')->storeAs('signatures', $imageName);
+        $request->file('image')->storeAs('signatures', $imageName, 'public');
 
 
         // store to database

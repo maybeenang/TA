@@ -38,9 +38,6 @@ class GenerateReportPDF implements ShouldQueue
                 throw new \Exception('Tidak ada mahasiswa yang terdaftar di kelas ini');
             }
 
-            Log::info('Generate PDF for ' . $this->report->classRoom->fullName);
-            Log::info('Lecturer: ' . $this->report->responsibleLecturer);
-
             // get min, max, range (max-min), average, from each graadecomponent score
             $distribusiNilai = $this->report->gradeComponents
                 ->map(function ($gradeComponent) {
@@ -77,7 +74,23 @@ class GenerateReportPDF implements ShouldQueue
                 ];
             });
 
-            Log::info('Generate PDF for ' . $this->report->classRoom->fullName);
+            $verifikasiData = $this->report->verifikasiData();
+
+            $classroomLecturers = $this->report->lecturers->map(function ($lecturer) {
+                return $lecturer->user->name;
+            })->implode(', ');
+
+            if ($classroomLecturers === '') {
+                $classroomLecturers = $this->report->classRoom?->lecturer?->user?->name ?? '-';
+            }
+
+            $detailLaporan = (object) [
+                'dosenPengampu' => $classroomLecturers,
+                'kelas' => $this->report->classRoom->name,
+                'mataKuliah' => $this->report->classRoom->course->code . ' ' . $this->report->classRoom->course->name,
+                'sks' => $this->report->classRoom->course->credit,
+                'tahunAkademik' => $this->report->classRoom->academicYear->fullName,
+            ];
 
             // delete last pdf if exist
             if ($this->report->pdf_path && Storage::exists('pdfs/' . $this->report->pdf_path)) {
@@ -95,6 +108,8 @@ class GenerateReportPDF implements ShouldQueue
                 'laporan' => $this->report,
                 'distribusiNilai' => $distribusiNilai,
                 'rentangNilai' => $rentangNilai,
+                'verifikasiData' => $verifikasiData,
+                'detailLaporan' => $detailLaporan,
             ])
                 ->format(Format::A4)
                 ->margins(3, 3, 3, 4, Unit::Centimeter)

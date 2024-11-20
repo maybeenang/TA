@@ -18,6 +18,8 @@
         @include("pdfs.hal2-2")
         @pageBreak
         @include("pdfs.hal3")
+        @pageBreak
+        @include("pdfs.bukti-verifikasi")
 
         @stack("scripts")
     </body>

@@ -1,11 +1,13 @@
 <div>
     <div class="mb-4 flex justify-end">
-        <x-button variant="secondary" wire:click="regeneratePdf">Generate Ulang PDF</x-button>
+        <x-button variant="secondary" wire:click="regeneratePdf" :disabled="$this->isGenerating">
+            Generate Ulang PDF
+        </x-button>
     </div>
     @if ($this->isGenerating)
         <div
             class="flex h-full items-center justify-center"
-            @pdf-failed.window="$refs.pdfLoading.innerHTML = 'Gagal generate PDF'; $refs.pdfLoading.classList.add('text-red-600')"
+            @pdf-failed.window="$refs.pdfLoading.innerHTML = 'Gagal generate PDF, Silahkan coba lagi'; $refs.pdfLoading.classList.add('text-red-600')"
         >
             <div class="text-center" x-ref="pdfLoading">
                 <div role="status">

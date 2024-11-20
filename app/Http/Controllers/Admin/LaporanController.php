@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Services\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Reverb\Loggers\Log;
 
 class LaporanController extends Controller
 {
+
+    protected $reportService;
+
+    public function __construct(ReportService $reportService)
+    {
+        $this->reportService = $reportService;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -26,6 +37,28 @@ class LaporanController extends Controller
     {
         $signatures = Auth::user()->signatures;
         return view('pages.admin.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures'));
+    }
+
+    public function verifikasiLaporanUpdate(Request $request, Report $laporan)
+    {
+        $validated = $request->validate([
+            'signature' => 'required|exists:signatures,id',
+        ]);
+
+        $signature = Auth::user()->signatures()->find($validated['signature']); // @intelliphense-ignore-line
+
+
+        if (!$signature) {
+            return redirect()->back()->with('error', 'Signature not found');
+        }
+
+        try {
+            $this->reportService->verifikasiLaporan($laporan, $request->signature);
+            return redirect()->route('admin.laporan.index')->with('success', 'Berhasil verifikasi laporan');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Gagal verifikasi laporan' . $e->getMessage());
+        }
     }
 
     /**

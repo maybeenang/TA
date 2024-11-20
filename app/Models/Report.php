@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ReportStatusEnum;
 use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 #[ObservedBy(ReportObserver::class)]
 class Report extends Model
@@ -23,6 +25,13 @@ class Report extends Model
         'pdf_path',
         'pdf_status',
         'note',
+        'signature_id',
+        'verified_at',
+        'verified_by',
+    ];
+
+    protected $casts = [
+        'verified_at' => 'datetime',
     ];
 
 
@@ -75,6 +84,11 @@ class Report extends Model
     public function gradeScales()
     {
         return $this->hasMany(GradeScale::class);
+    }
+
+    public function signature()
+    {
+        return $this->belongsTo(Signature::class);
     }
 
     public function progres()
@@ -192,5 +206,42 @@ class Report extends Model
         $currentRelation = $this->$relation;
 
         return $originalRelation != $currentRelation;
+    }
+
+
+    public function verifikasiData()
+    {
+        $reportStatus = $this->reportStatus->name;
+
+        if ($reportStatus !== ReportStatusEnum::TERVERIFIKASI->value) {
+            // return collection
+            return (object)[
+                'name' => '-',
+                'nip' => '-',
+                'email' => '-',
+            ];
+        }
+
+
+        $verifikator = User::find($this->verified_by);
+
+        if (!$verifikator) {
+            return (object)[
+                'name' => '-',
+                'nip' => '-',
+                'email' => '-',
+            ];
+        }
+
+
+
+        // return object
+        return (object)[
+            'name' => $verifikator?->name ?? '-',
+            'nip' => $verifikator?->lecturer?->nip ?? '-',
+            'email' => $verifikator?->email ?? '-',
+            'verified_at' => $this->verified_at ?? '-',
+            'signature' => $this->signature?->path ?? '',
+        ];
     }
 }

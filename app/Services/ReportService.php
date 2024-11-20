@@ -219,6 +219,33 @@ class ReportService
         });
     }
 
+    public function tolakLaporan($id, string $catatan = '')
+    {
+        $laporan = Report::find($id);
+        return DB::transaction(function () use ($laporan, $catatan) {
+            $laporan->update([
+                'report_status_id' => 4,
+                'note' => $catatan,
+            ]);
+
+            return $laporan;
+        });
+    }
+
+    public function verifikasiLaporan(Report $laporan, int $signatureId)
+    {
+        return DB::transaction(function () use ($laporan, $signatureId) {
+            $laporan->update([
+                'report_status_id' => 3,
+                'verified_at' => now(),
+                'verified_by' => Auth::id(),
+                'signature_id' => $signatureId,
+            ]);
+
+            return $laporan;
+        });
+    }
+
 
     public function convertCamelCase($camelCaseString)
     {

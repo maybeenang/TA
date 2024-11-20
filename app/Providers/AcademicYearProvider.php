@@ -38,7 +38,6 @@ class AcademicYearProvider extends ServiceProvider
 
 
 
-        Log::info('Academic Year Now: ' . $academicYearNow);
 
         // set academic year now to view
         $this->app->make('view')->share('academicYearNow', $academicYearNow);

@@ -10,12 +10,24 @@
 
         <div class="flex gap-4">
             <div class="max-w-md">
-                <x-form class="" method="POST" action="{{ route('admin.kelas.store') }}">
+                <div class="space-y-2 rounded-md border-2 border-l-8 border-zinc-300 border-l-red-500 p-2 text-xs">
+                    <p>
+                        Verifikasi laporan ini untuk memastikan bahwa laporan telah terverifikasi dan siap untuk
+                        diunduh.
+                    </p>
+                    <p>
+                        Status Laporan :
+                        <x-dynamic-component component="badges.report-status" :value="$laporan->reportStatus->name" />
+                    </p>
+                </div>
+                <x-form class="" method="POST" action="{{ route('admin.laporan.verifikasi.update', $laporan) }}">
                     @csrf
 
-                    <x-form.item class="space-y-3" name="notification">
+                    @method("PUT")
+
+                    <x-form.item class="space-y-3" name="signature">
                         <x-form.label>Pilih tanda tangan</x-form.label>
-                        <x-radio-group x-form:control name="notification" class="grid grid-cols-4 space-y-1">
+                        <x-radio-group x-form:control name="signature" class="grid grid-cols-4 space-y-1">
                             @forelse ($signatures as $signature)
                                 <x-form.item class="flex">
                                     <x-radio-group.item x-form:control value="{{$signature->id}}" />
@@ -28,7 +40,7 @@
                                     </x-form.label>
                                 </x-form.item>
                             @empty
-                                <span>Tidak ada data</span>
+                                <span class="text-xs">Tidak ada tanda tangan</span>
                             @endforelse
                         </x-radio-group>
                         <x-form.description>
