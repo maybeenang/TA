@@ -18,11 +18,11 @@
                         <x-radio-group x-form:control name="notification" class="grid grid-cols-4 space-y-1">
                             @forelse ($signatures as $signature)
                                 <x-form.item class="flex">
-                                    <x-radio-group.item x-form:control value="all" />
+                                    <x-radio-group.item x-form:control value="{{$signature->id}}" />
                                     <x-form.label class="font-normal">
                                         <img
                                             src="{{ route("admin.signature.show", $signature) }}"
-                                            alt="signature"
+                                            alt="{{ $signature->name }}"
                                             class="h-20 w-20 object-cover"
                                         />
                                     </x-form.label>

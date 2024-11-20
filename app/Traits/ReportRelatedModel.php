@@ -42,10 +42,10 @@ trait ReportRelatedModel
             $cacheKey = "report_regenerating_{$report->id}";
 
             if (!Cache::has($cacheKey)) {
-                Cache::put($cacheKey, true, now()->addSeconds(20));
+                Cache::put($cacheKey, true, now()->addSeconds(10));
 
                 GenerateReportPDF::dispatch($report)
-                    ->delay(now()->addSeconds(10));
+                    ->delay(now()->addSeconds(5));
             }
         }
     }

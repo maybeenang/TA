@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use App\Services\ReportService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class ReportObserver
@@ -29,18 +30,21 @@ class ReportObserver
      * Handle the Report "updated" event.
      */
 
-    public function updating(Report $report): void
+    public function updated(Report $report): void
     {
-        $report->load([
-            'gradeComponents',
-            'grades',
-            'lecturers'
-        ]);
-        Log::info($report->hasRelationChanges([
-            'gradeComponents',
-            'grades',
-            'lecturers'
-        ]));
+        // check apakah yang di update adalah pdf_path atau pdf_status
+        if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status') || $report->isDirty('report_status_id')) {
+            Log::info("PDF Path atau PDF Status berubah pada report id: {$report->id}");
+            return;
+        }
+
+        $cacheKey = "report_regenerating_{$report->id}";
+        if (!Cache::has($cacheKey)) {
+            Cache::put($cacheKey, true, now()->addSeconds(10));
+
+            GenerateReportPDF::dispatch($report)
+                ->delay(now()->addSeconds(5));
+        }
     }
 
     /**

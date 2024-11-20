@@ -32,15 +32,15 @@ class ProcessReportVerification
             return;
         }
 
+        Log::info('Checking report verification');
 
         $status = $report->progres();
-        Log::info('Report status: ' . json_encode($status));
 
         // check if report status id is 2
         if ($report->report_status_id === 2) {
             Log::info('Report already verified');
-            $status['result'] = false;
-            $status['message'] = 'Mohon maaf, Laporan sudah anda ajukan untuk verifikasi';
+            $status['result'] = True;
+            $status['message'] = 'Laporan sudah anda ajukan untuk verifikasi';
 
             broadcast(new ReportVerified($report->id, $status));
             return;
@@ -64,8 +64,8 @@ class ProcessReportVerification
         }
 
         // append status with result
-        $status['result'] = true;
         Log::info('Report verified');
+        $status['result'] = true;
         $status['message'] = 'Selamat!, Pengajuan verifikasi laporan berhasil';
         $report->report_status_id = 2;
         $report->save();

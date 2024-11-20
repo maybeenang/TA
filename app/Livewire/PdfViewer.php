@@ -33,6 +33,13 @@ class PdfViewer extends Component
         $this->isGenerating = false;
     }
 
+
+    public function regeneratePdf()
+    {
+        $this->isGenerating = true;
+        GenerateReportPDF::dispatch($this->report);
+    }
+
     public function mount(Report $report)
     {
         $this->report = $report;

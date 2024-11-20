@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
+
+        Schema::table('reports', function (Blueprint $table) {
+            $table->foreignId('signature_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+        });
     }
 
     /**
@@ -27,5 +31,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('signatures');
+        Schema::table('reports', function (Blueprint $table) {
+            $table->dropForeign(['signature_id']);
+            $table->dropColumn('signature_id');
+        });
     }
 };

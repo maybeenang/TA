@@ -114,15 +114,22 @@ class Report extends Model
 
     public function getStandarDeviationAttribute()
     {
-        $scores = $this->grades->pluck('total_score');
-        $count = $scores->count();
-        $sum = $scores->sum();
-        $squaredSum = $scores->map(function ($score) {
-            return pow($score, 2);
-        })->sum();
-        $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
-        // get two decimal
-        return round(sqrt($variance), 2);
+
+        try {
+            $scores = $this->grades->pluck('total_score');
+            $count = $scores->count();
+            $sum = $scores->sum();
+            $squaredSum = $scores->map(function ($score) {
+                return pow($score, 2);
+            })->sum();
+
+            $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+            return round(sqrt($variance), 2);
+        } catch (\DivisionByZeroError $e) {
+            return 0;
+        } catch (\Error $e) {
+            return 0;
+        }
     }
 
     public function convertToGradeScale($score)

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\ReportStatusEnum;
+use Illuminate\Support\Str;
 use App\Events\PDFGenerated;
 use App\Models\Report;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,22 +38,19 @@ class GenerateReportPDF implements ShouldQueue
                 throw new \Exception('Tidak ada mahasiswa yang terdaftar di kelas ini');
             }
 
-            // check if laporan status is not draft or ditolak
-            /*if ($this->report->reportStatus->name !== ReportStatusEnum::DRAFT && $this->report->reportStatus->name !== ReportStatusEnum::DITOLAK) {*/
-            /*    throw new \Exception('Laporan sudah di verifikasi');*/
-            /*}*/
-
+            Log::info('Generate PDF for ' . $this->report->classRoom->fullName);
+            Log::info('Lecturer: ' . $this->report->responsibleLecturer);
 
             // get min, max, range (max-min), average, from each graadecomponent score
             $distribusiNilai = $this->report->gradeComponents
                 ->map(function ($gradeComponent) {
                     $scores = $gradeComponent->studentGrades->pluck('score');
-
+                    // get scores length
                     return [
                         'name' => $gradeComponent->name,
-                        'min' => $scores->min(),
-                        'max' => $scores->max(),
-                        'range' => $scores->max() - $scores->min(),
+                        'min' => $scores->min() ?? 0,
+                        'max' => $scores->max() ?? 0,
+                        'range' => $scores->max() - $scores->min() ?? 0,
                         'average' => round($scores->avg(), 2) ?? 0,
                         'simpangan_baku' => $gradeComponent->standardDeviation() ?? 0,
                     ];
@@ -79,11 +77,16 @@ class GenerateReportPDF implements ShouldQueue
                 ];
             });
 
-            $pdfName = 'Laporan-' . $this->report->classRoom->fullName . '.pdf';
+            Log::info('Generate PDF for ' . $this->report->classRoom->fullName);
 
-            $pdfName = str_replace(' ', '-', $pdfName);
-            // check if path is exist
-            //
+            // delete last pdf if exist
+            if ($this->report->pdf_path && Storage::exists('pdfs/' . $this->report->pdf_path)) {
+                Storage::delete('pdfs/' . $this->report->pdf_path);
+            }
+
+            // generate random name with uuid
+            $pdfName = Str::uuid() . '.pdf';
+
             if (!Storage::exists('pdfs')) {
                 Storage::makeDirectory('pdfs');
             }
@@ -102,9 +105,10 @@ class GenerateReportPDF implements ShouldQueue
                 'pdf_status' => 'done',
             ]);
 
-            broadcast(new PDFGenerated($this->report->id));
+            broadcast(new PDFGenerated($this->report->id, true));
         } catch (\Throwable $th) {
             Log::error($th);
+            broadcast(new PDFGenerated($this->report->id, false));
             throw $th;
         }
     }

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // delete all pdf files in storage
         Storage::deleteDirectory('pdfs');
+        Storage::deleteDirectory('signatures');
 
         $this->call(
             [

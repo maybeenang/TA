@@ -4,54 +4,162 @@
 
 @script
     <script type="module">
-        document.addEventListener('open-confirm-laporan-verifikasi', () => {
-            const laporanId = event.detail;
-            Alpine.store('dialogLaporanVerifikasi').reportId = laporanId;
-        });
+        Alpine.data('reportVerification', () => ({
+            echoChannel: null,
+            resultDescEl: null,
 
-        document.addEventListener('checking-report', () => {
-            const laporanId = event.detail?.id;
-            Alpine.store('dialogLaporanVerifikasi').isValidating = true;
+            init() {
+                this.resultDescEl = document.getElementById('result-desc');
+                this.setupEventListeners();
 
-            Echo.channel(`report-verified-${laporanId}`).listen('ReportVerified', (e) => {
-                Alpine.store('dialogLaporanVerifikasi').isValidationDone = true;
-                Alpine.store('dialogLaporanVerifikasi').validationResults = e;
+                // Return cleanup function
+                return () => {
+                    this.cleanupEventListeners();
+                };
+            },
 
-                const resultDescEl = document.getElementById('result-desc');
-                // clear previous resultDescEl
-                resultDescEl.innerHTML = '';
-                resultDescEl.classList.remove('text-green-600', 'text-red-600', 'mt-2');
-                resultDescEl.innerHTML = e.result.message ?? 'Terjadi kesalahan saat melakukan validasi data laporan';
+            setupEventListeners() {
+                const handleOpen = this.handleOpenDialog.bind(this);
+                const handleCheck = this.handleCheckingReport.bind(this);
+                const handleClose = this.handleCloseModal.bind(this);
 
-                if (e.result.result) {
-                    resultDescEl.classList.add('text-green-600', 'mt-2');
-                } else {
-                    resultDescEl.classList.add('text-red-600', 'mt-2');
-                    // add ul li
-                    const ul = document.createElement('ul');
-                    ul.classList.add('list-disc', 'list-inside', 'text-sm', 'text-red-600');
-                    e.result?.errors?.map((error) => {
-                        const li = document.createElement('li');
-                        li.textContent = error;
-                        ul.appendChild(li);
-                    });
-                    resultDescEl.appendChild(ul);
+                console.log('Setting up event listeners for dialog laporan verifikasi');
+                console.log('Listeners:', { open: handleOpen, check: handleCheck, close: handleClose });
+
+                // Store references untuk cleanup
+                this._listeners = {
+                    open: handleOpen,
+                    check: handleCheck,
+                    close: handleClose,
+                };
+
+                document.addEventListener('open-confirm-laporan-verifikasi', (e) => {
+                    handleOpen(e);
+                });
+                document.addEventListener('checking-report', (e) => {
+                    handleCheck(e);
+                });
+                document.addEventListener('close-modal', (e) => {
+                    handleClose(e);
+                });
+            },
+
+            cleanupEventListeners() {
+                // Cleanup semua event listeners
+                if (this._listeners) {
+                    document.removeEventListener('open-confirm-laporan-verifikasi', this._listeners.open);
+                    document.removeEventListener('checking-report', this._listeners.check);
+                    document.removeEventListener('close-modal', this._listeners.close);
+                    this._listeners = null;
                 }
-            });
-        });
 
-        document.addEventListener('close-modal', () => {
-            const data = Alpine.store('dialogLaporanVerifikasi');
-            data.isValidating = false;
-            data.isValidationDone = false;
-            data.reportId = null;
-            data.validationResults = {};
-        });
+                this.cleanupPreviousEcho();
+            },
+
+            handleOpenDialog(event) {
+                const laporanId = event.detail;
+                console.log('Opening dialog for report with ID:', laporanId);
+                Alpine.store('dialogLaporanVerifikasi').reportId = laporanId;
+            },
+
+            handleCheckingReport(event) {
+                const laporanId = event.detail?.id;
+                console.log('Checking report with ID:', laporanId);
+                const store = Alpine.store('dialogLaporanVerifikasi');
+
+                store.isValidating = true;
+                this.cleanupPreviousEcho();
+                this.setupEchoListener(laporanId);
+            },
+
+            handleCloseModal() {
+                const store = Alpine.store('dialogLaporanVerifikasi');
+                this.resetState(store);
+                this.cleanupPreviousEcho();
+            },
+
+            cleanupPreviousEcho() {
+                if (this.echoChannel) {
+                    // Properly leave/unsubscribe from the channel
+                    this.echoChannel.stopListening('ReportVerified');
+                    Echo.leaveChannel(this.echoChannel.name);
+                    this.echoChannel = null;
+                }
+            },
+
+            setupEchoListener(laporanId) {
+                const channelName = `report-verified-${laporanId}`;
+                this.echoChannel = Echo.channel(channelName);
+
+                this.echoChannel.listen('ReportVerified', (e) => {
+                    this.handleReportVerified(e);
+                });
+            },
+
+            handleReportVerified(e) {
+                const store = Alpine.store('dialogLaporanVerifikasi');
+                store.isValidationDone = true;
+                store.validationResults = e;
+
+                this.updateResultDisplay(e.result);
+
+                // Cleanup Echo setelah mendapat response
+                this.cleanupPreviousEcho();
+            },
+
+            updateResultDisplay(result) {
+                if (!this.resultDescEl) return;
+
+                // Reset previous state
+                this.resultDescEl.innerHTML = '';
+                this.resultDescEl.classList.remove('text-green-600', 'text-red-600', 'mt-2');
+
+                // Set base message
+                this.resultDescEl.innerHTML =
+                    result.message ?? 'Terjadi kesalahan saat melakukan validasi data laporan';
+
+                if (result.result) {
+                    this.resultDescEl.classList.add('text-green-600', 'mt-2');
+                } else {
+                    this.handleValidationErrors(result.errors);
+                }
+            },
+
+            handleValidationErrors(errors) {
+                if (!errors?.length) return;
+
+                this.resultDescEl.classList.add('text-red-600', 'mt-2');
+
+                const ul = document.createElement('ul');
+                ul.classList.add('list-disc', 'list-inside', 'text-sm', 'text-red-600');
+
+                errors.forEach((error) => {
+                    const li = document.createElement('li');
+                    li.textContent = error;
+                    ul.appendChild(li);
+                });
+
+                this.resultDescEl.appendChild(ul);
+            },
+
+            resetState(store) {
+                store.isValidating = false;
+                store.isValidationDone = false;
+                store.reportId = null;
+                store.validationResults = {};
+
+                if (this.resultDescEl) {
+                    this.resultDescEl.innerHTML = '';
+                    this.resultDescEl.classList.remove('text-green-600', 'text-red-600', 'mt-2');
+                }
+            },
+        }));
     </script>
 @endscript
 
 <x-dialog x-model="{{ $model }}" @open-confirm-laporan-verifikasi.window="{{$model}} = true;">
-    <x-dialog.content>
+    <x-dialog.content x-data="reportVerification">
+        {{-- Confirmation Section --}}
         <div class="space-y-4" x-show="!$store.dialogLaporanVerifikasi.isValidating">
             <section>
                 <x-dialog.title>Apakah anda yakin?</x-dialog.title>
@@ -60,15 +168,16 @@
                 </x-dialog.description>
             </section>
             <section class="flex justify-end">
-                <x-button x-on:click="{{$model}} = false" variant="secondary">Batal</x-button>
-                <x-button x-on:click="$dispatch('checking-report', { id: $store.dialogLaporanVerifikasi.reportId })">
+                <x-button x-on:click="{{$model}} = false; $dispatch('close-modal')" variant="secondary">Batal</x-button>
+                <x-button x-on:click="$dispatch('checking-report', { id: $store?.dialogLaporanVerifikasi?.reportId})">
                     Ajukan Verifikasi
                 </x-button>
             </section>
         </div>
 
+        {{-- Loading Section --}}
         <div
-            x-show="$store.dialogLaporanVerifikasi.isValidating && !$store.dialogLaporanVerifikasi.isValidationDone "
+            x-show="$store.dialogLaporanVerifikasi.isValidating && !$store.dialogLaporanVerifikasi.isValidationDone"
             class="my-8"
         >
             <section>
@@ -84,6 +193,7 @@
             </section>
         </div>
 
+        {{-- Result Section --}}
         <div
             x-show="$store.dialogLaporanVerifikasi.isValidating && $store.dialogLaporanVerifikasi.isValidationDone"
             class="my-8"
@@ -91,13 +201,13 @@
             <section>
                 <div class="flex h-full items-center justify-center text-justify">
                     <div class="text-center">
-                        <div x-show="$store.dialogLaporanVerifikasi.validationResults?.result?.result ?? false">
+                        <template x-if="$store.dialogLaporanVerifikasi.validationResults?.result?.result">
                             <x-icons.success-circle class="mx-auto h-8 w-8 fill-blue-600 text-gray-200" />
-                        </div>
+                        </template>
 
-                        <div x-show="!$store.dialogLaporanVerifikasi.validationResults?.result?.result ?? true">
+                        <template x-if="!$store.dialogLaporanVerifikasi.validationResults?.result?.result">
                             <x-icons.failed-circle class="mx-auto h-8 w-8 fill-blue-600 text-gray-200" />
-                        </div>
+                        </template>
                         <div id="result-desc"></div>
                     </div>
                 </div>

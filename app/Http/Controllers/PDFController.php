@@ -40,6 +40,11 @@ class PDFController extends Controller
             return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
         }
 
-        return response()->file(Storage::path('pdfs/' . $laporan->pdf_path));
+        return response()->file(Storage::path('pdfs/' . $laporan->pdf_path), [
+            'Content-Type' => 'application/pdf',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ]);
     }
 }
