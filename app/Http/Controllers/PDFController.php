@@ -23,7 +23,7 @@ class PDFController extends Controller
             return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
         }
 
-        return Storage::download('pdfs/' . $laporan->pdf_path);
+        return Storage::download('pdfs/' . $laporan->pdf_path, $laporan->classroom->fullName . '.pdf');
     }
 
     public function pdf(Report $laporan)

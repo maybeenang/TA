@@ -43,8 +43,6 @@ class LaporanTable extends DynamicTable
         }
     }
 
-
-
     public function query(): Builder
     {
         return Report::query()

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 trait AdvanceSearchAndSort
 {
-    //
+
     /**
      * Handle recursive search through nested relations
      */

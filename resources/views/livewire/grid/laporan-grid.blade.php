@@ -1,11 +1,14 @@
 <div class="w-full space-y-8">
     <x-form class="mx-auto max-w-sm" wire:submit="filterWithAcademicYear">
-        <x-form.item name="academic_year_id">
+        <x-form.item>
             <x-form.label>Tahun Akademik</x-form.label>
             <x-select class="" name="academic_year_id" wire:model="academicYearId">
                 <option value="-" selected disabled>Pilih Tahun Ajaran</option>
                 @forelse ($allAcademicYears as $academicYear)
-                    <option value="{{ $academicYear->id }}">
+                    <option
+                        value="{{ $academicYear->id }}"
+                        @if ($currentAcademicYear->id == $academicYear->id) selected @endif
+                    >
                         {{ $academicYear->fullName }}
                     </option>
                 @empty
@@ -27,35 +30,8 @@
     </section>
 
     <section class="grid grid-cols-2 gap-2 md:grid-cols-4">
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
-        <x-card.laporan-card />
+        @foreach ($this->data() as $item)
+            <x-card.laporan-card :value="$item" />
+        @endforeach
     </section>
 </div>

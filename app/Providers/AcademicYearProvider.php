@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\AcademicYear;
+use App\Services\AcademicYearService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Reverb\Loggers\Log;
 
 class AcademicYearProvider extends ServiceProvider
 {
@@ -13,7 +13,9 @@ class AcademicYearProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(AcademicYearService::class, function () {
+            return new AcademicYearService();
+        });
     }
 
     /**
@@ -21,28 +23,14 @@ class AcademicYearProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $allAcademicYears = AcademicYear::all();
+        // Gunakan View Composer di boot()
+        View::composer('*', function ($view) {
+            $academicYearService = app(AcademicYearService::class);
 
-        // get now date
-        $now = now();
-        // get academic year now
-        $academicYearNow = AcademicYear::where('start_date', '<=', $now)
-            ->where('end_date', '>=', $now)
-            ->first();
-
-
-        if (!$academicYearNow) {
-            $academicYearNow = AcademicYear::where('start_date', '>=', $now)
-                ->orderBy('start_date', 'asc')
-                ->first();
-        }
-
-
-
-
-
-        // set academic year now to view
-        $this->app->make('view')->share('academicYearNow', $academicYearNow);
-        $this->app->make('view')->share('allAcademicYears', $allAcademicYears);
+            $view->with([
+                'academicYearNow' => $academicYearService->getCurrentAcademicYear(),
+                'allAcademicYears' => $academicYearService->getAllAcademicYears()
+            ]);
+        });
     }
 }

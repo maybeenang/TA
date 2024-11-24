@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enums\ReportStatusEnum;
 use App\Events\CheckingReport;
 use App\Events\ReportVerified;
 use App\Models\Report;
@@ -37,7 +38,7 @@ class ProcessReportVerification
         $status = $report->progres();
 
         // check if report status id is 2
-        if ($report->report_status_id === 2) {
+        if ($report->reportStatus->name === ReportStatusEnum::DIKIRIM->value || $report->reportStatus->name === ReportStatusEnum::TERVERIFIKASI->value) {
             Log::info('Report already verified');
             $status['result'] = True;
             $status['message'] = 'Laporan sudah anda ajukan untuk verifikasi';

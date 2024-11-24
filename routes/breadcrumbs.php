@@ -90,6 +90,10 @@ Breadcrumbs::for('admin.laporan.arsip', function (BreadcrumbTrail $trail) {
     $trail->push('Arsip Laporan', route('admin.laporan.arsip'));
 });
 
+Breadcrumbs::for('admin.laporan.verifikasi', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Verifikasi Laporan', route('admin.laporan.verifikasi'));
+});
 
 // ===================== TENAGA PENGAJAR =====================
 

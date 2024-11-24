@@ -4,6 +4,7 @@ namespace App\Livewire\Table\TenagaPengajar;
 
 use App\Dynamics\Column;
 use App\Dynamics\Dialog;
+use App\Enums\ReportStatusEnum;
 use App\Events\CheckingReport;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
@@ -46,18 +47,14 @@ class PilihLaporanTable extends DynamicTable
 
     function convertCamelCase($camelCaseString)
     {
-        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
         $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
-        // Ubah kata pertama dari setiap kata menjadi huruf besar
         return ucwords($result);
     }
 
 
     function convertKebabCase($camelCaseString)
     {
-        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
         $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
-        // Ubah semua huruf menjadi kecil
         return strtolower($result);
     }
 
@@ -72,6 +69,10 @@ class PilihLaporanTable extends DynamicTable
             })
             ->whereHas('classRoom.lecturer', function ($query) {
                 $query->where('user_id', Auth::id());
+            })
+            ->whereHas('reportStatus', function ($query) {
+                $query->where('name', '!=', ReportStatusEnum::TERVERIFIKASI);
+                $query->where('name', '!=', ReportStatusEnum::DIKIRIM);
             });
     }
 

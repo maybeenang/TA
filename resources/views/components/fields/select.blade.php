@@ -13,7 +13,7 @@
     <select
         name="{{ $name }}"
         id="{{ $name }}"
-        class="select2 flex-[0.94] rounded-md border border-gray-300 disabled:cursor-not-allowed disabled:bg-zinc-100"
+        class="select2 flex-[0.95] rounded-md border border-gray-300 disabled:cursor-not-allowed disabled:bg-zinc-100"
         {{ $attributes }}
     >
         @if ($placeholder)

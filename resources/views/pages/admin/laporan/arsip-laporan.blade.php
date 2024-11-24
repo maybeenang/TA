@@ -8,6 +8,6 @@
             Arsip Laporan
         </span>
 
-        <livewire:grid.laporan-grid />
+        <livewire:grid.admin-arsip-laporan />
     </div>
 </x-app-layout>
