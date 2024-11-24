@@ -33,6 +33,12 @@ class LaporanController extends Controller
         return view('pages.admin.laporan.verifikasi-laporan');
     }
 
+
+    public function arsipLaporan()
+    {
+        return view('pages.admin.laporan.arsip-laporan');
+    }
+
     public function verifikasiLaporanEdit(Report $laporan)
     {
         $signatures = Auth::user()->signatures;

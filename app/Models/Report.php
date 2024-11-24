@@ -240,8 +240,8 @@ class Report extends Model
             'name' => $verifikator?->name ?? '-',
             'nip' => $verifikator?->lecturer?->nip ?? '-',
             'email' => $verifikator?->email ?? '-',
-            'verified_at' => $this->verified_at ?? '-',
-            'signature' => $this->signature?->path ?? '',
+            'verified_at' => $this?->verified_at ?? now(),
+            'signature' => $this?->signature?->path ?? null,
         ];
     }
 }

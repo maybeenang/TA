@@ -21,6 +21,7 @@ class AcademicYearProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $allAcademicYears = AcademicYear::all();
 
         // get now date
         $now = now();
@@ -28,6 +29,7 @@ class AcademicYearProvider extends ServiceProvider
         $academicYearNow = AcademicYear::where('start_date', '<=', $now)
             ->where('end_date', '>=', $now)
             ->first();
+
 
         if (!$academicYearNow) {
             $academicYearNow = AcademicYear::where('start_date', '>=', $now)
@@ -41,5 +43,6 @@ class AcademicYearProvider extends ServiceProvider
 
         // set academic year now to view
         $this->app->make('view')->share('academicYearNow', $academicYearNow);
+        $this->app->make('view')->share('allAcademicYears', $allAcademicYears);
     }
 }

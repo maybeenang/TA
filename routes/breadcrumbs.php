@@ -85,6 +85,11 @@ Breadcrumbs::for('admin.laporan.show', function (BreadcrumbTrail $trail, $lapora
     $trail->push('Detail Laporan', route('admin.laporan.show', $laporan));
 });
 
+Breadcrumbs::for('admin.laporan.arsip', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Arsip Laporan', route('admin.laporan.arsip'));
+});
+
 
 // ===================== TENAGA PENGAJAR =====================
 

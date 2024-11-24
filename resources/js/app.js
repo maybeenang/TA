@@ -1,5 +1,5 @@
+import.meta.glob(["../images/**"]);
 import "./bootstrap";
-
 import collapse from "@alpinejs/collapse";
 import anchor from "@alpinejs/anchor";
 import { embed, pdfobjectversion } from "pdfobject";

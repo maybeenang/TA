@@ -49,6 +49,11 @@
                     "slug": ["admin.laporan.verifikasi"]
                 },
                 {
+                    "url": "admin.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": ["admin.laporan.arsip"]
+                },
+                {
                     "url": "admin.signature.index",
                     "name": "Kelola Tanda Tangan",
                     "slug": ["admin.signature.verifikasi"]

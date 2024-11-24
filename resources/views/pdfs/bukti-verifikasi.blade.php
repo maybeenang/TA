@@ -53,16 +53,18 @@
     @if ($laporan->reportStatus->name === $reportStatus::TERVERIFIKASI->value)
         <div class="mt-16 border-t pt-4 text-center font-normal">
             <p>
-                {{ \Carbon\Carbon::make($verifikasiData->verified_at)->locale("id")->isoFormat("dddd, DD MMMM YYYY") }}
+                {{ \Carbon\Carbon::make($verifikasiData?->verified_at ?? now())->locale("id")->isoFormat("dddd, DD MMMM YYYY") ?? "-" }}
             </p>
         </div>
 
         <div class="mt-4 text-center">
             <div class="mx-auto mb-2 h-28 w-28">
-                @inlinedImage(asset("storage/signatures/" . $verifikasiData->signature) ?? "")
+                @if (isset($verifikasiData?->signature))
+                    @inlinedImage(asset("storage/signatures/" . $verifikasiData?->signature))
+                @endif
             </div>
             <p>
-                {{ $verifikasiData->name }}
+                {{ $verifikasiData?->name ?? "-" }}
             </p>
         </div>
     @endif

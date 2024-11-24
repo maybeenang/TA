@@ -74,7 +74,7 @@ class SignatureController extends Controller
     {
         $request->validate([
             'name' => 'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -82,18 +82,10 @@ class SignatureController extends Controller
             // randon string generator
             $imageName = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
 
-            // check if dir signatures is not exist
-            if (!Storage::exists('signatures')) {
-                Storage::makeDirectory('signatures');
-            }
+            // delete old File
+            Storage::disk('public')->delete('signatures/' . $signature->path);
 
-            // delete old file
-            Storage::delete('signatures/' . $signature->path);
-
-            $request->file('image')->storeAs('signatures', $imageName);
-
-            // delete old file
-            Storage::delete('signatures/' . $signature->path);
+            $request->file('image')->storeAs('signatures', $imageName, 'public');
 
             $signature->path = $imageName;
         }
@@ -107,12 +99,8 @@ class SignatureController extends Controller
 
     public function destroy(Signature $signature)
     {
-        // check if file is exist
-        if (!Storage::exists('signatures/' . $signature->path)) {
-            return response()->json(['message' => 'File tidak ditemukan'], 404);
-        }
 
-        Storage::delete('signatures/' . $signature->path);
+        Storage::disk('public')->delete('signatures/' . $signature->path);
 
         $signature->delete();
 
