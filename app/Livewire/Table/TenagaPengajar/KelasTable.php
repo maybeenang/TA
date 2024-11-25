@@ -7,6 +7,7 @@ use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Lecturer;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 
 class KelasTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name',];
 
     public $relations = ['course', 'lecturer', 'academicYear'];
@@ -22,17 +25,10 @@ class KelasTable extends DynamicTable
 
     public $componentBefore = 'livewire.table.kelas';
 
-    public $academicYearId;
-
     public function filterWithAcademicYear()
     {
         /*dd($this->academicYearId);*/
         $this->resetPage();
-    }
-
-    public function getAllAcademicYears()
-    {
-        return AcademicYear::query()->get();
     }
 
     public function getRowData($id)

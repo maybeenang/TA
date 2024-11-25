@@ -29,7 +29,8 @@ class AcademicYearProvider extends ServiceProvider
 
             $view->with([
                 'academicYearNow' => $academicYearService->getCurrentAcademicYear(),
-                'allAcademicYears' => $academicYearService->getAllAcademicYears()
+                'allAcademicYears' => $academicYearService->getAllAcademicYears(),
+                'dashboardData' => $academicYearService->getAllCountDashboard()
             ]);
         });
     }

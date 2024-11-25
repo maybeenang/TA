@@ -1,12 +1,14 @@
-<div class="bg-white h-40 rounded-md border-zinc-200 border p-4 grid">
+@props(["number" => 0])
+
+<div class="grid h-40 rounded-md border border-zinc-200 bg-white p-4">
     <section>
-        <p class="font-bold text-4xl">
-            100
+        <p class="text-4xl font-bold">
+            {{ $number }}
         </p>
     </section>
     <section class="self-end text-center">
         <p>
-            Lorem ipsum
+            {{ $slot }}
         </p>
     </section>
 </div>

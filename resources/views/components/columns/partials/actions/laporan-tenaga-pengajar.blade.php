@@ -11,9 +11,12 @@
             <a wire:navigate.hover href="{{ route("tenaga-pengajar.laporan.show", $value) }}">
                 <x-dropdown-menu.item>Detail</x-dropdown-menu.item>
             </a>
-            <x-dropdown-menu.item x-on:click="$dispatch('open-confirm-laporan-verifikasi', {{$value->id}})">
-                Ajukan Verifikasi
-            </x-dropdown-menu.item>
+
+            @if ($value->isEditable)
+                <x-dropdown-menu.item x-on:click="$dispatch('open-confirm-laporan-verifikasi', {{$value->id}})">
+                    Ajukan Verifikasi
+                </x-dropdown-menu.item>
+            @endif
         </x-dropdown-menu.content>
     </x-dropdown-menu>
 </div>

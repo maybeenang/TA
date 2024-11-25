@@ -54,9 +54,9 @@ class MataKuliahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Course $mataKuliah)
     {
-        //
+        return view('pages.admin.mata-kuliah.show', compact('mataKuliah'));
     }
 
     /**

@@ -30,8 +30,12 @@
     </section>
 
     <section class="grid grid-cols-2 gap-2 md:grid-cols-4">
-        @foreach ($this->data() as $item)
+        @forelse ($this->data() as $item)
             <x-card.laporan-card :value="$item" />
-        @endforeach
+        @empty
+            <div class="col-span-2 md:col-span-4">
+                <x-card.empty-card />
+            </div>
+        @endforelse
     </section>
 </div>

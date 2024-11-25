@@ -244,4 +244,9 @@ class Report extends Model
             'signature' => $this?->signature?->path ?? null,
         ];
     }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->reportStatus->name === ReportStatusEnum::DRAFT->value || $this->reportStatus->name === ReportStatusEnum::DITOLAK->value;
+    }
 }

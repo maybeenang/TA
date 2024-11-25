@@ -93,7 +93,6 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
-
         $reportStatus = $laporan->reportStatus->name;
 
         Log::info('Report status: ' . $reportStatus);
@@ -103,22 +102,8 @@ class LaporanController extends Controller
             return view('pages.tenaga-pengajar.laporan.laporan-terverifikasi', compact('laporan', 'msg'));
         }
 
-
-        $lecturers = Lecturer::query()
-            ->with('user')
-            // check if user is not null
-            ->whereHas('user')
-            ->get()
-            ->map(function ($lecturer) {
-                return [
-                    'value' => $lecturer->id,
-                    'label' => $lecturer->user->name,
-                ];
-            });
-
         return view('pages.tenaga-pengajar.laporan.edit', compact(
             'laporan',
-            'lecturers',
         ));
     }
 
@@ -128,7 +113,6 @@ class LaporanController extends Controller
     public function update(Request $request, Report $laporan)
     {
         try {
-
             $request->validate([
                 'step' => 'required|in:informasi-umum,metode-perkuliahan',
             ]);

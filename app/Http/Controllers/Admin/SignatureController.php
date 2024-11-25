@@ -26,7 +26,11 @@ class SignatureController extends Controller
             return response()->json(['message' => 'File tidak ditemukan'], 404);
         }
 
-        return response()->file(Storage::disk('public')->path('signatures/' . $signature->path));
+        return response()->file(Storage::disk('public')->path('signatures/' . $signature->path), [
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ]);
     }
 
     public function create()
@@ -74,7 +78,7 @@ class SignatureController extends Controller
     {
         $request->validate([
             'name' => 'nullable',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -88,6 +92,8 @@ class SignatureController extends Controller
             $request->file('image')->storeAs('signatures', $imageName, 'public');
 
             $signature->path = $imageName;
+        } else {
+            $imageName = $signature->path;
         }
 
         $signature->name = $request->name ?? $imageName;

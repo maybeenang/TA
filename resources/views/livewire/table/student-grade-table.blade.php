@@ -22,13 +22,17 @@
             <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
                 <thead>
                     <tr class="whitespace-nowrap bg-zinc-100 uppercase">
-                        <th class="border border-zinc-300 px-2 py-2">Aksi</th>
+                        @if ($this->laporan->isEditable)
+                            <th class="border border-zinc-300 px-2 py-2">Aksi</th>
+                        @endif
 
                         @foreach ($this->headers() as $header)
                             <th class="border border-zinc-300 px-2 py-2">{{ $header }}</th>
                         @endforeach
 
-                        <th class="border border-zinc-300 px-2 py-2">Aksi</th>
+                        @if ($this->laporan->isEditable)
+                            <th class="border border-zinc-300 px-2 py-2">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -39,23 +43,25 @@
                                 "bg-amber-100" => $editingId === $row["student_id"],
                             ])
                         >
-                            <td class="border border-zinc-300 px-2 py-2 text-center">
-                                @if ($editingId === $row["student_id"])
-                                    <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
-                                        <x-icons.check-alt-icon />
-                                    </button>
-                                    <button wire:click="cancelEditing" class="text-red-600 hover:text-red-900">
-                                        <x-icons.close-alt-icon />
-                                    </button>
-                                @else
-                                    <button
-                                        wire:click="startEditing({{ $row["student_id"] }})"
-                                        class="text-blue-600 hover:text-blue-900"
-                                    >
-                                        <x-icons.pencil-icon />
-                                    </button>
-                                @endif
-                            </td>
+                            @if ($this->laporan->isEditable)
+                                <td class="border border-zinc-300 px-2 py-2 text-center">
+                                    @if ($editingId === $row["student_id"])
+                                        <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
+                                            <x-icons.check-alt-icon />
+                                        </button>
+                                        <button wire:click="cancelEditing" class="text-red-600 hover:text-red-900">
+                                            <x-icons.close-alt-icon />
+                                        </button>
+                                    @else
+                                        <button
+                                            wire:click="startEditing({{ $row["student_id"] }})"
+                                            class="text-blue-600 hover:text-blue-900"
+                                        >
+                                            <x-icons.pencil-icon />
+                                        </button>
+                                    @endif
+                                </td>
+                            @endif
 
                             @foreach ($row as $key => $cell)
                                 @if (strpos($key, "id") !== false)
@@ -77,23 +83,25 @@
                                 </td>
                             @endforeach
 
-                            <td class="border border-zinc-300 px-2 py-2 text-center">
-                                @if ($editingId === $row["student_id"])
-                                    <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
-                                        <x-icons.check-alt-icon />
-                                    </button>
-                                    <button wire:click="cancelEditing" class="text-red-600 hover:text-red-900">
-                                        <x-icons.close-alt-icon />
-                                    </button>
-                                @else
-                                    <button
-                                        wire:click="startEditing({{ $row["student_id"] }})"
-                                        class="text-blue-600 hover:text-blue-900"
-                                    >
-                                        <x-icons.pencil-icon />
-                                    </button>
-                                @endif
-                            </td>
+                            @if ($this->laporan->isEditable)
+                                <td class="border border-zinc-300 px-2 py-2 text-center">
+                                    @if ($editingId === $row["student_id"])
+                                        <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
+                                            <x-icons.check-alt-icon />
+                                        </button>
+                                        <button wire:click="cancelEditing" class="text-red-600 hover:text-red-900">
+                                            <x-icons.close-alt-icon />
+                                        </button>
+                                    @else
+                                        <button
+                                            wire:click="startEditing({{ $row["student_id"] }})"
+                                            class="text-blue-600 hover:text-blue-900"
+                                        >
+                                            <x-icons.pencil-icon />
+                                        </button>
+                                    @endif
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

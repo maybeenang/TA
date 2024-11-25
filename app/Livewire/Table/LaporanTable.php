@@ -10,12 +10,15 @@ use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
 use App\Models\ReportStatus;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name'];
 
     public $relations = ['classRoom', 'reportStatus'];
@@ -27,8 +30,6 @@ class LaporanTable extends DynamicTable
     public $customActionBunttons = 'components.columns.partials.actions.laporan';
 
     public $routeName = 'admin.laporan';
-
-    public $academicYearId;
 
     // forms
     public $reportStatusName;
@@ -70,11 +71,6 @@ class LaporanTable extends DynamicTable
     public function filterWithAcademicYear()
     {
         $this->resetPage();
-    }
-
-    public function getAllAcademicYears()
-    {
-        return AcademicYear::query()->get();
     }
 
     public function query(): Builder

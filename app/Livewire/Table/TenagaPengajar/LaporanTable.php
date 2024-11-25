@@ -9,12 +9,15 @@ use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name'];
 
     public $relations = ['classRoom', 'reportStatus'];
@@ -23,16 +26,9 @@ class LaporanTable extends DynamicTable
 
     public $componentAfter = 'livewire.table.after.cpmk-after';
 
-    public $academicYearId;
-
     public function filterWithAcademicYear()
     {
         $this->resetPage();
-    }
-
-    public function getAllAcademicYears()
-    {
-        return AcademicYear::query()->get();
     }
 
     #[On('checking-report')]

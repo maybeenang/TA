@@ -23,9 +23,6 @@
                 const handleCheck = this.handleCheckingReport.bind(this);
                 const handleClose = this.handleCloseModal.bind(this);
 
-                console.log('Setting up event listeners for dialog laporan verifikasi');
-                console.log('Listeners:', { open: handleOpen, check: handleCheck, close: handleClose });
-
                 // Store references untuk cleanup
                 this._listeners = {
                     open: handleOpen,
@@ -126,20 +123,10 @@
             },
 
             handleValidationErrors(errors) {
-                if (!errors?.length) return;
-
                 this.resultDescEl.classList.add('text-red-600', 'mt-2');
 
                 const ul = document.createElement('ul');
                 ul.classList.add('list-disc', 'list-inside', 'text-sm', 'text-red-600');
-
-                errors.forEach((error) => {
-                    const li = document.createElement('li');
-                    li.textContent = error;
-                    ul.appendChild(li);
-                });
-
-                this.resultDescEl.appendChild(ul);
             },
 
             resetState(store) {

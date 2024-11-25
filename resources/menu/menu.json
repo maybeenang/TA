@@ -41,7 +41,7 @@
                 {
                     "url": "admin.laporan.index",
                     "name": "Semua Laporan",
-                    "slug": ["admin.laporan.index", "admin.laporan.show"]
+                    "slug": ["admin.laporan.index", "admin.laporan.show", "admin.laporan.create", "admin.laporan.edit"]
                 },
                 {
                     "url": "admin.laporan.verifikasi",
@@ -61,12 +61,12 @@
                 {
                     "url": "admin.kelas.index",
                     "name": "Kelola Kelas",
-                    "slug": "admin.kelas"
+                    "slug": ["admin.kelas.index", "admin.kelas.show"]
                 },
                 {
                     "url": "admin.mata-kuliah.index",
                     "name": "Kelola Mata Kuliah",
-                    "slug": "admin.mata-kuliah"
+                    "slug": ["admin.mata-kuliah.index", "admin.mata-kuliah.show"]
                 },
                 {
                     "url": "admin.tenaga-pengajar.index",

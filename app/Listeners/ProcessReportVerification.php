@@ -35,7 +35,6 @@ class ProcessReportVerification
 
         Log::info('Checking report verification');
 
-        $status = $report->progres();
 
         // check if report status id is 2
         if ($report->reportStatus->name === ReportStatusEnum::DIKIRIM->value || $report->reportStatus->name === ReportStatusEnum::TERVERIFIKASI->value) {
@@ -47,17 +46,13 @@ class ProcessReportVerification
             return;
         }
 
+        $status = $report->progres();
+
         // check all status is true
         if (in_array(false, $status, true)) {
             Log::info('Report not verified');
             // append status with result
-            $status['message'] = 'Mohon maaf, Pengajuan verifikasi laporan gagal, silahkan periksa kembali data laporan anda, Adapun data yang tidak sesuai adalah';
-
-            $status['errors'] = array_filter($status, fn($value) => $value === false);
-            // get all keys from errors
-            $status['errors'] = array_keys($status['errors']);
-            // convert to normal text
-            $status['errors'] = array_map(fn($value) => $this->reportService->convertCamelCase($value), $status['errors']);
+            $status['message'] = 'Mohon maaf, Pengajuan verifikasi laporan gagal, silahkan periksa kembali data laporan anda';
 
             $status['result'] = false;
             broadcast(new ReportVerified($report->id, $status));

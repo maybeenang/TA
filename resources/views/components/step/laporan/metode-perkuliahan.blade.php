@@ -1,4 +1,12 @@
-<form class="min-h-2 space-y-2" action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}" method="post">
+@php
+    // check if admin or not
+    $is_admin = Route::currentRouteName() === "admin.laporan.edit";
+
+    // if admin then make route to admin, else make route to tenaga-pengajar
+    $route = $is_admin ? "admin.laporan" : "tenaga-pengajar.laporan";
+@endphp
+
+<form class="min-h-2 space-y-2" action="{{ route($route . ".update", $laporan) }}" method="post">
     @csrf
     @method("PUT")
 

@@ -4,7 +4,7 @@
             <x-form.label>Tahun Akademik</x-form.label>
             <x-select class="" name="academic_year_id" wire:model="academicYearId">
                 <option value="-" selected disabled>Pilih Tahun Ajaran</option>
-                @forelse ($this->getAllAcademicYears() as $academicYear)
+                @forelse ($allAcademicYears as $academicYear)
                     <option value="{{ $academicYear->id }}">
                         {{ $academicYear->fullName }}
                     </option>

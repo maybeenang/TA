@@ -99,7 +99,7 @@
                         <!--rata rata-->
                         @if ($loop->last)
                             <tr class="bg-zinc-100">
-                                <td colspan="2" class="border border-zinc-300 p-2">Rata Rata</td>
+                                <td colspan="3" class="border border-zinc-300 p-2">Rata Rata</td>
                                 @foreach ($this->averages() as $average)
                                     <td class="border border-zinc-300 p-2">{{ $average }}%</td>
                                 @endforeach

@@ -95,24 +95,39 @@ class KelasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(ClassRoom $kelas)
     {
-        //
+
+        return view('pages.admin.kelas.edit', compact('kelas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ClassRoom $kelas)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'course_id' => 'required|exists:courses,id',
+            'academic_year_id' => 'required|exists:academic_years,id',
+            'lecturer_id' => 'required|exists:lecturers,id',
+            'mode' => 'nullable|string',
+        ]);
+
+        $kelas->update($validated);
+
+        return redirect()->route('admin.kelas.index')
+            ->with('success', 'Kelas berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ClassRoom $kelas)
     {
-        //
+
+        $kelas->delete();
+        return redirect()->route('admin.kelas.index')
+            ->with('success', 'Kelas berhasil dihapus');
     }
 }

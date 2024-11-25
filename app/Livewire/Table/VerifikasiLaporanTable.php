@@ -11,12 +11,15 @@ use App\Models\ClassRoom;
 use App\Models\Report;
 use App\Models\ReportStatus;
 use App\Services\ReportService;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class VerifikasiLaporanTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name'];
 
     public $relations = ['classRoom', 'reportStatus'];
@@ -29,7 +32,6 @@ class VerifikasiLaporanTable extends DynamicTable
 
     public $routeName = 'admin.laporan';
 
-    public $academicYearId;
 
     private ReportService $reportService;
 
@@ -54,12 +56,6 @@ class VerifikasiLaporanTable extends DynamicTable
     {
         $this->resetPage();
     }
-
-    public function getAllAcademicYears()
-    {
-        return AcademicYear::query()->get();
-    }
-
 
     public function query(): Builder
     {

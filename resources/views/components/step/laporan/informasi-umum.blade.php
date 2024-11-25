@@ -1,4 +1,12 @@
-<form class="min-h-2 space-y-2" action="{{ route("tenaga-pengajar.laporan.update", $laporan) }}" method="post">
+@php
+    // check if admin or not
+    $is_admin = Route::currentRouteName() === "admin.laporan.edit";
+
+    // if admin then make route to admin, else make route to tenaga-pengajar
+    $route = $is_admin ? "admin.laporan" : "tenaga-pengajar.laporan";
+@endphp
+
+<form class="min-h-2 space-y-2" action="{{ route($route . ".update", $laporan) }}" method="post">
     @csrf
     @method("PUT")
 
@@ -25,7 +33,10 @@
     <x-fields.select
         name="responsible_lecturer"
         label="Dosen Penanggung Jawab"
-        :options="$lecturers"
+        :options="$allLecturers->map(fn ($lecturer) => [
+            'value' => $lecturer->id,
+            'label' => $lecturer->user->name,
+        ])"
         placeholder="Pilih Dosen Penanggung Jawab"
         :value="$laporan->responsible_lecturer"
     />
@@ -33,7 +44,10 @@
     <x-fields.select-multiple
         name="report_lecturers[]"
         label="Dosen Pengampu"
-        :options="$lecturers"
+        :options="$allLecturers->map(fn ($lecturer) => [
+            'value' => $lecturer->id,
+            'label' => $lecturer->user->name,
+        ])"
         placeholder="Pilih Dosen Pengampu"
         :value="$laporan->lecturers->pluck('id')->toArray()"
     />

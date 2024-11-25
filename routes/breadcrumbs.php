@@ -4,7 +4,6 @@ use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
-use Illuminate\Support\Facades\Log;
 
 Breadcrumbs::for('welcome', function (BreadcrumbTrail $trail) {
     $trail->push('Beranda', route('welcome'));
@@ -30,6 +29,11 @@ Breadcrumbs::for('admin.mata-kuliah.index', function (BreadcrumbTrail $trail) {
     $trail->push('Mata Kuliah', route('admin.mata-kuliah.index'));
 });
 
+Breadcrumbs::for('admin.mata-kuliah.show', function (BreadcrumbTrail $trail, $mataKuliah) {
+    $trail->parent('admin.mata-kuliah.index');
+    $trail->push($mataKuliah->name, route('admin.mata-kuliah.show', $mataKuliah));
+});
+
 Breadcrumbs::for('admin.mata-kuliah.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.mata-kuliah.index');
     $trail->push('Tambah Mata Kuliah', route('admin.mata-kuliah.create'));
@@ -48,6 +52,16 @@ Breadcrumbs::for('admin.tahun-akademik.create', function (BreadcrumbTrail $trail
 Breadcrumbs::for('admin.kelas.index', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Kelas', route('admin.kelas.index'));
+});
+
+Breadcrumbs::for('admin.kelas.show', function (BreadcrumbTrail $trail, $kelas) {
+    $trail->parent('admin.kelas.index');
+    $trail->push($kelas->fullName, route('admin.kelas.show', $kelas));
+});
+
+Breadcrumbs::for('admin.kelas.edit', function (BreadcrumbTrail $trail, $kelas) {
+    $trail->parent('admin.kelas.index');
+    $trail->push('Edit Kelas', route('admin.kelas.edit', $kelas));
 });
 
 Breadcrumbs::for('admin.kelas.create', function (BreadcrumbTrail $trail) {
@@ -80,9 +94,19 @@ Breadcrumbs::for('admin.laporan.index', function (BreadcrumbTrail $trail) {
     $trail->push('Laporan', route('admin.laporan.index'));
 });
 
+Breadcrumbs::for('admin.laporan.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.laporan.index');
+    $trail->push('Tambah Laporan', route('admin.laporan.create'));
+});
+
 Breadcrumbs::for('admin.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
     $trail->parent('admin.laporan.index');
     $trail->push('Detail Laporan', route('admin.laporan.show', $laporan));
+});
+
+Breadcrumbs::for('admin.laporan.edit', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('admin.laporan.index');
+    $trail->push('Edit Laporan', route('admin.laporan.edit', $laporan));
 });
 
 Breadcrumbs::for('admin.laporan.arsip', function (BreadcrumbTrail $trail) {
@@ -93,6 +117,16 @@ Breadcrumbs::for('admin.laporan.arsip', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('admin.laporan.verifikasi', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Verifikasi Laporan', route('admin.laporan.verifikasi'));
+});
+
+Breadcrumbs::for('admin.signature.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Kelola Tanda Tangan', route('admin.signature.index'));
+});
+
+Breadcrumbs::for('admin.signature.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.signature.index');
+    $trail->push('Tambah Tanda Tangan', route('admin.signature.create'));
 });
 
 // ===================== TENAGA PENGAJAR =====================

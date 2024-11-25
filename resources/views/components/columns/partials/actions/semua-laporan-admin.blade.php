@@ -11,6 +11,13 @@
             <a wire:navigate href="{{ route("admin.laporan.show", $value) }}">
                 <x-dropdown-menu.item @click="">Detail</x-dropdown-menu.item>
             </a>
+
+            @if ($value->isEditable)
+                <a wire:navigate href="{{ route("admin.laporan.edit", $value) }}">
+                    <x-dropdown-menu.item @click="">Edit</x-dropdown-menu.item>
+                </a>
+            @endif
+
             <x-dropdown-menu.item @click="$dispatch('open-ubah-status-laporan', {reportId: {{$value->id}}})">
                 Ubah Status
             </x-dropdown-menu.item>

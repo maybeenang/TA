@@ -32,6 +32,10 @@ class ReportObserver
 
     public function updated(Report $report): void
     {
+        Log::info('Report updated');
+
+
+
         // check apakah yang di update adalah pdf_path atau pdf_status
         if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status')) {
             return;
@@ -44,6 +48,14 @@ class ReportObserver
             GenerateReportPDF::dispatch($report)
                 ->delay(now()->addSeconds(5));
         }
+
+        $userId = $report->classRoom?->lecturer?->user_id;
+
+        if ($userId) {
+            Cache::delete("lecturer_{$userId}");
+        }
+
+        Cache::forget('all_count_dashboard');
     }
 
     /**
