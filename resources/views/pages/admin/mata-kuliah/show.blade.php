@@ -16,9 +16,12 @@
             <table class="w-full border-collapse">
                 @foreach ($mataKuliah->toArray() as $key => $value)
                     @php
-                        if ($key === "created_at" || $key === "updated_at") {
-                            $value = \Carbon\Carbon::parse($value)->isoFormat("dddd, D MMMM Y HH:mm:ss");
-                        }
+                        match ($key) {
+                            "name" => ($key = "Nama"),
+                            "code" => ($key = "Kode"),
+                            "credit" => ($key = "SKS"),
+                            default => ($key = $key),
+                        };
                     @endphp
 
                     <tr class="w-full">
@@ -34,6 +37,10 @@
                     </tr>
                 @endforeach
             </table>
+        </section>
+
+        <section>
+            <livewire:table.kelas-mata-kuliah-table :course="$mataKuliah" />
         </section>
     </div>
 </x-app-layout>

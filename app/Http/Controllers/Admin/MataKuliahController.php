@@ -62,24 +62,49 @@ class MataKuliahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $mataKuliah)
     {
-        //
+        return view('pages.admin.mata-kuliah.edit', compact('mataKuliah'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $mataKuliah)
     {
-        //
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'credit' => 'required|numeric',
+        ]);
+
+        try {
+            $mataKuliah->update([
+                'name' => $validated['name'],
+                'credit' => $validated['credit'],
+            ]);
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat mengubah mata kuliah');
+        }
+
+        return redirect()->route('admin.mata-kuliah.index')
+            ->with('success', 'Mata Kuliah berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $mataKuliah)
     {
-        //
+        try {
+            $mataKuliah->delete();
+        } catch (\Throwable $th) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat menghapus mata kuliah');
+        }
+
+        return redirect()->route('admin.mata-kuliah.index')
+            ->with('success', 'Mata Kuliah berhasil dihapus');
     }
 }

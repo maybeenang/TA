@@ -48,6 +48,6 @@ class ClassRoom extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->course->code . ' ' . $this->course->name . ' ' . $this->name;
+        return $this?->course?->code . ' ' . $this->course?->name . ' ' . $this->name;
     }
 }

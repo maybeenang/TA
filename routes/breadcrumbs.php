@@ -29,6 +29,11 @@ Breadcrumbs::for('admin.mata-kuliah.index', function (BreadcrumbTrail $trail) {
     $trail->push('Mata Kuliah', route('admin.mata-kuliah.index'));
 });
 
+Breadcrumbs::for('admin.mata-kuliah.edit', function (BreadcrumbTrail $trail, $mataKuliah) {
+    $trail->parent('admin.mata-kuliah.index');
+    $trail->push('Edit Mata Kuliah', route('admin.mata-kuliah.edit', $mataKuliah));
+});
+
 Breadcrumbs::for('admin.mata-kuliah.show', function (BreadcrumbTrail $trail, $mataKuliah) {
     $trail->parent('admin.mata-kuliah.index');
     $trail->push($mataKuliah->name, route('admin.mata-kuliah.show', $mataKuliah));

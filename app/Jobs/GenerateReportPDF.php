@@ -87,9 +87,9 @@ class GenerateReportPDF implements ShouldQueue
             $detailLaporan = (object) [
                 'dosenPengampu' => $classroomLecturers,
                 'kelas' => $this->report->classRoom->name,
-                'mataKuliah' => $this->report->classRoom->course->code . ' ' . $this->report->classRoom->course->name,
-                'sks' => $this->report->classRoom->course->credit,
-                'tahunAkademik' => $this->report->classRoom->academicYear->fullName,
+                'mataKuliah' => $this->report?->classRoom?->course?->code . ' ' . $this->report?->classRoom?->course?->name,
+                'sks' => $this->report->classRoom?->course?->credit,
+                'tahunAkademik' => $this->report->classRoom?->academicYear?->fullName,
             ];
 
             // delete last pdf if exist
