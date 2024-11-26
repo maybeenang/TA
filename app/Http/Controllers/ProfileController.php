@@ -32,9 +32,27 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        if ($request->has('nip')) {
+            $request->user()->lecturer()->updateOrCreate(
+                ['user_id' => $request->user()->id],
+                ['nip' => $request->nip]
+            );
+        }
+
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updatePhoto(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'photo' => ['required', 'image', 'max:1024'],
+        ]);
+
+        $request->user()->updateProfilePhoto($request->file('photo'));
+
+        return Redirect::route('profile.edit')->with('status', 'photo-updated');
     }
 
     /**

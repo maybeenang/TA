@@ -20,5 +20,6 @@
                 Jumlah Laporan Sudah Selesai
             </x-card.dashboard-card>
         @endrole
+        <x-card.welcome-card />
     </div>
 </x-app-layout>
