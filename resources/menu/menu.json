@@ -87,7 +87,7 @@
             "submenu": [
                 {
                     "url": "profile.edit",
-                    "name": "Akun"
+                    "name": "Profil"
                 }
             ]
         }

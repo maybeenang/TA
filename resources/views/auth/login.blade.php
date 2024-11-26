@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route("login") }}" class="mx-auto max-w-md flex-1 bg-white/50 p-8 backdrop-blur">
+    <form method="POST" action="{{ route("login") }}" class="mx-auto max-w-md flex-1 bg-white/40 p-8 backdrop-blur">
         <div class="text-center">
             <h1 class="text-4xl font-semibold">Masuk</h1>
             <h1 class="text-2xl">Sistem Informasi</h1>

@@ -21,5 +21,13 @@
             </x-card.dashboard-card>
         @endrole
         <x-card.welcome-card />
+
+        <x-card.dashboard-informasi-card />
+
+        @role("admin")
+            <livewire:grid.admin-verifikasi-laporan />
+        @endrole
+
+        <livewire:grid.laporan-terakhir />
     </div>
 </x-app-layout>

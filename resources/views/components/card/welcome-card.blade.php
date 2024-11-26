@@ -1,8 +1,25 @@
-<div class="col-span-2 grid gap-4 rounded-md border border-zinc-200 bg-white p-4">
-    <section>
-        <p class="text-lg font-bold md:text-3xl">Login</p>
+<div class="col-span-2 flex items-center justify-between rounded-md border border-zinc-200 bg-white p-4">
+    <section class="flex items-center gap-2">
+        <div class="h-[50px] w-[50px] rounded-full border border-zinc-300">
+            <img
+                src="
+                {{ auth()->user()->profile_picture_path }}
+            "
+                alt="
+                {{ auth()->user()->name }}
+                "
+                class="h-full w-full rounded-full object-cover"
+            />
+        </div>
+
+        <div class="">
+            <span class="font-semibold">Selamat Datang</span>
+            <p class="line-clamp-1">{{ auth()->user()->name }}</p>
+        </div>
     </section>
-    <section class="self-end text-center text-xs">
-        <p>button</p>
-    </section>
+    <form action="{{ route("logout") }}" method="post">
+        @csrf
+
+        <x-button type="submit" variant="destructive">Log Out</x-button>
+    </form>
 </div>

@@ -12,8 +12,10 @@
             {{ \Carbon\Carbon::make($verifikasiData?->verified_at ?? now())->locale("id")->isoFormat("dddd, DD MMMM YYYY") ?? "-" }}
         </x-card.description>
     </x-card.header>
-    <x-card.content class="h-64 text-xs">
-        {{ $value->self_evaluation ?? "-" }}
+    <x-card.content class="min-h-32">
+        <p class="line-clamp-4">
+            {{ $value->self_evaluation ?? "-" }}
+        </p>
     </x-card.content>
     <x-card.footer class="flex justify-end gap-2">
         <a href="{{ route("admin.laporan.show", $value) }}">

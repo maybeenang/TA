@@ -10,7 +10,7 @@
 
         <div class="">
             <section class="flex flex-col items-center justify-center gap-2 rounded-md md:justify-start">
-                <div class="mx-auto h-[100px] w-[100px] rounded-md md:h-[200px] md:w-[200px]">
+                <div class="mx-auto h-[100px] w-[100px] rounded-md border border-zinc-400 md:h-[200px] md:w-[200px]">
                     <img
                         src="{{ $user->profile_picture_path }}"
                         alt="{{ $user->name }}"
