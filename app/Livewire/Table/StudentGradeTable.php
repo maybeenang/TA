@@ -11,7 +11,6 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-#[Lazy]
 class StudentGradeTable extends Component
 {
 
@@ -104,6 +103,7 @@ class StudentGradeTable extends Component
             return $data;
         });
     }
+
 
     public function headers()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TenagaPengajar;
 
+use App\Enums\ReportStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Lecturer;
@@ -75,7 +76,7 @@ class LaporanController extends Controller
                 ->with('success', 'Berhasil membuat laporan');
         } catch (\Throwable $th) {
             Log::error($th);
-            return redirect()->back()->with('error', 'Gagal membuat laporan');
+            return redirect()->back()->with('error', 'Gagal membuat laporan ' . $th->getMessage());
         }
     }
 
@@ -92,21 +93,17 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
-        $lecturers = Lecturer::query()
-            ->with('user')
-            // check if user is not null
-            ->whereHas('user')
-            ->get()
-            ->map(function ($lecturer) {
-                return [
-                    'value' => $lecturer->id,
-                    'label' => $lecturer->user->name,
-                ];
-            });
+        $reportStatus = $laporan->reportStatus->name;
+
+        Log::info('Report status: ' . $reportStatus);
+
+        if ($reportStatus !== ReportStatusEnum::DRAFT->value && $reportStatus !== ReportStatusEnum::DITOLAK->value) {
+            $msg = 'Laporan tidak dapat diedit karena sudah ' . $reportStatus . ', jika anda merasa ini adalah kesalahan, silahkan hubungi admin';
+            return view('pages.tenaga-pengajar.laporan.laporan-terverifikasi', compact('laporan', 'msg'));
+        }
 
         return view('pages.tenaga-pengajar.laporan.edit', compact(
             'laporan',
-            'lecturers',
         ));
     }
 
@@ -116,7 +113,6 @@ class LaporanController extends Controller
     public function update(Request $request, Report $laporan)
     {
         try {
-
             $request->validate([
                 'step' => 'required|in:informasi-umum,metode-perkuliahan',
             ]);
@@ -143,39 +139,5 @@ class LaporanController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function print(Report $laporan)
-    {
-        // check if laporan pdf is exist
-        if (!$laporan->pdf_path) {
-            GenerateReportPDF::dispatch($laporan);
-            return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
-        }
-
-        // check ig pdf es exist
-        if (!Storage::exists('pdfs/' . $laporan->pdf_path)) {
-            GenerateReportPDF::dispatch($laporan);
-            return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
-        }
-
-        return Storage::download('pdfs/' . $laporan->pdf_path);
-    }
-
-    public function pdf(Report $laporan)
-    {
-        if (!$laporan->pdf_path) {
-            GenerateReportPDF::dispatch($laporan);
-            // return not found
-            return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
-        }
-
-        // check ig pdf es exist
-        if (!Storage::exists('pdfs/' . $laporan->pdf_path)) {
-            GenerateReportPDF::dispatch($laporan);
-            return response()->json(['message' => 'PDF sedang dibuat, silahkan coba beberapa saat lagi'], 404);
-        }
-
-        return response()->file(Storage::path('pdfs/' . $laporan->pdf_path));
     }
 }

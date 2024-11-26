@@ -23,12 +23,13 @@
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",
-                    "name": "Laporan Portofolio Perkuliahan"
+                    "name": "Laporan Portofolio Perkuliahan",
+                    "slug": ["tenaga-pengajar.laporan.index", "tenaga-pengajar.laporan.show"]
                 },
                 {
                     "url": "tenaga-pengajar.kelas.index",
-                    "name": "Kelas",
-                    "slug": "tenaga-pengajar.kelas"
+                    "name": "Daftar Kelas",
+                    "slug": ["tenaga-pengajar.kelas.index", "tenaga-pengajar.kelas.show"]
                 }
             ]
         },
@@ -39,32 +40,42 @@
             "submenu": [
                 {
                     "url": "admin.laporan.index",
-                    "name": "Laporan",
-                    "slug": "admin.laporan"
+                    "name": "Semua Laporan",
+                    "slug": ["admin.laporan.index", "admin.laporan.show", "admin.laporan.create", "admin.laporan.edit"]
+                },
+                {
+                    "url": "admin.laporan.verifikasi",
+                    "name": "Verifikasi Laporan",
+                    "slug": ["admin.laporan.verifikasi"]
+                },
+                {
+                    "url": "admin.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": ["admin.laporan.arsip"]
+                },
+                {
+                    "url": "admin.signature.index",
+                    "name": "Kelola Tanda Tangan",
+                    "slug": ["admin.signature.verifikasi"]
                 },
                 {
                     "url": "admin.kelas.index",
-                    "name": "Kelas",
-                    "slug": "admin.kelas"
+                    "name": "Kelola Kelas",
+                    "slug": ["admin.kelas.index", "admin.kelas.show"]
                 },
                 {
                     "url": "admin.mata-kuliah.index",
-                    "name": "Mata Kuliah",
-                    "slug": "admin.mata-kuliah"
-                },
-                {
-                    "url": "admin.tenaga-pengajar.index",
-                    "name": "Tenaga Pengajar",
-                    "slug": "admin.tenaga-pengajar"
+                    "name": "Kelola Mata Kuliah",
+                    "slug": ["admin.mata-kuliah.index", "admin.mata-kuliah.show"]
                 },
                 {
                     "url": "admin.tahun-akademik.index",
-                    "name": "Tahun Akademik",
+                    "name": "Kelola Tahun Akademik",
                     "slug": "admin.tahun-akademik"
                 },
                 {
                     "url": "admin.user.index",
-                    "name": "Pengguna",
+                    "name": "Kelola Pengguna",
                     "slug": "admin.user"
                 }
             ]
@@ -76,11 +87,7 @@
             "submenu": [
                 {
                     "url": "profile.edit",
-                    "name": "Akun"
-                },
-                {
-                    "url": "logout",
-                    "name": "Keluar"
+                    "name": "Profil"
                 }
             ]
         }

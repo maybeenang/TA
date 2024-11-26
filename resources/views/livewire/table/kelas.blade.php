@@ -1,19 +1,15 @@
 <div class="">
-    <x-form class="max-w-sm mx-auto" wire:submit="filterWithAcademicYear">
+    <x-form class="mx-auto max-w-sm" wire:submit="filterWithAcademicYear">
         <x-form.item name="academic_year_id">
             <x-form.label>Tahun Akademik</x-form.label>
             <x-select class="" name="academic_year_id" wire:model="academicYearId">
-                <option value="-" selected disabled>
-                    Pilih Tahun Ajaran
-                </option>
-                @forelse ($this->getAllAcademicYears() as $academicYear)
+                <option value="-" selected disabled>Pilih Tahun Ajaran</option>
+                @forelse ($allAcademicYears as $academicYear)
                     <option value="{{ $academicYear->id }}">
-                        {{ $academicYear->name }}
+                        {{ $academicYear->fullName }}
                     </option>
                 @empty
-                    <option value="" disabled>
-                        Tidak ada tahun ajaran
-                    </option>
+                    <option value="" disabled>Tidak ada tahun ajaran</option>
                 @endforelse
             </x-select>
             <x-form.message />

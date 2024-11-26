@@ -18,8 +18,12 @@
                         @php
                             $isActive = isset($subitem->url) && strpos(Route::currentRouteName(), $subitem->url) !== false;
 
-                            if (! $isActive) {
-                                $isActive = isset($subitem->slug) && strpos(Route::currentRouteName(), $subitem->slug) !== false;
+                            if (! $isActive && isset($subitem->slug)) {
+                                if (is_array($subitem->slug)) {
+                                    $isActive = in_array(Route::currentRouteName(), $subitem->slug);
+                                } else {
+                                    $isActive = Route::currentRouteName() === $subitem->slug;
+                                }
                             }
                         @endphp
 
@@ -30,6 +34,7 @@
                                 "bg-yellow-100" => $isActive,
                             ])
                             href="{{ route($subitem->url) }}"
+                            wire:navigate
                         >
                             {{ $subitem->name }}
                         </a>

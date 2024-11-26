@@ -7,6 +7,7 @@ use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Expr\Throw_;
 
 class ReportService
 {
@@ -180,7 +181,7 @@ class ReportService
         return DB::transaction(function () use ($validated) {
 
             if (Report::where('class_room_id', $validated['classroom'])->exists()) {
-                return redirect()->back()->with('error', 'Kelas ini sudah memiliki laporan');
+                throw new \Exception('Laporan sudah ada');
             }
 
             $report = Report::create([
@@ -216,5 +217,41 @@ class ReportService
 
             return $laporan;
         });
+    }
+
+    public function tolakLaporan($id, string $catatan = '')
+    {
+        $laporan = Report::find($id);
+        return DB::transaction(function () use ($laporan, $catatan) {
+            $laporan->update([
+                'report_status_id' => 4,
+                'note' => $catatan,
+            ]);
+
+            return $laporan;
+        });
+    }
+
+    public function verifikasiLaporan(Report $laporan, int $signatureId)
+    {
+        return DB::transaction(function () use ($laporan, $signatureId) {
+            $laporan->update([
+                'report_status_id' => 3,
+                'verified_at' => now(),
+                'verified_by' => Auth::id(),
+                'signature_id' => $signatureId,
+            ]);
+
+            return $laporan;
+        });
+    }
+
+
+    public function convertCamelCase($camelCaseString)
+    {
+        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
+        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
+        // Ubah kata pertama dari setiap kata menjadi huruf besar
+        return ucwords($result);
     }
 }

@@ -27,6 +27,7 @@
     "dependencies": {
         "@alpinejs/anchor": "^3.14.3",
         "@alpinejs/collapse": "^3.14.3",
+        "handsontable": "^14.6.1",
         "pdfobject": "^2.3.0",
         "puppeteer": "^23.8.0"
     }

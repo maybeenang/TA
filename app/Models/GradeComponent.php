@@ -43,15 +43,20 @@ class GradeComponent extends Model
 
     public function standardDeviation()
     {
-        $scores = $this->studentGrades->pluck('score');
-        $mean = $scores->avg();
-        $count = $scores->count();
-        $sum = $scores->sum();
-        $squaredSum = $scores->map(function ($score) {
-            return pow($score, 2);
-        })->sum();
-        $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+        try {
+            $scores = $this->studentGrades->pluck('score');
+            $count = $scores->count();
+            $sum = $scores->sum();
+            $squaredSum = $scores->map(function ($score) {
+                return pow($score, 2);
+            })->sum();
 
-        return round(sqrt($variance), 2);
+            $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+            return round(sqrt($variance), 2);
+        } catch (\DivisionByZeroError $e) {
+            return 0;
+        } catch (\Error $e) {
+            return 0;
+        }
     }
 }

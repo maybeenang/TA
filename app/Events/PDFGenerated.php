@@ -19,7 +19,7 @@ class PDFGenerated implements ShouldBroadcast
      * Create a new event instance.
      */
 
-    public function __construct(public int $id) {}
+    public function __construct(public int $id, public bool $status) {}
 
     /**
      * Get the channels the event should broadcast on.
@@ -29,7 +29,7 @@ class PDFGenerated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('pdf-generated'),
+            new Channel('pdf-generated-' . $this->id),
         ];
     }
 }

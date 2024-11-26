@@ -10,40 +10,50 @@ use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
 use App\Models\ReportStatus;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name'];
 
     public $relations = ['classRoom', 'reportStatus'];
 
     public $componentBefore = 'livewire.table.kelas';
 
+    public $componentAfter = 'livewire.table.after.cpmk-after';
+
     public $customActionBunttons = 'components.columns.partials.actions.laporan';
 
     public $routeName = 'admin.laporan';
 
-    public $academicYearId;
-
     // forms
     public $reportStatusName;
+    public $selectedChangeReport;
+    public $reportNote;
 
     public function getAllReportStatuses()
     {
         return ReportStatusEnum::toSelectArray();
     }
 
-    public function changeReportStatus($reportId)
+    public function changeReportStatus()
     {
         if ($this->reportStatusName === null) {
             return;
         }
-        $report = Report::find($reportId);
+        $report = Report::find($this->selectedChangeReport);
         $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
         $report->report_status_id = $reportStatusId;
+
+        if ($this->reportNote && $this->reportStatusName === 'ditolak') {
+            $report->note = $this->reportNote;
+        }
+
         $report->save();
 
         $this->reset('reportStatusName');
@@ -54,34 +64,13 @@ class LaporanTable extends DynamicTable
     public function closeModal()
     {
         $this->reset('reportStatusName');
+        $this->reset('selectedChangeReport');
+        $this->reset('reportNote');
     }
 
     public function filterWithAcademicYear()
     {
         $this->resetPage();
-    }
-
-    public function getAllAcademicYears()
-    {
-        return AcademicYear::query()->get();
-    }
-
-
-    function convertCamelCase($camelCaseString)
-    {
-        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
-        // Ubah kata pertama dari setiap kata menjadi huruf besar
-        return ucwords($result);
-    }
-
-
-    function convertKebabCase($camelCaseString)
-    {
-        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
-        // Ubah semua huruf menjadi kecil
-        return strtolower($result);
     }
 
     public function query(): Builder
@@ -100,12 +89,11 @@ class LaporanTable extends DynamicTable
         return [
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
-            Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
-            Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
-            Column::make('reportStatus.name', 'Status')->component('columns.report-status'),
-            Column::make('', 'Progres')->component('columns.progres-laporan-admin'),
+            Column::make('classRoom.course.code', 'Kode MK'),
+            Column::make('classRoom.course.name', 'Mata Kuliah'),
+            Column::make('', 'Status')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('id', ' ')->component('columns.actions')->sortable(false),
+            Column::make('', ' ')->component('columns.partials.actions.semua-laporan-admin'),
         ];
     }
 

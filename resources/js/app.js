@@ -1,5 +1,5 @@
+import.meta.glob(["../images/**"]);
 import "./bootstrap";
-
 import collapse from "@alpinejs/collapse";
 import anchor from "@alpinejs/anchor";
 import { embed, pdfobjectversion } from "pdfobject";
@@ -16,6 +16,16 @@ document.addEventListener(
         window.Alpine.plugin(anchor);
 
         window.embed = embed;
+
+        window.Alpine.store("dialogLaporanVerifikasi", {
+            isValidating: false,
+            isValidationDone: false,
+            toggleIsValidating() {
+                this.isValidating = !this.isValidating;
+            },
+            reportId: null,
+            validationResults: {},
+        });
     },
     { once: true },
 );

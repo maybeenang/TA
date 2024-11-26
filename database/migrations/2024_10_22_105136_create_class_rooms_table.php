@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('schedule')->nullable();
+            $table->string('mode')->nullable();
+
             $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
             $table->foreignId('academic_year_id')->constrained('academic_years')->cascadeOnDelete();
             $table->foreignId('lecturer_id')->nullable()->constrained('lecturers')->nullOnDelete();

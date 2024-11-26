@@ -1,38 +1,61 @@
 <x-app-layout>
     <div
-        class="border-zinc-100 border p-2 rounded-md border-t-red-500 border-t-4 border-b-yellow-500 border-b-4 space-y-4">
-        <span class="text-sm flex items-center gap-1">
+        class="space-y-4 rounded-md border border-b-4 border-t-4 border-zinc-100 border-b-yellow-500 border-t-red-500 p-2"
+    >
+        <span class="flex items-center gap-1 text-sm">
             <x-icons.person-icon />
             Edit Informasi Pengguna
         </span>
         <div class="">
-
-            <section class="rounded-md flex items-center justify-center md:justify-start flex-col gap-2 ">
-                <div class="h-[300px] w-[300px] md:h-[200px] md:w-[200px] rounded-md bg-zinc-200 mx-auto">
-
+            <section class="flex flex-col items-center justify-center gap-2 rounded-md md:justify-start">
+                <div class="mx-auto h-[300px] w-[300px] rounded-md bg-zinc-200 md:h-[200px] md:w-[200px]">
+                    <img
+                        src="{{ $user->profile_picture_path }}"
+                        alt="{{ $user->name }}"
+                        class="h-full w-full rounded-md object-cover"
+                    />
                 </div>
-                <x-button>Upload Foto</x-button>
             </section>
-            <section class="rounded-md max-w-screen-md mx-auto">
-                <x-form class="max-w-md mx-auto" action="{{ route('admin.user.update', $user) }}" method="POST">
+            <section class="mx-auto max-w-screen-md rounded-md">
+                <x-form class="mx-auto max-w-md" action="{{ route('admin.user.update', $user) }}" method="POST">
                     @csrf
-                    @method('PUT')
+                    @method("PUT")
 
                     <x-form.item name="name">
                         <x-form.label>Nama</x-form.label>
-                        <x-input x-form:control required placeholder="John Doe" name="name" :value="old('name', $user->name)" />
+                        <x-input
+                            x-form:control
+                            required
+                            placeholder="John Doe"
+                            name="name"
+                            :value="old('name', $user->name)"
+                        />
                         <x-form.message />
                     </x-form.item>
                     <x-form.item name="nip">
-                        <x-form.label>NIP <span class="text-sm font-normal">(optional)</span></x-form.label>
-                        <x-input x-form:control placeholder="1234567890" name="nip" :value="old('nip', $user?->lecturer?->nip)" />
+                        <x-form.label>
+                            NIP
+                            <span class="text-sm font-normal">(optional)</span>
+                        </x-form.label>
+                        <x-input
+                            x-form:control
+                            placeholder="1234567890"
+                            name="nip"
+                            :value="old('nip', $user?->lecturer?->nip)"
+                        />
                         <x-form.message />
                     </x-form.item>
 
                     <x-form.item name="email">
                         <x-form.label>Email</x-form.label>
-                        <x-input type="email" x-form:control required placeholder="johndoe@email.com" name="email"
-                            :value="old('email', $user->email)" />
+                        <x-input
+                            type="email"
+                            x-form:control
+                            required
+                            placeholder="johndoe@email.com"
+                            name="email"
+                            :value="old('email', $user->email)"
+                        />
                         <x-form.message />
                     </x-form.item>
 
@@ -44,18 +67,21 @@
                             </p>
                         </div>
                         <div class="flex gap-4">
-
                             @foreach ($roles as $role)
                                 <x-form.item class="">
-                                    <x-checkbox id="{{ $role->value }}" x-form:control name="roles[]"
-                                        value="{{ $role->value }}" :checked="in_array(
+                                    <x-checkbox
+                                        id="{{ $role->value }}"
+                                        x-form:control
+                                        name="roles[]"
+                                        value="{{ $role->value }}"
+                                        :checked="in_array(
                                             $role->value,
                                             old('roles', $user->roles->pluck('name')->toArray()),
-                                        )" />
+                                        )"
+                                    />
                                     <x-form.label class="whitespace-nowrap">{{ $role->label() }}</x-form.label>
                                 </x-form.item>
                             @endforeach
-
                         </div>
                         <x-form.message />
                     </x-form.item>
@@ -86,5 +112,4 @@
             </section>
         </div>
     </div>
-
 </x-app-layout>

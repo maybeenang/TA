@@ -3,8 +3,7 @@ export default function (Alpine) {
         if (!directive.value) handleRoot(el, Alpine);
         else if (directive.value === "items") handleItems(el, Alpine);
         else if (directive.value === "item") handleItem(el, Alpine);
-        else if (directive.value === "checkboxitem")
-            handleCheckboxItem(el, Alpine);
+        else if (directive.value === "checkboxitem") handleCheckboxItem(el, Alpine);
         else if (directive.value === "radiogroup") handleRadioGroup(el, Alpine);
         else if (directive.value === "radioitem") handleRadioItem(el, Alpine);
         else if (directive.value === "button") handleButton(el, Alpine);
@@ -17,11 +16,7 @@ export default function (Alpine) {
 function handleRoot(el, Alpine) {
     Alpine.bind(el, {
         "x-id"() {
-            return [
-                "alpine-dropdown-menu",
-                "alpine-dropdown-menu-button",
-                "alpine-dropdown-menu-items",
-            ];
+            return ["alpine-dropdown-menu", "alpine-dropdown-menu-button", "alpine-dropdown-menu-items"];
         },
         ":id"() {
             return this.$id("alpine-dropdown-menu");
@@ -35,8 +30,7 @@ function handleRoot(el, Alpine) {
                 __activeEl: null,
                 __isOpen: false,
                 __next() {
-                    let nextElement =
-                        this.__itemEls.indexOf(document.activeElement) + 1;
+                    let nextElement = this.__itemEls.indexOf(document.activeElement) + 1;
 
                     if (nextElement > this.__itemEls.length - 1) {
                         return this.__firstEl.focus();
@@ -45,8 +39,7 @@ function handleRoot(el, Alpine) {
                     this.__itemEls[nextElement].focus();
                 },
                 __previous() {
-                    let previousElement =
-                        this.__itemEls.indexOf(document.activeElement) - 1;
+                    let previousElement = this.__itemEls.indexOf(document.activeElement) - 1;
 
                     if (previousElement < 0) {
                         return this.__lastEl.focus();
@@ -58,19 +51,17 @@ function handleRoot(el, Alpine) {
                     this.__isOpen = true;
 
                     this.$nextTick(() => {
-                        activationStrategy &&
-                            this[activationStrategy].focus({
-                                preventScroll: true,
-                            });
+                        activationStrategy;
+                        //&&
+                        //this[activationStrategy].focus({
+                        //    preventScroll: true,
+                        //});
                     });
                 },
                 __close(focusAfter = true) {
                     this.__isOpen = false;
 
-                    focusAfter &&
-                        this.$nextTick(() =>
-                            this.$refs.__button.focus({ preventScroll: true }),
-                        );
+                    focusAfter && this.$nextTick(() => this.$refs.__button.focus({ preventScroll: true }));
                 },
             };
         },
@@ -94,16 +85,10 @@ function handleButton(el, Alpine) {
             return this.$data.__isOpen;
         },
         ":aria-controls"() {
-            return (
-                this.$data.__isOpen && this.$id("alpine-dropdown-menu-items")
-            );
+            return this.$data.__isOpen && this.$id("alpine-dropdown-menu-items");
         },
         "x-init"() {
-            if (
-                this.$el.tagName.toLowerCase() === "button" &&
-                !this.$el.hasAttribute("type")
-            )
-                this.$el.type = "button";
+            if (this.$el.tagName.toLowerCase() === "button" && !this.$el.hasAttribute("type")) this.$el.type = "button";
         },
         "@click"() {
             this.$data.__open();
@@ -161,8 +146,7 @@ function handleItems(el, Alpine) {
                 ),
             );
             this.$data.__firstEl = this.$data.__itemEls[0];
-            this.$data.__lastEl =
-                this.$data.__itemEls[this.$data.__itemEls.length - 1];
+            this.$data.__lastEl = this.$data.__itemEls[this.$data.__itemEls.length - 1];
         },
         "@click"() {
             this.$data.__close();
@@ -387,11 +371,7 @@ function handleRadioItem(el, Alpine) {
 function handleSubRoot(el, Alpine) {
     Alpine.bind(el, {
         "x-id"() {
-            return [
-                "alpine-dropdown-menu",
-                "alpine-dropdown-menu-button",
-                "alpine-dropdown-menu-items",
-            ];
+            return ["alpine-dropdown-menu", "alpine-dropdown-menu-button", "alpine-dropdown-menu-items"];
         },
         ":id"() {
             return this.$id("alpine-dropdown-menu");
@@ -405,8 +385,7 @@ function handleSubRoot(el, Alpine) {
                 __button: null,
                 __isOpen: false,
                 __next() {
-                    let nextElement =
-                        this.__itemEls.indexOf(document.activeElement) + 1;
+                    let nextElement = this.__itemEls.indexOf(document.activeElement) + 1;
 
                     if (nextElement > this.__itemEls.length - 1) {
                         return this.__firstEl.focus();
@@ -415,8 +394,7 @@ function handleSubRoot(el, Alpine) {
                     this.__itemEls[nextElement].focus();
                 },
                 __previous() {
-                    let previousElement =
-                        this.__itemEls.indexOf(document.activeElement) - 1;
+                    let previousElement = this.__itemEls.indexOf(document.activeElement) - 1;
 
                     if (previousElement < 0) {
                         return this.__lastEl.focus();
@@ -515,8 +493,7 @@ function handleSubItems(el, Alpine) {
                 ),
             );
             this.$data.__firstEl = this.$data.__itemEls[0];
-            this.$data.__lastEl =
-                this.$data.__itemEls[this.$data.__itemEls.length - 1];
+            this.$data.__lastEl = this.$data.__itemEls[this.$data.__itemEls.length - 1];
         },
         "@click.outside"() {
             this.$data.__close();
@@ -585,10 +562,7 @@ let dom = {
         }
 
         let el = els.find((el) => {
-            return el.textContent
-                .trim()
-                .toLowerCase()
-                .startsWith(this.searchQuery);
+            return el.textContent.trim().toLowerCase().startsWith(this.searchQuery);
         });
 
         el && receiver(el);

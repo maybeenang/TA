@@ -3,52 +3,41 @@
 namespace App\Livewire\Table\TenagaPengajar;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
+use App\Events\CheckingReport;
 use App\Livewire\DynamicTable;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Report;
+use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Livewire\Attributes\On;
 
 class LaporanTable extends DynamicTable
 {
+    use WithAcademicYear;
+
     public $searchColumns = ['name'];
 
     public $relations = ['classRoom', 'reportStatus'];
 
     public $componentBefore = 'livewire.table.kelas';
 
-
-    public $academicYearId;
+    public $componentAfter = 'livewire.table.after.cpmk-after';
 
     public function filterWithAcademicYear()
     {
         $this->resetPage();
     }
 
-    public function getAllAcademicYears()
+    #[On('checking-report')]
+    public function ajukanVerifikasi($id)
     {
-        return AcademicYear::query()->get();
+        if ($id) {
+            broadcast(new CheckingReport($id));
+        }
     }
-
-    function convertCamelCase($camelCaseString)
-    {
-        // Tambahkan spasi sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);
-        // Ubah kata pertama dari setiap kata menjadi huruf besar
-        return ucwords($result);
-    }
-
-
-    function convertKebabCase($camelCaseString)
-    {
-        // Tambahkan tanda - sebelum huruf kapital yang diikuti oleh huruf kecil
-        $result = preg_replace('/([a-z])([A-Z])/', '$1-$2', $camelCaseString);
-        // Ubah semua huruf menjadi kecil
-        return strtolower($result);
-    }
-
 
     public function query(): Builder
     {
@@ -69,12 +58,18 @@ class LaporanTable extends DynamicTable
         return [
             Column::make('classRoom.id', 'Kode Kelas'),
             Column::make('classRoom.name', 'Nama Kelas'),
-            Column::make('classRoom.course.code', 'Kode Mata Kuliah'),
-            Column::make('classRoom.course.name', 'Nama Mata Kuliah'),
-            Column::make('reportStatus.name', 'Status Laporan')->component('columns.report-status'),
-            Column::make('', 'Progres')->component('columns.progres-laporan'),
+            Column::make('classRoom.course.code', 'Kode MK'),
+            Column::make('classRoom.course.name', 'Mata Kuliah'),
+            Column::make('', 'Status Laporan')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('id', ' ')->component('columns.partials.actions.laporan-tenaga-pengajar'),
+            Column::make('', ' ')->component('columns.partials.actions.laporan-tenaga-pengajar'),
+        ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.confirm-laporan-verifikasi', 'verifikasiLaporan'),
         ];
     }
 }

@@ -20,6 +20,9 @@ export default {
             },
         },
         extend: {
+            backgroundImage: {
+                loginImage: "url('/resources/images/login_image.jpg')",
+            },
             colors: {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",

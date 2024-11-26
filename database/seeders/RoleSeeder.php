@@ -35,5 +35,11 @@ class RoleSeeder extends Seeder
                 $user->assignRole($admin);
             });
         }
+
+        $me = User::where('email', 'elangpermadani123@gmail.com')->first();
+
+        if ($me) {
+            $me->assignRole($tenagaPengajar);
+        }
     }
 }

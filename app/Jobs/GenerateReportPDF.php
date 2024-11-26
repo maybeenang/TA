@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Enums\ReportStatusEnum;
+use Illuminate\Support\Str;
 use App\Events\PDFGenerated;
 use App\Models\Report;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,25 +42,28 @@ class GenerateReportPDF implements ShouldQueue
             $distribusiNilai = $this->report->gradeComponents
                 ->map(function ($gradeComponent) {
                     $scores = $gradeComponent->studentGrades->pluck('score');
+                    // get scores length
                     return [
                         'name' => $gradeComponent->name,
-                        'min' => $scores->min(),
-                        'max' => $scores->max(),
-                        'range' => $scores->max() - $scores->min(),
-                        'average' => round($scores->avg(), 2),
-                        'simpangan_baku' => $gradeComponent->standardDeviation(),
+                        'min' => $scores->min() ?? 0,
+                        'max' => $scores->max() ?? 0,
+                        'range' => $scores->max() - $scores->min() ?? 0,
+                        'average' => round($scores->avg(), 2) ?? 0,
+                        'simpangan_baku' => $gradeComponent->standardDeviation() ?? 0,
                     ];
                 });
+
 
             // append new value to distribusiNilai
             $distribusiNilai->push([
                 'name' => 'Nilai',
                 'min' => $this->report->grades->min('total_score') ?? 0,
                 'max' => $this->report->grades->max('total_score') ?? 0,
-                'range' => $this->report->grades->max('total_score') - $this->report->grades->min('total_score'),
-                'average' => $this->report->grades->avg('total_score') ?? 0,
+                'range' => $this->report?->grades?->max('total_score') - $this->report->grades->min('total_score'),
+                'average' => $this->report?->grades?->avg('total_score') ?? 0,
                 'simpangan_baku' => $this->report->standarDeviation ?? 0,
             ]);
+
 
             $rentangNilai = $this->report->gradeScales->map(function ($gradeScale) {
                 return [
@@ -69,11 +74,32 @@ class GenerateReportPDF implements ShouldQueue
                 ];
             });
 
-            $pdfName = 'Laporan-' . $this->report->classRoom->fullName . '.pdf';
+            $verifikasiData = $this->report->verifikasiData();
 
-            $pdfName = str_replace(' ', '-', $pdfName);
-            // check if path is exist
-            //
+            $classroomLecturers = $this->report->lecturers->map(function ($lecturer) {
+                return $lecturer->user->name;
+            })->implode(', ');
+
+            if ($classroomLecturers === '') {
+                $classroomLecturers = $this->report->classRoom?->lecturer?->user?->name ?? '-';
+            }
+
+            $detailLaporan = (object) [
+                'dosenPengampu' => $classroomLecturers,
+                'kelas' => $this->report->classRoom->name,
+                'mataKuliah' => $this->report?->classRoom?->course?->code . ' ' . $this->report?->classRoom?->course?->name,
+                'sks' => $this->report->classRoom?->course?->credit,
+                'tahunAkademik' => $this->report->classRoom?->academicYear?->fullName,
+            ];
+
+            // delete last pdf if exist
+            if ($this->report->pdf_path && Storage::exists('pdfs/' . $this->report->pdf_path)) {
+                Storage::delete('pdfs/' . $this->report->pdf_path);
+            }
+
+            // generate random name with uuid
+            $pdfName = Str::uuid() . '.pdf';
+
             if (!Storage::exists('pdfs')) {
                 Storage::makeDirectory('pdfs');
             }
@@ -82,6 +108,8 @@ class GenerateReportPDF implements ShouldQueue
                 'laporan' => $this->report,
                 'distribusiNilai' => $distribusiNilai,
                 'rentangNilai' => $rentangNilai,
+                'verifikasiData' => $verifikasiData,
+                'detailLaporan' => $detailLaporan,
             ])
                 ->format(Format::A4)
                 ->margins(3, 3, 3, 4, Unit::Centimeter)
@@ -92,9 +120,10 @@ class GenerateReportPDF implements ShouldQueue
                 'pdf_status' => 'done',
             ]);
 
-            broadcast(new PDFGenerated($this->report->id));
+            broadcast(new PDFGenerated($this->report->id, true));
         } catch (\Throwable $th) {
             Log::error($th);
+            broadcast(new PDFGenerated($this->report->id, false));
             throw $th;
         }
     }

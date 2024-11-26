@@ -9,26 +9,23 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TahunAkademikTable extends DynamicTable
 {
-    public $searchColumns = ['name'];
-    /*public $relations = ['lecturer'];*/
-
-    /*public $componentBefore = 'livewire.table.mata-kuliah';*/
+    public $searchColumns = ['name', 'semester'];
 
     public $routeName = 'admin.tahun-akademik';
 
     public function query(): Builder
     {
-        return AcademicYear::query();
+        return AcademicYear::query()
+            ->orderBy('start_date', 'desc');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('name', 'Nama'),
+            Column::make('fullName', 'Nama'),
             Column::make('start_date', 'Mulai')->component('columns.date')->sortable(false),
             Column::make('end_date', 'Selesai')->component('columns.date')->sortable(false),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
-            Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];
     }
 }

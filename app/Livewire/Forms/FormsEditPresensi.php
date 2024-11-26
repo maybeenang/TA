@@ -11,8 +11,8 @@ class FormsEditPresensi extends Form
 {
     public $id;
     public $meeting_name = '';
-    public $student_present = 0;
-    public $student_active = 0;
+    public $student_present;
+    public $student_active;
 
     public function rules(): array
     {
@@ -37,7 +37,7 @@ class FormsEditPresensi extends Form
     {
         $this->id = $data->id;
         $this->meeting_name = $data->meeting_name;
-        $this->student_present = $data->student_present ?? 0;
-        $this->student_active = $data->student_active ?? 0;
+        $this->student_present = $data->student_present;
+        $this->student_active = $data->student_active;
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ReportStatusEnum;
 use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 #[ObservedBy(ReportObserver::class)]
 class Report extends Model
@@ -22,6 +24,14 @@ class Report extends Model
         'class_room_id',
         'pdf_path',
         'pdf_status',
+        'note',
+        'signature_id',
+        'verified_at',
+        'verified_by',
+    ];
+
+    protected $casts = [
+        'verified_at' => 'datetime',
     ];
 
 
@@ -76,6 +86,11 @@ class Report extends Model
         return $this->hasMany(GradeScale::class);
     }
 
+    public function signature()
+    {
+        return $this->belongsTo(Signature::class);
+    }
+
     public function progres()
     {
         $informasiUmum = $this->responsible_lecturer !== null && $this->lecturers->count() > 0;
@@ -88,7 +103,7 @@ class Report extends Model
 
 
         $presensiDanKeaktifan = $this->attendanceAndActivities()->each(function ($attendanceAndActivity) {
-            return $attendanceAndActivity->attendance !== null && $attendanceAndActivity->activity !== null;
+            return $attendanceAndActivity->student_present !== null && $attendanceAndActivity->student_active !== null;
         });
 
         $kriteriaPenilaian = $this->gradeComponents->count() > 0 && $this->gradeScales->count() > 0;
@@ -113,16 +128,22 @@ class Report extends Model
 
     public function getStandarDeviationAttribute()
     {
-        $scores = $this->grades->pluck('total_score');
-        $mean = $scores->avg();
-        $count = $scores->count();
-        $sum = $scores->sum();
-        $squaredSum = $scores->map(function ($score) {
-            return pow($score, 2);
-        })->sum();
-        $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
-        // get two decimal
-        return round(sqrt($variance), 2);
+
+        try {
+            $scores = $this->grades->pluck('total_score');
+            $count = $scores->count();
+            $sum = $scores->sum();
+            $squaredSum = $scores->map(function ($score) {
+                return pow($score, 2);
+            })->sum();
+
+            $variance = ($squaredSum - ($sum ** 2) / $count) / ($count - 1);
+            return round(sqrt($variance), 2);
+        } catch (\DivisionByZeroError $e) {
+            return 0;
+        } catch (\Error $e) {
+            return 0;
+        }
     }
 
     public function convertToGradeScale($score)
@@ -185,5 +206,47 @@ class Report extends Model
         $currentRelation = $this->$relation;
 
         return $originalRelation != $currentRelation;
+    }
+
+
+    public function verifikasiData()
+    {
+        $reportStatus = $this->reportStatus->name;
+
+        if ($reportStatus !== ReportStatusEnum::TERVERIFIKASI->value) {
+            // return collection
+            return (object)[
+                'name' => '-',
+                'nip' => '-',
+                'email' => '-',
+            ];
+        }
+
+
+        $verifikator = User::find($this->verified_by);
+
+        if (!$verifikator) {
+            return (object)[
+                'name' => '-',
+                'nip' => '-',
+                'email' => '-',
+            ];
+        }
+
+
+
+        // return object
+        return (object)[
+            'name' => $verifikator?->name ?? '-',
+            'nip' => $verifikator?->lecturer?->nip ?? '-',
+            'email' => $verifikator?->email ?? '-',
+            'verified_at' => $this?->verified_at ?? now(),
+            'signature' => $this?->signature?->path ?? null,
+        ];
+    }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->reportStatus->name === ReportStatusEnum::DRAFT->value || $this->reportStatus->name === ReportStatusEnum::DITOLAK->value;
     }
 }

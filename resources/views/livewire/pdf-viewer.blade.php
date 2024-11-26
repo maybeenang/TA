@@ -1,7 +1,15 @@
 <div>
+    <div class="mb-4 flex justify-end">
+        <x-button variant="secondary" wire:click="regeneratePdf" :disabled="$this->isGenerating">
+            Generate Ulang PDF
+        </x-button>
+    </div>
     @if ($this->isGenerating)
-        <div class="flex h-full items-center justify-center">
-            <div class="text-center">
+        <div
+            class="flex h-full items-center justify-center"
+            @pdf-failed.window="$refs.pdfLoading.innerHTML = 'Gagal generate PDF, Silahkan coba lagi'; $refs.pdfLoading.classList.add('text-red-600')"
+        >
+            <div class="text-center" x-ref="pdfLoading">
                 <div role="status">
                     <x-icons.loading-spinner class="h-8 w-8 animate-spin fill-blue-600 text-gray-200" />
                     <span class="sr-only">Loading...</span>
@@ -10,22 +18,25 @@
             </div>
         </div>
     @else
-        <iframe
-            src="{{ route("tenaga-pengajar.laporan.pdf", $report) }}"
-            width="100%"
-            height="1000px"
-            style="border: none"
-        >
+        <iframe src="{{ route("laporan.pdf", $report) }}" width="100%" height="1000px" style="border: none">
             This browser does not support PDFs. Please download the PDF to view it:
-            <a href="{{ route("tenaga-pengajar.laporan.pdf", $report) }}">Download PDF</a>
+            <a href="{{ route("laporan.pdf", $report) }}">Download PDF</a>
         </iframe>
     @endif
 
     @script
         <script type="module">
-            console.log('pepek');
-            Echo.channel('pdf-generated').listen('PDFGenerated', (e) => {
-                $wire.$call('checkPdfStatus');
+            const reportId = await $wire.$call('getReportIdProperty');
+            console.log('reportId', reportId);
+            Echo.channel(`pdf-generated-${reportId}`).listen('PDFGenerated', (e) => {
+                console.log('PDFGenerated', e);
+                if (e.status == true) {
+                    $wire.$call('pdfHasGenerated');
+                } else {
+                    console.error('Failed to generate PDF');
+                    // dispatch event to parent component
+                    window.dispatchEvent(new CustomEvent('pdf-failed'));
+                }
             });
 
             $wire.$call('checkPdfStatus');

@@ -42,6 +42,12 @@ return new class extends Migration
             $table->longText('teaching_methods')->nullable();
             $table->longText('self_evaluation')->nullable();
             $table->longText('follow_up_plan')->nullable();
+            $table->longText('note')->nullable();
+
+            // verified at
+            $table->timestamp('verified_at')->nullable();
+            // verified by
+            $table->foreignId('verified_by')->nullable()->constrained('users')->cascadeOnDelete();
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_status_id')->constrained('report_statuses')->cascadeOnDelete();

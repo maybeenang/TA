@@ -1,7 +1,8 @@
-@props(['value'])
+@props([
+    "value",
+])
 @php
     $lecturerName = App\Models\ClassRoom::find($value)?->lecturer?->user?->name;
-
 @endphp
 
 <div class="">
@@ -11,7 +12,7 @@
         <p class="text-gray-400">Belum ada</p>
 
         <x-dialog>
-            <x-dialog.trigger class="text-blue-500 text-sm">Tambah</x-dialog.trigger>
+            <x-dialog.trigger class="text-sm text-blue-500">Tambah</x-dialog.trigger>
             <x-dialog.content>
                 <x-dialog.header>
                     <x-dialog.title>Tambah Tenaga Pengajar</x-dialog.title>
@@ -21,11 +22,11 @@
                 </x-dialog.header>
 
                 @php
-                    $lecturers = $this->getAllLecturers();
+                    $lecturers = $allLecturers;
                     $lecturers = $lecturers->map(function ($lecturer) {
                         return [
-                            'id' => $lecturer->id,
-                            'name' => $lecturer?->user?->name,
+                            "id" => $lecturer->id,
+                            "name" => $lecturer?->user?->name,
                         ];
                     });
 
@@ -45,11 +46,16 @@
                         </div>
                         <div class="grid grid-cols-4 items-center gap-4">
                             <x-label htmlFor="username" class="text-right">Tenaga Pengajar</x-label>
-                            <x-select autofocus id="lecturer_id" name="lecturer_id" class="col-span-3"
-                                wire:model="lecturerId">
+                            <x-select
+                                autofocus
+                                id="lecturer_id"
+                                name="lecturer_id"
+                                class="col-span-3"
+                                wire:model="lecturerId"
+                            >
                                 <option value="">Pilih Tenaga Pengajar</option>
                                 @foreach ($lecturers as $lecturer)
-                                    <option value="{{ $lecturer['id'] }}">{{ $lecturer['name'] }}</option>
+                                    <option value="{{ $lecturer["id"] }}">{{ $lecturer["name"] }}</option>
                                 @endforeach
                             </x-select>
                         </div>
@@ -58,7 +64,6 @@
                         <x-button type="submit">Save changes</x-button>
                     </x-dialog.footer>
                 </form>
-
             </x-dialog.content>
         </x-dialog>
     @endif

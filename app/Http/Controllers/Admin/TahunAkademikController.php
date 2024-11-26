@@ -34,6 +34,7 @@ class TahunAkademikController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|max:255',
+            'semester' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
         ]);

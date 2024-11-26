@@ -19,9 +19,11 @@
 
     <div class="overflow-x-auto">
         <div class="min-w-max">
-            <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
+            <table class="mb-8 mt-2 w-full table-auto border-collapse text-wrap border border-zinc-300 text-left">
                 <thead>
                     <tr class="whitespace-nowrap bg-zinc-100 uppercase">
+                        <th class="border border-zinc-300 px-2 py-2">Aksi</th>
+
                         @foreach ($this->headers() as $header)
                             <th class="border border-zinc-300 px-2 py-2">{{ $header }}</th>
                         @endforeach
@@ -37,6 +39,24 @@
                                 "bg-amber-100" => $editingId === $row["id"],
                             ])
                         >
+                            <td class="border border-zinc-300 px-2 py-2 text-center">
+                                @if ($editingId === $row["id"])
+                                    <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
+                                        <x-icons.check-alt-icon />
+                                    </button>
+                                    <button wire:click="cancelEditing" class="text-red-600 hover:text-red-900">
+                                        <x-icons.close-alt-icon />
+                                    </button>
+                                @else
+                                    <button
+                                        wire:click="startEditing({{ $row["id"] }})"
+                                        class="text-blue-600 hover:text-blue-900"
+                                    >
+                                        <x-icons.pencil-icon />
+                                    </button>
+                                @endif
+                            </td>
+
                             @foreach ($row as $key => $cell)
                                 @if (strpos($key, "id") !== false)
                                     @continue
@@ -52,7 +72,7 @@
                                             @keydown.escape="$wire.cancelEditing()"
                                         />
                                     @else
-                                        {{ $cell }}%
+                                        {{ $cell }}
                                     @endif
                                 </td>
                             @endforeach
@@ -79,7 +99,7 @@
                         <!--rata rata-->
                         @if ($loop->last)
                             <tr class="bg-zinc-100">
-                                <td colspan="2" class="border border-zinc-300 p-2">Rata Rata</td>
+                                <td colspan="3" class="border border-zinc-300 p-2">Rata Rata</td>
                                 @foreach ($this->averages() as $average)
                                     <td class="border border-zinc-300 p-2">{{ $average }}%</td>
                                 @endforeach

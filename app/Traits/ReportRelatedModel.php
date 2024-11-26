@@ -41,14 +41,11 @@ trait ReportRelatedModel
             // Gunakan cache untuk debouncing
             $cacheKey = "report_regenerating_{$report->id}";
 
-            Log::info($cacheKey);
-            Log::info(Cache::has($cacheKey));
-
             if (!Cache::has($cacheKey)) {
-                Cache::put($cacheKey, true, now()->addSeconds(20));
+                Cache::put($cacheKey, true, now()->addSeconds(10));
 
                 GenerateReportPDF::dispatch($report)
-                    ->delay(now()->addSeconds(10));
+                    ->delay(now()->addSeconds(5));
             }
         }
     }

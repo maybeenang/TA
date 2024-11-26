@@ -17,7 +17,16 @@
             </x-alert>
         @endif
 
-        <div class="">
+        <div class="mx-auto flex h-96 w-full" wire:loading>
+            <div class="flex h-full items-center justify-center text-center">
+                <div role="status">
+                    <x-icons.loading-spinner class="h-8 w-8 animate-spin fill-blue-600 text-gray-200" />
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="" wire:loading.remove>
             <x-form class="mx-auto w-full" id="editGradeScaleForm" wire:submit="save">
                 @csrf
 
