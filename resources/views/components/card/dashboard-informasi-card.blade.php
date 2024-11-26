@@ -4,7 +4,7 @@
             <img
                 alt=" Logo "
                 class="h-full w-full rounded-full object-cover"
-                src="{{ Vite::asset("/resources/images/logo_if.png") }}"
+                src="{{ Vite::asset("resources/images/logo_if.png") }}"
             />
         </div>
 
