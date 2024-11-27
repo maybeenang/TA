@@ -27,17 +27,25 @@
     @script
         <script type="module">
             const reportId = await $wire.$call('getReportIdProperty');
-            console.log('reportId', reportId);
-            Echo.channel(`pdf-generated-${reportId}`).listen('PDFGenerated', (e) => {
-                console.log('PDFGenerated', e);
-                if (e.status == true) {
+
+            const ev = new EventSource(`${window.mercureUrl}?topic=${encodeURIComponent('pdf-generated-' + reportId)}`);
+
+            ev.onmessage = (e) => {
+                const data = JSON.parse(e.data);
+                if (data.data.status == true) {
                     $wire.$call('pdfHasGenerated');
                 } else {
                     console.error('Failed to generate PDF');
-                    // dispatch event to parent component
+
                     window.dispatchEvent(new CustomEvent('pdf-failed'));
                 }
-            });
+            };
+
+            ev.onerror = (e) => {
+                console.error('Failed to connect to Mercure hub');
+
+                window.dispatchEvent(new CustomEvent('pdf-failed'));
+            };
 
             $wire.$call('checkPdfStatus');
         </script>

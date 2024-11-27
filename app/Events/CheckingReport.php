@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel as BroadcastingChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -30,7 +30,7 @@ class CheckingReport implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('report-cheking-' . $this->reportId),
+            new BroadcastingChannel('report-cheking-' . $this->reportId),
         ];
     }
 }

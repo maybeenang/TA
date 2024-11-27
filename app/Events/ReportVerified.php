@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel as BroadcastingChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -25,7 +25,7 @@ class ReportVerified implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('report-verified-' . $this->reportId),
+            new BroadcastingChannel('report-verified-' . $this->reportId),
         ];
     }
 }

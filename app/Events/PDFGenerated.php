@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Models\Report;
-use Illuminate\Broadcasting\Channel;
+use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;

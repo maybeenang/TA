@@ -5,7 +5,8 @@
 @script
     <script type="module">
         Alpine.data('reportVerification', () => ({
-            echoChannel: null,
+            //echoChannel: null,
+            ev: null,
             resultDescEl: null,
 
             init() {
@@ -76,21 +77,37 @@
             },
 
             cleanupPreviousEcho() {
-                if (this.echoChannel) {
-                    // Properly leave/unsubscribe from the channel
-                    this.echoChannel.stopListening('ReportVerified');
-                    Echo.leaveChannel(this.echoChannel.name);
-                    this.echoChannel = null;
+                if (this.ev) {
+                    this.ev.close();
+                    this.ev = null;
                 }
+                //if (this.echoChannel) {
+                //    // Properly leave/unsubscribe from the channel
+                //    this.echoChannel.stopListening('ReportVerified');
+                //    Echo.leaveChannel(this.echoChannel.name);
+                //    this.echoChannel = null;
+                //}
             },
 
             setupEchoListener(laporanId) {
                 const channelName = `report-verified-${laporanId}`;
-                this.echoChannel = Echo.channel(channelName);
+                //this.echoChannel = Echo.channel(channelName);
 
-                this.echoChannel.listen('ReportVerified', (e) => {
-                    this.handleReportVerified(e);
-                });
+                this.ev = new EventSource(`${window.mercureUrl}?topic=${encodeURIComponent(channelName)}`);
+
+                this.ev.onmessage = (e) => {
+                    const data = JSON.parse(e.data);
+                    this.handleReportVerified(data.data);
+                };
+
+                this.ev.onerror = (e) => {
+                    console.error('Failed to connect to Mercure hub');
+                    this.cleanupPreviousEcho();
+                };
+
+                //this.echoChannel.listen('ReportVerified', (e) => {
+                //    this.handleReportVerified(e);
+                //});
             },
 
             handleReportVerified(e) {

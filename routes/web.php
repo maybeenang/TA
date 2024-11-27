@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
+
 Route::group(
     [
         'middleware' => ['auth', 'verified']
