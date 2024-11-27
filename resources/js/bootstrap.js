@@ -3,7 +3,7 @@ window.axios = axios;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-window.mercureUrl = import.meta.env.VITE_MERCURE_URL;
+window.mercureUrl = `${import.meta.env.VITE_MERCURE_URL}`;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

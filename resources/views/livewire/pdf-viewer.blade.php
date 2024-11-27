@@ -28,6 +28,8 @@
         <script type="module">
             const reportId = await $wire.$call('getReportIdProperty');
 
+            console.log(window.mercureUrl);
+
             const ev = new EventSource(`${window.mercureUrl}?topic=${encodeURIComponent('pdf-generated-' + reportId)}`);
 
             ev.onmessage = (e) => {
