@@ -55,7 +55,7 @@
             x-transition:leave="transition duration-100 ease-in"
             x-transition:leave-start="scale-100 transform opacity-100"
             x-transition:leave-end="scale-95 transform opacity-0"
-            class="absolute right-0 z-50 mt-2 max-h-60 w-96 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
+            class="absolute right-0 z-50 mt-2 max-h-72 w-96 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
         >
             <div class="p-4">
                 <div class="mb-2 flex items-center justify-between">

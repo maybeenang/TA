@@ -56,6 +56,13 @@ class LaporanTable extends DynamicTable
 
         $report->save();
 
+        // check if classroom from report already has a lecturer
+        $lecturer = ClassRoom::find($report->class_room_id)->lecturer;
+
+        if ($lecturer && $lecturer?->user) {
+            $lecturer->user->notify(new \App\Notifications\ReportStatusUpdated($report));
+        }
+
         $this->reset('reportStatusName');
         $this->dispatch('close-modal');
     }
