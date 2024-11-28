@@ -58,15 +58,6 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
         ];
     }
 
-    public function toArray(object $notifiable): array
-    {
-        return [
-            'report_id' => $this->report->id,
-            'title' => 'Status Laporan anda berubah',
-            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
-        ];
-    }
-
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([

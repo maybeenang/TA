@@ -41,6 +41,16 @@ class LaporanTable extends DynamicTable
         return ReportStatusEnum::toSelectArray();
     }
 
+    #[On('send-report-reminder')]
+    public function reportReminder($reportId)
+    {
+        $report = Report::find($reportId);
+
+        if ($report?->classRoom?->lecturer?->user) {
+            $report->classRoom->lecturer->user->notify(new \App\Notifications\ReportReminder($report));
+        }
+    }
+
     public function changeReportStatus()
     {
         if ($this->reportStatusName === null) {
