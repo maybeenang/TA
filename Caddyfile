@@ -27,11 +27,6 @@
 	}
 }
 
-localhost:3000 {
-
-	respond "Not Found" 404
-}
-
 {$CADDY_SERVER_SERVER_NAME} {
     import cors {header.origin}
 	log {

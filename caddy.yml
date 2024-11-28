@@ -1,0 +1,10 @@
+apps: 
+  - name: caddy
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args: 
+        - octane:frankenphp
+        - --caddyfile=Caddyfile
+        - --port=3001
