@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\RolesEnum;
+use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,6 +53,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        Log::info('User ' . $this->id . ' received a broadcast notification');
+        return 'user.' . $this->id;
     }
 
     public function getIsAdminAttribute()

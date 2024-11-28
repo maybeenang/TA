@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class NotificationButton extends Component
@@ -11,23 +12,32 @@ class NotificationButton extends Component
 
     public function mount()
     {
-        // Contoh data, sesuaikan dengan model/database Anda
-        $this->notifications = [
-            [
-                'id' => 1,
-                'title' => 'New Task Assigned',
-                'message' => 'You have been assigned a new task',
-                'time' => '5m ago',
-                'read' => false
-            ],
-            [
-                'id' => 2,
-                'title' => 'System Update',
-                'message' => 'System will be updated tonight',
-                'time' => '1h ago',
-                'read' => false
-            ]
-        ];
+        /*$this->notifications = [*/
+        /*    [*/
+        /*        'id' => 1,*/
+        /*        'title' => 'New Task Assigned',*/
+        /*        'message' => 'You have been assigned a new task',*/
+        /*        'time' => '5m ago',*/
+        /*        'read' => false*/
+        /*    ],*/
+        /*    [*/
+        /*        'id' => 2,*/
+        /*        'title' => 'System Update',*/
+        /*        'message' => 'System will be updated tonight',*/
+        /*        'time' => '1h ago',*/
+        /*        'read' => false*/
+        /*    ]*/
+        /*];*/
+
+        $this->notifications = Auth::user()->notifications->map(function ($notification) {
+            return [
+                'id' => $notification->id,
+                'title' => $notification->data['title'] ?? '',
+                'message' => $notification->data['message'] ?? '',
+                'time' => $notification->created_at->diffForHumans(),
+                'read' => $notification->read_at !== null
+            ];
+        })->toArray();
 
         $this->unreadCount = collect($this->notifications)
             ->where('read', false)

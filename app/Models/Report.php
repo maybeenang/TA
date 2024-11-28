@@ -35,11 +35,16 @@ class Report extends Model
     ];
 
 
+    public function getUserIdAttribute()
+    {
+        return $this->classRoom?->lecturer?->user?->id ?? null;
+    }
+
+
     public function classRoom()
     {
         return $this->belongsTo(ClassRoom::class);
     }
-
 
     public function responsibleLecturer()
     {

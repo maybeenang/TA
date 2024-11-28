@@ -1,11 +1,22 @@
 <div
     x-data="{
         open: false,
+        userId: {{ auth()->user()->id }},
         isMobile: window.innerWidth < 768,
+        ev: null,
         init() {
             window.addEventListener('resize', () => {
                 this.isMobile = window.innerWidth < 768
             })
+
+            this.ev = new EventSource(
+                `${window.mercureUrl}?topic=${encodeURIComponent('notification-user-' + this.userId)}`,
+            )
+
+            this.ev.onmessage = (e) => {
+                const data = JSON.parse(e.data)
+                console.log(data)
+            }
         },
     }"
     class="relative"
@@ -36,14 +47,14 @@
             x-transition:leave="transition duration-100 ease-in"
             x-transition:leave-start="scale-100 transform opacity-100"
             x-transition:leave-end="scale-95 transform opacity-0"
-            class="absolute right-0 z-50 mt-2 w-80 rounded-lg border border-gray-200 bg-white shadow-lg"
+            class="absolute right-0 z-50 mt-2 max-h-60 w-80 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
         >
             <div class="p-4">
                 <div class="mb-4 flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">Notifications</h3>
+                    <h3 class="text-lg font-semibold text-black">Notifikasi</h3>
                     @if ($unreadCount > 0)
                         <button wire:click="markAllAsRead" class="text-sm text-blue-600 hover:text-blue-800">
-                            Mark all as read
+                            Tandai semua dibaca
                         </button>
                     @endif
                 </div>
@@ -54,7 +65,7 @@
                             class="{{ $notification["read"] ? "bg-gray-50" : "bg-blue-50" }} rounded-lg p-3"
                         >
                             <div class="flex items-start justify-between">
-                                <h4 class="text-sm font-medium">{{ $notification["title"] }}</h4>
+                                <h4 class="text-sm font-medium text-black">{{ $notification["title"] }}</h4>
                                 <span class="text-xs text-gray-500">{{ $notification["time"] }}</span>
                             </div>
                             <p class="mt-1 text-sm text-gray-600">{{ $notification["message"] }}</p>
@@ -63,12 +74,12 @@
                                     wire:click="markAsRead({{ $notification["id"] }})"
                                     class="mt-2 text-xs text-blue-600 hover:text-blue-800"
                                 >
-                                    Mark as read
+                                    Tandai dibaca
                                 </button>
                             @endif
                         </div>
                     @empty
-                        <p class="py-4 text-center text-gray-500">No notifications</p>
+                        <p class="py-4 text-center text-gray-500">Tidak ada notifikasi</p>
                     @endforelse
                 </div>
             </div>
