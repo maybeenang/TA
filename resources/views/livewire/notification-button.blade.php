@@ -13,9 +13,17 @@
                 `${window.mercureUrl}?topic=${encodeURIComponent('notification-user-' + this.userId)}`,
             )
 
+            this.ev.onopen = (e) => {
+                console.log('Connected to Mercure hub')
+            }
+
             this.ev.onmessage = (e) => {
                 const data = JSON.parse(e.data)
-                console.log(data)
+                $wire.call('receiveNotification', data.data)
+            }
+
+            this.ev.onerror = (e) => {
+                console.error('Failed to connect to Mercure hub')
             }
         },
     }"
@@ -47,26 +55,33 @@
             x-transition:leave="transition duration-100 ease-in"
             x-transition:leave-start="scale-100 transform opacity-100"
             x-transition:leave-end="scale-95 transform opacity-0"
-            class="absolute right-0 z-50 mt-2 max-h-60 w-80 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
+            class="absolute right-0 z-50 mt-2 max-h-60 w-96 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
         >
             <div class="p-4">
-                <div class="mb-4 flex items-center justify-between">
+                <div class="mb-2 flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-black">Notifikasi</h3>
+                </div>
+
+                <div class="mb-4 flex justify-end gap-2">
                     @if ($unreadCount > 0)
                         <button wire:click="markAllAsRead" class="text-sm text-blue-600 hover:text-blue-800">
                             Tandai semua dibaca
                         </button>
+                        <button wire:click="clearAllNotifications" class="text-sm text-red-500 hover:text-red-800">
+                            Hapus semua
+                        </button>
                     @endif
                 </div>
+
                 <div class="space-y-4">
                     @forelse ($notifications as $notification)
                         <div
                             wire:key="notification-{{ $notification["id"] }}"
                             class="{{ $notification["read"] ? "bg-gray-50" : "bg-blue-50" }} rounded-lg p-3"
                         >
+                            <p class="mb-2 text-right text-xs text-gray-500">{{ $notification["time"] }}</p>
                             <div class="flex items-start justify-between">
                                 <h4 class="text-sm font-medium text-black">{{ $notification["title"] }}</h4>
-                                <span class="text-xs text-gray-500">{{ $notification["time"] }}</span>
                             </div>
                             <p class="mt-1 text-sm text-gray-600">{{ $notification["message"] }}</p>
                             @if (! $notification["read"])

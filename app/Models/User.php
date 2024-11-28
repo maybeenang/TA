@@ -55,12 +55,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function receivesBroadcastNotificationsOn()
-    {
-        Log::info('User ' . $this->id . ' received a broadcast notification');
-        return 'user.' . $this->id;
-    }
-
     public function getIsAdminAttribute()
     {
         return $this->hasRole(Role::findByName(RolesEnum::ADMIN->value));

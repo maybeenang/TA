@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Report;
+use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -57,18 +58,30 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
         ];
     }
 
+    public function toArray(object $notifiable): array
+    {
+        return [
+            'report_id' => $this->report->id,
+            'title' => 'Status Laporan anda berubah',
+            'message' => 'Status laporan anda berubah menjadi ' . $this->report->reportStatus->name,
+        ];
+    }
+
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'report_id' => $this->report->id,
             'title' => 'Status Laporan anda berubah',
             'message' => 'Status laporan anda berubah menjadi ' . $this->report->reportStatus->name,
+            // carbon diff for human now
+            'time' => Carbon::now()->diffForHumans(),
         ]);
     }
 
     public function broadcastOn()
     {
         $userId = $this->report->userId;
-        return new Channel('notification-user-' . $userId, true);
+        Log::info('Broadcasting to user ' . $userId);
+        return new Channel('notification-user-' . $userId);
     }
 }
