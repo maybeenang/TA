@@ -28,15 +28,6 @@
 }
 
 localhost:3000 {
-	mercure {
-		# Publisher JWT key
-		publisher_jwt !ChangeThisMercureHubJWTSecretKey!
-		# Subscriber JWT key
-		subscriber_jwt !ChangeThisMercureHubJWTSecretKey!
-        anonymous true
-
-        cors_origins *
-	}
 
 	respond "Not Found" 404
 }
@@ -57,11 +48,20 @@ localhost:3000 {
 		}
 	}
 
+
 	route {
 		root * "{$APP_PUBLIC_PATH}"
 		encode zstd br gzip
 
 		# Mercure configuration is injected here...
+        mercure {
+            # Publisher JWT key
+            publisher_jwt !ChangeThisMercureHubJWTSecretKey!
+            # Subscriber JWT key
+            subscriber_jwt !ChangeThisMercureHubJWTSecretKey!
+            anonymous true
+        }
+
 		{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
 		php_server {
