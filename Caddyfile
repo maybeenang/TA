@@ -35,7 +35,7 @@ localhost:3000 {
 		subscriber_jwt !ChangeThisMercureHubJWTSecretKey!
         anonymous true
 
-        cors_origins http://localhost:8000
+        cors_origins *
 	}
 
 	respond "Not Found" 404
