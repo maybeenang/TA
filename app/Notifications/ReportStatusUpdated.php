@@ -63,7 +63,7 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
         return [
             'report_id' => $this->report->id,
             'title' => 'Status Laporan anda berubah',
-            'message' => 'Status laporan anda berubah menjadi ' . $this->report->reportStatus->name,
+            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
         ];
     }
 
@@ -72,7 +72,7 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
         return new BroadcastMessage([
             'report_id' => $this->report->id,
             'title' => 'Status Laporan anda berubah',
-            'message' => 'Status laporan anda berubah menjadi ' . $this->report->reportStatus->name,
+            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
             // carbon diff for human now
             'time' => Carbon::now()->diffForHumans(),
         ]);
