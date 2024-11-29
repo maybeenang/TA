@@ -191,6 +191,7 @@ return [
         'public/**/*.php',
         'resources/**/*.php',
         'resources/**/*.blade.php',
+        'resources/livewire/**/*.blade.php',
         'routes',
         'composer.lock',
         '.env',

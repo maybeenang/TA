@@ -64,7 +64,6 @@ class ReportReminder extends Notification implements ShouldQueue, ShouldBroadcas
             'report_id' => $this->report->id,
             'title' => 'Pengingat',
             'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' belum anda kirimkan untuk diverifikasi, silahkan kirimkan sebelum batas waktu yang ditentukan',
-            // carbon diff for human now
             'time' => Carbon::now()->diffForHumans(),
         ]);
     }

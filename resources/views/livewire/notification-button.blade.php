@@ -67,27 +67,29 @@
                         <button wire:click="markAllAsRead" class="text-sm text-blue-600 hover:text-blue-800">
                             Tandai semua dibaca
                         </button>
-                        <button wire:click="clearAllNotifications" class="text-sm text-red-500 hover:text-red-800">
-                            Hapus semua
-                        </button>
                     @endif
+
+                    <button wire:click="clearAllNotifications" class="text-sm text-red-500 hover:text-red-800">
+                        Hapus semua
+                    </button>
                 </div>
 
                 <div class="space-y-4">
                     @forelse ($notifications as $notification)
                         <div
-                            wire:key="notification-{{ $notification["id"] }}"
-                            class="{{ $notification["read"] ? "bg-gray-50" : "bg-blue-50" }} rounded-lg p-3"
+                            wire:key="notification-{{ $notification['id'] }}"
+                            class="{{ $notification['read'] ? 'bg-gray-50' : 'bg-blue-50' }} rounded-lg p-3"
                         >
-                            <p class="mb-2 text-right text-xs text-gray-500">{{ $notification["time"] }}</p>
+                            <p class="mb-2 text-right text-xs text-gray-500">{{ $notification['time'] }}</p>
                             <div class="flex items-start justify-between">
-                                <h4 class="text-sm font-medium text-black">{{ $notification["title"] }}</h4>
+                                <h4 class="text-sm font-medium text-black">{{ $notification['title'] }}</h4>
                             </div>
-                            <p class="mt-1 text-sm text-gray-600">{{ $notification["message"] }}</p>
-                            @if (! $notification["read"])
+                            <p class="mt-1 text-sm text-gray-600">{{ $notification['message'] }}</p>
+
+                            @if (! $notification['read'])
                                 <button
-                                    wire:click="markAsRead({{ $notification["id"] }})"
                                     class="mt-2 text-xs text-blue-600 hover:text-blue-800"
+                                    wire:click="markAsRead(@js($notification['id']))"
                                 >
                                     Tandai dibaca
                                 </button>
@@ -122,7 +124,7 @@
                     <div class="flex h-full flex-col overflow-y-auto bg-white shadow-xl">
                         {{-- Header --}}
                         <div class="flex items-center justify-between border-b p-4">
-                            <h2 class="text-lg font-semibold">Notifications</h2>
+                            <h2 class="text-lg font-semibold text-black">Notifikasi</h2>
                             <button @click="open = false" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                                 <span class="sr-only">Close panel</span>
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -138,39 +140,48 @@
 
                         {{-- Content --}}
                         <div class="flex-1 p-4">
-                            @if ($unreadCount > 0)
-                                <div class="mb-4 flex justify-end">
+                            <div class="mb-4 flex justify-end gap-2">
+                                @if ($unreadCount > 0)
                                     <button
                                         wire:click="markAllAsRead"
                                         class="text-sm text-blue-600 hover:text-blue-800"
                                     >
-                                        Mark all as read
+                                        Tandai semua dibaca
                                     </button>
-                                </div>
-                            @endif
+                                @endif
+
+                                <button
+                                    wire:click="clearAllNotifications"
+                                    class="text-sm text-red-500 hover:text-red-800"
+                                >
+                                    Hapus semua
+                                </button>
+                            </div>
 
                             <div class="space-y-4">
                                 @forelse ($notifications as $notification)
                                     <div
-                                        wire:key="notification-{{ $notification["id"] }}"
-                                        class="{{ $notification["read"] ? "bg-gray-50" : "bg-blue-50" }} rounded-lg p-4"
+                                        wire:key="notification-{{ $notification['id'] }}"
+                                        class="{{ $notification['read'] ? 'bg-gray-50' : 'bg-blue-50' }} rounded-lg p-4"
                                     >
                                         <div class="flex items-start justify-between">
-                                            <h4 class="text-sm font-medium">{{ $notification["title"] }}</h4>
-                                            <span class="text-xs text-gray-500">{{ $notification["time"] }}</span>
+                                            <h4 class="text-sm font-medium text-black">
+                                                {{ $notification['title'] }}
+                                            </h4>
+                                            <span class="text-xs text-gray-500">{{ $notification['time'] }}</span>
                                         </div>
-                                        <p class="mt-1 text-sm text-gray-600">{{ $notification["message"] }}</p>
-                                        @if (! $notification["read"])
+                                        <p class="mt-1 text-sm text-gray-600">{{ $notification['message'] }}</p>
+                                        @if (! $notification['read'])
                                             <button
-                                                wire:click="markAsRead({{ $notification["id"] }})"
+                                                wire:click="markAsRead(@js($notification['id']))"
                                                 class="mt-2 text-xs text-blue-600 hover:text-blue-800"
                                             >
-                                                Mark as read
+                                                Tandai dibaca
                                             </button>
                                         @endif
                                     </div>
                                 @empty
-                                    <div class="py-4 text-center text-gray-500">No notifications</div>
+                                    <div class="py-4 text-center text-gray-500">Tidak ada notifikasi</div>
                                 @endforelse
                             </div>
                         </div>
