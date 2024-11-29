@@ -41,7 +41,12 @@ class ReportReminder extends Notification implements ShouldQueue, ShouldBroadcas
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->markdown('mail.report-status-updated');
+        return (new MailMessage)
+            ->subject('Pengingat Laporan')
+            ->markdown('mail.report-reminder', [
+                'report' => $this->report,
+                'url' => route('tenaga-pengajar.laporan.select'),
+            ]);
     }
 
     /**

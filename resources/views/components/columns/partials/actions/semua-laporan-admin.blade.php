@@ -1,5 +1,5 @@
 @props([
-    "value",
+    'value',
 ])
 
 <div class="flex justify-center whitespace-nowrap">
@@ -8,12 +8,12 @@
             <x-icons.v-three-dots-icon />
         </x-dropdown-menu.trigger>
         <x-dropdown-menu.content>
-            <a wire:navigate href="{{ route("admin.laporan.show", $value) }}">
+            <a href="{{ route('admin.laporan.show', $value) }}">
                 <x-dropdown-menu.item @click="">Detail</x-dropdown-menu.item>
             </a>
 
             @if ($value->isEditable)
-                <a wire:navigate href="{{ route("admin.laporan.edit", $value) }}">
+                <a href="{{ route('admin.laporan.edit', $value) }}">
                     <x-dropdown-menu.item @click="">Edit</x-dropdown-menu.item>
                 </a>
             @endif

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -35,16 +36,15 @@ class PdfViewer extends Component
         $this->isGenerating = false;
     }
 
-
     public function regeneratePdf()
     {
+        Log::info('Regenerating PDF');
         if ($this->isGenerating) {
             return;
         }
         $this->isGenerating = true;
         GenerateReportPDF::dispatch($this->report);
     }
-
 
     public function mount(Report $report)
     {

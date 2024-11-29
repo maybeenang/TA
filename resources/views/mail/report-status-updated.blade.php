@@ -1,12 +1,12 @@
 <x-mail::message>
-# Introduction
+# Status Laporan anda berubah
 
-The body of your message.
+Laporan kelas **{{ $report->classroom->fullName }}** berubah menjadi **{{ $report->reportStatus->name }}**.
 
-<x-mail::button :url="''">
-Button Text
+<x-mail::button :url="$url">
+Lihat Laporan
 </x-mail::button>
 
-Thanks,<br>
+Terima Kasih,<br />
 {{ config('app.name') }}
 </x-mail::message>
