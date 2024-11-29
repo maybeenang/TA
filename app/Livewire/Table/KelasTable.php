@@ -59,12 +59,12 @@ class KelasTable extends DynamicTable
         return [
             Column::make('id', 'Kode'),
             Column::make('name', 'Nama'),
-            Column::make('course.code', 'Kode Mata Kuliah')->sortable(false),
-            Column::make('course.name', 'Nama Mata Kuliah')->sortable(false),
-            Column::make('course.credit', 'SKS')->sortable(false),
+            Column::make('course.code', 'Kode Mata Kuliah'),
+            Column::make('course.name', 'Nama Mata Kuliah'),
+            Column::make('course.credit', 'SKS'),
             Column::make('id', 'Nama Tenaga Pengajar')->component('columns.classroom-lecturers')->sortable(false),
-            Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
-            Column::make('id', ' ')->component('columns.actions')->sortable(false),
+            /*Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human'),*/
+            Column::make('id', ' ')->component('columns.actions'),
         ];
     }
 }

@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             $this->app['request']->server->set('HTTPS', true);
         }
+
+        if ($this->app->environment('local')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
@@ -26,9 +31,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(Events\StudentGradeUpdated::class, Listeners\RecalculateStudentGrade::class);
-        Event::listen(Events\GradeComponentUpdated::class, Listeners\RecalculateGradeComponent::class);
-        Event::listen(Events\CheckingReport::class, Listeners\ProcessReportVerification::class);
+        /*Event::listen(Events\StudentGradeUpdated::class, Listeners\RecalculateStudentGrade::class);*/
+        /*Event::listen(Events\GradeComponentUpdated::class, Listeners\RecalculateGradeComponent::class);*/
+        /*Event::listen(Events\CheckingReport::class, Listeners\ProcessReportVerification::class);*/
 
         Blade::directive('round', function ($expression) {
             return "<?php echo number_format($expression, 2); ?>";

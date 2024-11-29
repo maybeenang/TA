@@ -1,0 +1,8 @@
+###
+GET localhost:8000/dsa
+
+###
+PATCH localhost:8000/tenaga-pengajar/laporan/pengajuan-verifikasi/80
+X-Requested-With: XMLHttpRequest
+X-CSRF-TOKEN: bJDV3HpRITAhSpqom4PgTnzlnuODiK4ZlYv1xAH8
+

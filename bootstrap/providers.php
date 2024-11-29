@@ -7,6 +7,6 @@ return [
     App\Providers\MenuProvider::class,
     App\Providers\MercureServiceProvider::class,
     App\Providers\ReportStatusProvider::class,
-    App\Providers\MercureServiceProvider::class,
+    /*App\Providers\TelescopeServiceProvider::Logss,*/
     Spatie\Permission\PermissionServiceProvider::class,
 ];

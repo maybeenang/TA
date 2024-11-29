@@ -11,10 +11,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Laravel\Reverb\Loggers\Log;
 
 class AdminReportVerification extends Notification implements ShouldQueue, ShouldBroadcast
 {
     use Queueable;
+
+    protected $userId;
 
     /**
      * Create a new notification instance.
@@ -32,7 +35,7 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -54,6 +57,7 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
 
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
+        $this->userId = $notifiable->id;
         return new BroadcastMessage([
             'report_id' => $this->report->id,
             'title' => 'Verifikasi Laporan',
@@ -65,7 +69,6 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
 
     public function broadcastOn()
     {
-        $userId = $this->report->userId;
-        return new Channel('notification-user-' . $userId);
+        return new Channel('notification-user-' . $this->userId);
     }
 }
