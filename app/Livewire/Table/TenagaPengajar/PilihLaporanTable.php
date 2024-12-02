@@ -32,12 +32,10 @@ class PilihLaporanTable extends DynamicTable
         $this->resetPage();
     }
 
-    #[On('checking-report')]
-    public function ajukanVerifikasi($id)
+    #[On('pengajuan-verifikasi-sukses')]
+    public function refreshTable()
     {
-        if ($id) {
-            broadcast(new CheckingReport($id));
-        }
+        $this->data();
     }
 
     function convertCamelCase($camelCaseString)

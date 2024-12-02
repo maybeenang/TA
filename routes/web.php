@@ -14,11 +14,6 @@ Route::group(
         Route::get('/', fn() => view('pages.welcome'))->name('welcome');
         Route::get('/dashboard', [Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/test', function () {
-            Auth::user()->notify(new \App\Notifications\ReportStatusUpdated(\App\Models\Report::where('id', 1)->first()));
-            return 'done';
-        });
-
         Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');

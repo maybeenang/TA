@@ -1,5 +1,5 @@
 @props([
-    "value",
+    'value',
 ])
 
 <div>
@@ -8,7 +8,7 @@
             <x-icons.v-three-dots-icon />
         </x-dropdown-menu.trigger>
         <x-dropdown-menu.content class="whitespace-nowrap">
-            <a wire:navigate.hover href="{{ route("tenaga-pengajar.laporan.show", $value) }}">
+            <a href="{{ route('tenaga-pengajar.laporan.show', $value) }}">
                 <x-dropdown-menu.item>Detail</x-dropdown-menu.item>
             </a>
 

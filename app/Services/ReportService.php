@@ -246,6 +246,17 @@ class ReportService
         });
     }
 
+    public function ajukanVerifikasi(Report $laporan)
+    {
+        return DB::transaction(function () use ($laporan) {
+            $laporan->update([
+                'report_status_id' => 2,
+            ]);
+
+            return $laporan;
+        });
+    }
+
 
     public function convertCamelCase($camelCaseString)
     {

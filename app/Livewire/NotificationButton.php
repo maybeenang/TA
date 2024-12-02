@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class NotificationButton extends Component
@@ -12,7 +13,6 @@ class NotificationButton extends Component
 
     public function mount()
     {
-
         $this->notifications = Auth::user()->notifications->map(function ($notification) {
             return [
                 'id' => $notification->id,
@@ -30,13 +30,14 @@ class NotificationButton extends Component
 
     public function markAsRead($notificationId)
     {
-        // Implementasi mark as read
-        collect($this->notifications)->map(function ($notification) use ($notificationId) {
+        $notification = Auth::user()->notifications->where('id', $notificationId)->first();
+        $notification->markAsRead();
+        $this->notifications = collect($this->notifications)->map(function ($notification) use ($notificationId) {
             if ($notification['id'] == $notificationId) {
                 $notification['read'] = true;
             }
             return $notification;
-        });
+        })->toArray();
 
         $this->unreadCount = collect($this->notifications)
             ->where('read', false)

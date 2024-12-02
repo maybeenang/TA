@@ -1,8 +1,6 @@
 <div>
     <div class="mb-4 flex justify-end">
-        <x-button variant="secondary" wire:click="regeneratePdf" :disabled="$this->isGenerating">
-            Generate Ulang PDF
-        </x-button>
+        <x-button variant="secondary" wire:click="regeneratePdf">Generate Ulang PDF</x-button>
     </div>
     @if ($this->isGenerating)
         <div
@@ -18,38 +16,40 @@
             </div>
         </div>
     @else
-        <iframe src="{{ route("laporan.pdf", $report) }}" width="100%" height="1000px" style="border: none">
+        <iframe src="{{ route('laporan.pdf', $report) }}" width="100%" height="1000px" style="border: none">
             This browser does not support PDFs. Please download the PDF to view it:
-            <a href="{{ route("laporan.pdf", $report) }}">Download PDF</a>
+            <a href="{{ route('laporan.pdf', $report) }}">Download PDF</a>
         </iframe>
     @endif
 
     @script
         <script type="module">
+            await $wire.$call('checkPdfStatus');
             const reportId = await $wire.$call('getReportIdProperty');
-
-            console.log(window.mercureUrl);
 
             const ev = new EventSource(`${window.mercureUrl}?topic=${encodeURIComponent('pdf-generated-' + reportId)}`);
 
-            ev.onmessage = (e) => {
+            console.log('Connecting to Mercure hub');
+
+            ev.onopen = (e) => {
+                console.log('Connected to Mercure hub');
+            };
+
+            ev.onmessage = async (e) => {
                 const data = JSON.parse(e.data);
+                console.log(data);
                 if (data.data.status == true) {
-                    $wire.$call('pdfHasGenerated');
+                    await $wire.$call('pdfHasGenerated');
                 } else {
                     console.error('Failed to generate PDF');
-
                     window.dispatchEvent(new CustomEvent('pdf-failed'));
                 }
             };
 
             ev.onerror = (e) => {
                 console.error('Failed to connect to Mercure hub');
-
                 window.dispatchEvent(new CustomEvent('pdf-failed'));
             };
-
-            $wire.$call('checkPdfStatus');
         </script>
     @endscript
 </div>

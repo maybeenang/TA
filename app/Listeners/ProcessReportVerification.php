@@ -33,9 +33,6 @@ class ProcessReportVerification
             return;
         }
 
-        Log::info('Checking report verification');
-
-
         // check if report status id is 2
         if ($report->reportStatus->name === ReportStatusEnum::DIKIRIM->value || $report->reportStatus->name === ReportStatusEnum::TERVERIFIKASI->value) {
             Log::info('Report already verified');

@@ -10,7 +10,7 @@
             <div class="divide-y-zinc-200 w-full divide-y-2 rounded-md border border-zinc-200">
                 <header class="rounded-t-md bg-zinc-100 px-4 py-2">
                     <h3 class="">
-                        {{ $item->name ?? "Menu" }}
+                        {{ $item->name ?? 'Menu' }}
                     </h3>
                 </header>
                 @isset($item->submenu)
@@ -28,13 +28,13 @@
                         @endphp
 
                         <a
+                            wire:navigate
                             @class([
-                                "block cursor-pointer bg-white px-4 py-2 text-sm hover:bg-zinc-50",
-                                "rounded-b-md" => $loop->last,
-                                "bg-yellow-100" => $isActive,
+                                'block cursor-pointer bg-white px-4 py-2 text-sm hover:bg-zinc-50',
+                                'rounded-b-md' => $loop->last,
+                                'bg-yellow-100' => $isActive,
                             ])
                             href="{{ route($subitem->url) }}"
-                            wire:navigate
                         >
                             {{ $subitem->name }}
                         </a>

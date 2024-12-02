@@ -41,7 +41,12 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->markdown('mail.report-status-updated');
+        return (new MailMessage)
+            ->subject('Status Laporan berubah')
+            ->markdown('mail.report-status-updated', [
+                'report' => $this->report,
+                'url' => route('tenaga-pengajar.laporan.show', $this->report->id),
+            ]);
     }
 
     /**
@@ -54,7 +59,7 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
         return [
             'report_id' => $this->report->id,
             'title' => 'Status Laporan anda berubah',
-            'message' => 'Status laporan anda berubah menjadi ' . $this->report->reportStatus->name,
+            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
         ];
     }
 
@@ -72,7 +77,6 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
     public function broadcastOn()
     {
         $userId = $this->report->userId;
-        Log::info('Broadcasting to user ' . $userId);
         return new Channel('notification-user-' . $userId);
     }
 }

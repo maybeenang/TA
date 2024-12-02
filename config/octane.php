@@ -134,9 +134,7 @@ return [
         ...Octane::defaultServicesToWarm(),
     ],
 
-    'flush' => [
-        //
-    ],
+    'flush' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -191,6 +189,7 @@ return [
         'public/**/*.php',
         'resources/**/*.php',
         'resources/**/*.blade.php',
+        'resources/livewire/**/*.blade.php',
         'routes',
         'composer.lock',
         '.env',
@@ -220,6 +219,6 @@ return [
     |
     */
 
-    'max_execution_time' => 30,
+    'max_execution_time' => 0,
 
 ];

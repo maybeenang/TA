@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Enums\ReportStatusEnum;
+use App\Enums\RolesEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Lecturer;
 use App\Models\Report;
+use App\Models\User;
+use App\Notifications\AdminReportVerification;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
@@ -139,5 +143,36 @@ class LaporanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function pengajuanVerifikasi(Report $laporan)
+    {
+        $status = $laporan->progres();
+
+        if (in_array(false, $status, true)) {
+            return response()->json([
+                'message' => 'Mohon maaf, Pengajuan verifikasi laporan gagal, silahkan periksa kembali data laporan anda',
+                'result' => false,
+            ])->setStatusCode(400);
+        }
+
+        try {
+            $this->reportService->ajukanVerifikasi($laporan);
+
+            // send notification to all admin
+            $admins = User::role(RolesEnum::ADMIN->value)->get();
+            Notification::send($admins, new AdminReportVerification($laporan));
+
+            return response()->json([
+                'message' => 'Selamat!, Pengajuan verifikasi laporan berhasil',
+                'result' => true,
+            ])->setStatusCode(200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Gagal mengajukan verifikasi laporan',
+                'result' => false,
+            ])->setStatusCode(500);
+        }
     }
 }
