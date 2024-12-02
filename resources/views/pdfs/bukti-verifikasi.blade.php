@@ -40,12 +40,15 @@
             <p>
                 {{ \Carbon\Carbon::make($verifikasiData?->verified_at ?? now())->locale('id')->isoFormat('dddd, DD MMMM YYYY') ?? '-' }}
             </p>
+
+            <p>Mengetahui</p>
         </div>
 
-        <div class="mt-4 text-center">
+        <div class="mt-8 text-center">
             <div class="flex justify-between">
                 <div>
-                    <div class="mb-2 h-28 w-28">
+                    <p>Gugus Kendali Mutu Program Studi</p>
+                    <div class="mx-auto mb-2 h-28 w-28">
                         @if (isset($verifikasiData?->signatureGkmp))
                             @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureGkmp))
                         @endif
@@ -54,10 +57,12 @@
                     <p>
                         {{ $verifikasiData?->gkmp }}
                     </p>
+                    <p>NIP: {{ $verifikasiData?->gkmpNip ?? '-' }}</p>
                 </div>
 
                 <div>
-                    <div class="mb-2 h-28 w-28">
+                    <p>Kepala Program Studi</p>
+                    <div class="mx-auto mb-2 h-28 w-28">
                         @if (isset($verifikasiData?->signatureKaprodi))
                             @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureKaprodi))
                         @endif
@@ -66,6 +71,7 @@
                     <p>
                         {{ $verifikasiData?->kaprodi ?? '-' }}
                     </p>
+                    <p>NIP: {{ $verifikasiData?->kaprodiNip ?? '-' }}</p>
                 </div>
             </div>
         </div>

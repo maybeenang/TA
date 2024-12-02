@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ReportStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
 use App\Models\Lecturer;
@@ -47,6 +48,12 @@ class LaporanController extends Controller
 
     public function verifikasiLaporanEdit(Report $laporan)
     {
+
+        // check is laporan status is not submitted
+        if ($laporan->reportStatus->name !== ReportStatusEnum::DIKIRIM->value) {
+            abort(404);
+        }
+
         $signatures = Auth::user()->signatures;
 
         $roles = [
