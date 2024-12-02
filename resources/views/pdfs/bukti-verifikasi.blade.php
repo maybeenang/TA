@@ -3,21 +3,6 @@
     <table class="w-full border-collapse">
         <tbody>
             <tr class="border-b">
-                <td colspan="2" class="py-2 font-semibold">Terverifikasi oleh:</td>
-            </tr>
-            <tr class="border-b">
-                <td class="py-1 font-medium">Nama</td>
-                <td class="py-1">: {{ $verifikasiData->name }}</td>
-            </tr>
-            <tr class="border-b">
-                <td class="py-1 font-medium">NIP</td>
-                <td class="py-1">: {{ $verifikasiData->nip }}</td>
-            </tr>
-            <tr class="border-b">
-                <td class="py-1 font-medium">Email</td>
-                <td class="py-1">: {{ $verifikasiData->email }}</td>
-            </tr>
-            <tr class="border-b">
                 <td colspan="2" class="py-2 font-semibold">Detail Laporan:</td>
             </tr>
             <tr class="border-b">
@@ -53,19 +38,36 @@
     @if ($laporan->reportStatus->name === $reportStatus::TERVERIFIKASI->value)
         <div class="mt-16 border-t pt-4 text-center font-normal">
             <p>
-                {{ \Carbon\Carbon::make($verifikasiData?->verified_at ?? now())->locale("id")->isoFormat("dddd, DD MMMM YYYY") ?? "-" }}
+                {{ \Carbon\Carbon::make($verifikasiData?->verified_at ?? now())->locale('id')->isoFormat('dddd, DD MMMM YYYY') ?? '-' }}
             </p>
         </div>
 
         <div class="mt-4 text-center">
-            <div class="mx-auto mb-2 h-28 w-28">
-                @if (isset($verifikasiData?->signature))
-                    @inlinedImage(asset("storage/signatures/" . $verifikasiData?->signature))
-                @endif
+            <div class="flex justify-between">
+                <div>
+                    <div class="mb-2 h-28 w-28">
+                        @if (isset($verifikasiData?->signatureGkmp))
+                            @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureGkmp))
+                        @endif
+                    </div>
+
+                    <p>
+                        {{ $verifikasiData?->gkmp }}
+                    </p>
+                </div>
+
+                <div>
+                    <div class="mb-2 h-28 w-28">
+                        @if (isset($verifikasiData?->signatureKaprodi))
+                            @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureKaprodi))
+                        @endif
+                    </div>
+
+                    <p>
+                        {{ $verifikasiData?->kaprodi ?? '-' }}
+                    </p>
+                </div>
             </div>
-            <p>
-                {{ $verifikasiData?->name ?? "-" }}
-            </p>
         </div>
     @endif
 </div>

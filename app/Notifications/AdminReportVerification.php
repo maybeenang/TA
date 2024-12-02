@@ -43,7 +43,15 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->markdown('mail.admin-report-verification');
+        return (new MailMessage)
+            ->subject('Verifikasi Laporan')
+            ->markdown(
+                'mail.admin-report-verification',
+                [
+                    'report' => $this->report,
+                    'url' => route('admin.laporan.verifikasi.edit', $this->report),
+                ]
+            );
     }
 
     public function toDatabase(object $notifiable): array
@@ -51,7 +59,7 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
         return [
             'report_id' => $this->report->id,
             'title' => 'Verifikasi Laporan',
-            'message' => 'Laporan baru telah dikirim dan menunggu verifikasi.',
+            'message' => 'Laporan kelas ' . $this->report->classRoom->fullName . ' telah dikirim dan menunggu untuk diverifikasi.',
         ];
     }
 
@@ -61,7 +69,7 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
         return new BroadcastMessage([
             'report_id' => $this->report->id,
             'title' => 'Verifikasi Laporan',
-            'message' => 'Laporan baru telah dikirim dan menunggu verifikasi.',
+            'message' => 'Laporan kelas ' . $this->report->classRoom->fullName . ' telah dikirim dan menunggu untuk diverifikasi.',
             // carbon diff for human now
             'time' => Carbon::now()->diffForHumans(),
         ]);

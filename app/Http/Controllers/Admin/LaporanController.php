@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
 use App\Models\Lecturer;
 use App\Models\Report;
+use App\Notifications\TenagaPengajarReportVerification;
 use App\Services\AcademicYearService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -47,24 +48,43 @@ class LaporanController extends Controller
     public function verifikasiLaporanEdit(Report $laporan)
     {
         $signatures = Auth::user()->signatures;
-        return view('pages.admin.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures'));
+
+        $roles = [
+            (object) [
+                'value' => 'kaprodi',
+                'label' => 'Kapordi',
+            ],
+            (object) [
+                'value' => 'gkmp',
+                'label' => 'GKMP',
+            ],
+        ];
+
+
+        return view('pages.admin.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures', 'roles'));
     }
 
     public function verifikasiLaporanUpdate(Request $request, Report $laporan)
     {
         $validated = $request->validate([
             'signature' => 'required|exists:signatures,id',
+            'role' => 'required|in:kaprodi,gkmp',
         ]);
 
         $signature = Auth::user()->signatures()->find($validated['signature']); // @intelliphense-ignore-line
 
-
         if (!$signature) {
-            return redirect()->back()->with('error', 'Signature not found');
+            return redirect()->back()->with('error', 'Tanda tangan tidak ditemukan');
         }
 
         try {
-            $this->reportService->verifikasiLaporan($laporan, $request->signature);
+            $this->reportService->verifikasiLaporan($laporan, $validated);
+
+            // notify tenaga pengajar
+            if ($laporan?->classRoom?->lecturer?->user) {
+                $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
+            }
+
             return redirect()->route('admin.laporan.index')->with('success', 'Berhasil verifikasi laporan');
         } catch (\Exception $e) {
             Log::error($e->getMessage());

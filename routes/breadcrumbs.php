@@ -124,6 +124,11 @@ Breadcrumbs::for('admin.laporan.verifikasi', function (BreadcrumbTrail $trail) {
     $trail->push('Verifikasi Laporan', route('admin.laporan.verifikasi'));
 });
 
+Breadcrumbs::for('admin.laporan.verifikasi.edit', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('admin.laporan.verifikasi');
+    $trail->push($laporan?->classRoom?->fullName, route('admin.laporan.verifikasi.edit', $laporan));
+});
+
 Breadcrumbs::for('admin.signature.index', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Kelola Tanda Tangan', route('admin.signature.index'));

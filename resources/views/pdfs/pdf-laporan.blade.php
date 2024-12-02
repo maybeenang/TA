@@ -6,21 +6,18 @@
         <title>Document</title>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        @vite(["resources/css/luvi-ui.css", "resources/css/app.css", "resources/js/app.js"])
+        @vite(['resources/css/luvi-ui.css', 'resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-serif">
-        @include("pdfs.sampul")
+        @include('pdfs.sampul')
         @pageBreak
-        @include("pdfs.hal1")
+        @include('pdfs.bukti-verifikasi')
         @pageBreak
-        @include("pdfs.hal2")
-        @pageBreak
-        @include("pdfs.hal2-2")
-        @pageBreak
-        @include("pdfs.hal3")
-        @pageBreak
-        @include("pdfs.bukti-verifikasi")
+        @include('pdfs.hal1')
+        @include('pdfs.hal2')
+        @include('pdfs.hal2-2')
+        @include('pdfs.hal3')
 
-        @stack("scripts")
+        @stack('scripts')
     </body>
 </html>

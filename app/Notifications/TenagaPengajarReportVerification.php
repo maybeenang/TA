@@ -6,25 +6,23 @@ use App\Models\Report;
 use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 
-class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBroadcast
+class TenagaPengajarReportVerification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $userId;
 
     /**
      * Create a new notification instance.
      */
     public function __construct(
         public Report $report,
-    ) {
-        //
-    }
+    ) {}
 
     /**
      * Get the notification's delivery channels.
@@ -42,41 +40,36 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Status Laporan berubah')
-            ->markdown('mail.report-status-updated', [
+            ->subject('Laporan berhasil terverifikasi')
+            ->markdown('mail.tenaga-pengajar-report-verification', [
                 'report' => $this->report,
                 'url' => route('tenaga-pengajar.laporan.show', $this->report),
             ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toDatabase(object $notifiable): array
     {
         return [
             'report_id' => $this->report->id,
-            'title' => 'Status Laporan anda berubah',
-            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
+            'title' => 'Laporan berhasil terverifikasi',
+            'message' => 'Selamat!, Laporan kelas ' . $this->report?->classRoom->fullName . ' telah berhasil terverifikasi.',
         ];
     }
 
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
+        $this->userId = $notifiable->id;
+
         return new BroadcastMessage([
             'report_id' => $this->report->id,
-            'title' => 'Status Laporan anda berubah',
-            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
-            // carbon diff for human now
+            'title' => 'Laporan berhasil terverifikasi',
+            'message' => 'Selamat!, Laporan kelas ' . $this->report?->classRoom->fullName . ' telah berhasil terverifikasi.',
             'time' => Carbon::now()->diffForHumans(),
         ]);
     }
 
     public function broadcastOn()
     {
-        $userId = $this->report->userId;
-        return new Channel('notification-user-' . $userId);
+        return new Channel('notification-user-' . $this->userId);
     }
 }
