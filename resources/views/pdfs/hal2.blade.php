@@ -1,4 +1,4 @@
-<div class="space-y-4 text-xs">
+<div class="mt-4 space-y-4 text-xs">
     <section class="space-y-2">
         <h2 class="text-sm">5. Statistik Kelas</h2>
         <div class="flex gap-2">
@@ -13,7 +13,7 @@
                     @foreach ($laporan->attendanceAndActivities as $pertemuan)
                         <tr>
                             <td class="border border-black align-top">{{ $pertemuan->meeting_name }}</td>
-                            <td class="border border-black align-top">{{ $pertemuan->student_present ?? "0" }}</td>
+                            <td class="border border-black align-top">{{ $pertemuan->student_present ?? '0' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -30,13 +30,13 @@
                     @foreach ($laporan->attendanceAndActivities as $pertemuan)
                         <tr>
                             <td class="border border-black align-top">{{ $pertemuan->meeting_name }}</td>
-                            <td class="border border-black align-top">{{ $pertemuan->student_active ?? "0" }}</td>
+                            <td class="border border-black align-top">{{ $pertemuan->student_active ?? '0' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        @include("pdfs.chart-peserta-hadir")
+        @include('pdfs.chart-peserta-hadir')
     </section>
 </div>

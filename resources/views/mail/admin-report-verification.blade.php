@@ -1,12 +1,12 @@
 <x-mail::message>
-# Introduction
+# Verifikasi Laporan
 
-The body of your message.
+Laporan kelas **{{ $report?->classroom?->fullName }}** telah dikirim dan menunggu untuk diverifikasi.
 
-<x-mail::button :url="''">
-Button Text
+<x-mail::button :url="$url">
+Verifikasi Laporan
 </x-mail::button>
 
-Thanks,<br>
+Terima Kasih,<br>
 {{ config('app.name') }}
 </x-mail::message>

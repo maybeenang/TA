@@ -25,9 +25,11 @@ class Report extends Model
         'pdf_path',
         'pdf_status',
         'note',
-        'signature_id',
         'verified_at',
-        'verified_by',
+        'signature_gkmp_id',
+        'signature_kaprodi_id',
+        'verifikator_gkmp',
+        'verifikator_kaprodi',
     ];
 
     protected $casts = [
@@ -91,9 +93,14 @@ class Report extends Model
         return $this->hasMany(GradeScale::class);
     }
 
-    public function signature()
+    public function signatureGkmp()
     {
-        return $this->belongsTo(Signature::class);
+        return $this->belongsTo(Signature::class, 'signature_gkmp_id');
+    }
+
+    public function signatureKaprodi()
+    {
+        return $this->belongsTo(Signature::class, 'signature_kaprodi_id');
     }
 
     public function progres()
@@ -105,7 +112,6 @@ class Report extends Model
         $metodeEvaluasi = $this->cpmks()->each(function ($cpmk) {
             return $cpmk->code !== null && $cpmk->description !== null && $cpmk->criteria !== null && $cpmk->average_score !== null;
         });
-
 
         $presensiDanKeaktifan = $this->attendanceAndActivities()->each(function ($attendanceAndActivity) {
             return $attendanceAndActivity->student_present !== null && $attendanceAndActivity->student_active !== null;
@@ -221,32 +227,25 @@ class Report extends Model
         if ($reportStatus !== ReportStatusEnum::TERVERIFIKASI->value) {
             // return collection
             return (object)[
-                'name' => '-',
-                'nip' => '-',
-                'email' => '-',
+                'kaprodi' => '-',
+                'kaprodiNip' => '-',
+                'gkmp' => '-',
+                'gkmpNip' => '-',
             ];
         }
 
-
-        $verifikator = User::find($this->verified_by);
-
-        if (!$verifikator) {
-            return (object)[
-                'name' => '-',
-                'nip' => '-',
-                'email' => '-',
-            ];
-        }
-
-
+        $verifikatorGkmp = User::find($this->verifikator_gkmp);
+        $verifikatorKaprodi = User::find($this->verifikator_kaprodi);
 
         // return object
         return (object)[
-            'name' => $verifikator?->name ?? '-',
-            'nip' => $verifikator?->lecturer?->nip ?? '-',
-            'email' => $verifikator?->email ?? '-',
+            'kaprodi' => $verifikatorKaprodi->name ?? '-',
+            'kaprodiNip' => $verifikatorKaprodi->lecturer->nip ?? '-',
+            'gkmp' => $verifikatorGkmp->name ?? '-',
+            'gkmpNip' => $verifikatorGkmp->lecturer->nip ?? '-',
             'verified_at' => $this?->verified_at ?? now(),
-            'signature' => $this?->signature?->path ?? null,
+            'signatureGkmp' => $this?->signatureGkmp?->path ?? null,
+            'signatureKaprodi' => $this?->signatureKaprodi?->path ?? null,
         ];
     }
 

@@ -1,4 +1,4 @@
-<div class="space-y-4 text-xs">
+<div class="mt-4 space-y-4 text-xs">
     <section class="space-y-2">
         <h2 class="text-sm">6. Pencapaian Mata Kuliah</h2>
 
@@ -25,6 +25,6 @@
             </tbody>
         </table>
 
-        @include("pdfs.chart-cpmk")
+        @include('pdfs.chart-cpmk')
     </section>
 </div>

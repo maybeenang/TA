@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Enums\ReportStatusEnum;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
+use App\Models\ReportStatus;
+use App\Notifications\ReportTolak;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -228,19 +231,34 @@ class ReportService
                 'note' => $catatan,
             ]);
 
+            // notify user if laporan->classroom->lecturer->user->id
+            if ($laporan->classRoom?->lecturer?->user) {
+                $laporan->classRoom->lecturer->user->notify(new ReportTolak($laporan));
+            }
+
             return $laporan;
         });
     }
 
-    public function verifikasiLaporan(Report $laporan, int $signatureId)
+    public function verifikasiLaporan(Report $laporan, array $data)
     {
-        return DB::transaction(function () use ($laporan, $signatureId) {
+        return DB::transaction(function () use ($laporan, $data) {
+
+            $verifiedStatus = ReportStatus::where('name', ReportStatusEnum::TERVERIFIKASI->value)->first();
+            $signature = $data['role'] == 'kaprodi' ? 'signature_kaprodi_id' : 'signature_gkmp_id';
+            $verifikator = $data['role'] == 'kaprodi' ? 'verifikator_kaprodi' : 'verifikator_gkmp';
+
             $laporan->update([
-                'report_status_id' => 3,
-                'verified_at' => now(),
-                'verified_by' => Auth::id(),
-                'signature_id' => $signatureId,
+                $verifikator => Auth::id(),
+                $signature => $data['signature'],
             ]);
+
+            if ($laporan->verifikator_gkmp && $laporan->verifikator_kaprodi) {
+                $laporan->update([
+                    'report_status_id' => $verifiedStatus->id,
+                    'verified_at' => now(),
+                ]);
+            }
 
             return $laporan;
         });

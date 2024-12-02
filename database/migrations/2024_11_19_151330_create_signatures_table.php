@@ -21,7 +21,11 @@ return new class extends Migration
         });
 
         Schema::table('reports', function (Blueprint $table) {
-            $table->foreignId('signature_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+            $table->foreignId('signature_gkmp_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+            $table->foreignId('signature_kaprodi_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+            // verified
+            $table->foreignId('verifikator_gkmp')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('verifikator_kaprodi')->nullable()->constrained('users')->cascadeOnDelete();
         });
     }
 
@@ -32,8 +36,18 @@ return new class extends Migration
     {
         Schema::dropIfExists('signatures');
         Schema::table('reports', function (Blueprint $table) {
-            $table->dropForeign(['signature_id']);
-            $table->dropColumn('signature_id');
+
+            $table->dropForeign(['signature_gkmp_id']);
+            $table->dropColumn('signature_gkmp_id');
+
+            $table->dropForeign(['signature_kaprodi_id']);
+            $table->dropColumn('signature_kaprodi_id');
+
+            $table->dropForeign(['verifikator_gkmp']);
+            $table->dropColumn('verifikator_gkmp');
+
+            $table->dropForeign(['verifikator_kaprodi']);
+            $table->dropColumn('verifikator_kaprodi');
         });
     }
 };

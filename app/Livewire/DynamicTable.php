@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Traits\AdvanceSearchAndSort;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -96,6 +97,12 @@ abstract class DynamicTable extends Component
                 }
             })
             ->paginate($this->perPage);
+    }
+
+    #[On('refresh-table')]
+    public function refreshTable()
+    {
+        $this->data();
     }
 
     public function render()

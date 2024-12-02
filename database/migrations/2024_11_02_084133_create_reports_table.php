@@ -46,8 +46,6 @@ return new class extends Migration
 
             // verified at
             $table->timestamp('verified_at')->nullable();
-            // verified by
-            $table->foreignId('verified_by')->nullable()->constrained('users')->cascadeOnDelete();
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->foreignId('report_status_id')->constrained('report_statuses')->cascadeOnDelete();

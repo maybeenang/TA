@@ -32,12 +32,6 @@ class PilihLaporanTable extends DynamicTable
         $this->resetPage();
     }
 
-    #[On('pengajuan-verifikasi-sukses')]
-    public function refreshTable()
-    {
-        $this->data();
-    }
-
     function convertCamelCase($camelCaseString)
     {
         $result = preg_replace("/([a-z])([A-Z])/", '$1 $2', $camelCaseString);

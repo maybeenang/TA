@@ -18,8 +18,13 @@ class Signature extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function reports()
+    public function reportsgkmp()
     {
-        return $this->hasMany(Report::class);
+        return $this->hasMany(Report::class, 'signature_gkmp_id');
+    }
+
+    public function reportskaprodi()
+    {
+        return $this->hasMany(Report::class, 'signature_kaprodi_id');
     }
 }

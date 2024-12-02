@@ -11,11 +11,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
+use Laravel\Reverb\Loggers\Log;
 
-class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBroadcast
+class ReportTolak extends Notification implements ShouldQueue, ShouldBroadcast
 {
     use Queueable;
+
+    protected $userId;
 
     /**
      * Create a new notification instance.
@@ -42,33 +44,29 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Status Laporan berubah')
-            ->markdown('mail.report-status-updated', [
+            ->subject('Laporan anda ditolak')
+            ->markdown('mail.report-tolak', [
                 'report' => $this->report,
                 'url' => route('tenaga-pengajar.laporan.show', $this->report),
             ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toDatabase(object $notifiable): array
     {
         return [
             'report_id' => $this->report->id,
-            'title' => 'Status Laporan anda berubah',
-            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
+            'title' => 'Laporan anda ditolak',
+            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name . ' dengan catatan ' . $this->report?->note,
         ];
     }
 
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
+        $this->userId = $notifiable->id;
         return new BroadcastMessage([
             'report_id' => $this->report->id,
-            'title' => 'Status Laporan anda berubah',
-            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name,
+            'title' => 'Laporan anda ditolak',
+            'message' => 'Laporan kelas ' . $this->report?->classRoom?->fullName . ' berubah menjadi ' . $this->report->reportStatus->name . ' dengan catatan ' . $this->report?->note,
             // carbon diff for human now
             'time' => Carbon::now()->diffForHumans(),
         ]);
@@ -76,7 +74,6 @@ class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBro
 
     public function broadcastOn()
     {
-        $userId = $this->report->userId;
-        return new Channel('notification-user-' . $userId);
+        return new Channel('notification-user-' . $this->userId);
     }
 }

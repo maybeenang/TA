@@ -29,7 +29,6 @@
                 this.loading = false;
 
                 if (this.result.result) {
-                    $dispatch('pengajuan-verifikasi-sukses');
                     this.msgContainer.innerHTML = `<p class="mt-2 text-green-700">${this.result.message}</p>`;
                 } else {
                     this.msgContainer.innerHTML = `<p class="mt-2 text-red-700">${this.result.message}</p>`;
@@ -44,7 +43,11 @@
     </script>
 @endpush
 
-<x-dialog x-model="{{ $model }}" @open-confirm-laporan-verifikasi.window="{{$model}} = true;">
+<x-dialog
+    x-model="{{ $model }}"
+    @open-confirm-laporan-verifikasi.window="{{$model}} = true;"
+    @close-modal.window="$dispatch('refresh-table')"
+>
     <x-dialog.content
         x-data="confirmLaporanVerifikasi"
         @open-confirm-laporan-verifikasi.window="onOpenConfirmLaporanVerifikasi"
