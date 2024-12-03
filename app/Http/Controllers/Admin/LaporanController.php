@@ -92,7 +92,7 @@ class LaporanController extends Controller
                 $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
             }
 
-            return redirect()->route('admin.laporan.index')->with('success', 'Berhasil verifikasi laporan');
+            return redirect()->route('admin.laporan.verifikasi')->with('success', 'Berhasil verifikasi laporan');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('error', 'Gagal verifikasi laporan' . $e->getMessage());

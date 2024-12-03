@@ -30,7 +30,6 @@ class CpmkTable extends DynamicTable
         $this->form->mount($this->getRowData($id));
     }
 
-
     #[On('close-modal')]
     public function closeEditCpmk()
     {

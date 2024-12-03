@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MataKuliahTable extends DynamicTable
 {
-    public $searchColumns = ['name'];
+    public $searchColumns = ['name', 'code'];
     /*public $relations = ['lecturer'];*/
 
     /*public $componentBefore = 'livewire.table.mata-kuliah';*/

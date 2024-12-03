@@ -18,7 +18,7 @@ class LaporanTable extends DynamicTable
 {
     use WithAcademicYear;
 
-    public $searchColumns = ['name'];
+    public $searchColumns = ['classRoom.name', 'classRoom.course.name', 'classRoom.course.code', 'reportStatus.name'];
 
     public $relations = ['classRoom', 'reportStatus'];
 

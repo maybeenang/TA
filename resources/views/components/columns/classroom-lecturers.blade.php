@@ -1,5 +1,5 @@
 @props([
-    "value",
+    'value',
 ])
 @php
     $lecturerName = App\Models\ClassRoom::find($value)?->lecturer?->user?->name;
@@ -25,13 +25,15 @@
                     $lecturers = $allLecturers;
                     $lecturers = $lecturers->map(function ($lecturer) {
                         return [
-                            "id" => $lecturer->id,
-                            "name" => $lecturer?->user?->name,
+                            'id' => $lecturer->id,
+                            'name' => $lecturer?->user?->name,
                         ];
                     });
 
-                    $classRoomName = $this->getRowData($value)->name;
-                    $courseName = $this->getRowData($value)->course->name;
+                    $data = $this->getRowData($value);
+
+                    $classRoomName = $data->name;
+                    $courseName = $data->course->name;
                 @endphp
 
                 <form wire:submit="addLecture({{ $value }})">
@@ -55,7 +57,7 @@
                             >
                                 <option value="">Pilih Tenaga Pengajar</option>
                                 @foreach ($lecturers as $lecturer)
-                                    <option value="{{ $lecturer["id"] }}">{{ $lecturer["name"] }}</option>
+                                    <option value="{{ $lecturer['id'] }}">{{ $lecturer['name'] }}</option>
                                 @endforeach
                             </x-select>
                         </div>

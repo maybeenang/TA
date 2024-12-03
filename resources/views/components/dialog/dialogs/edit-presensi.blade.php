@@ -1,21 +1,11 @@
 @props([
-    "model",
+    'model',
 ])
 <x-dialog x-model="{{$model}}" @open-edit-presensi.window="{{$model}} = true">
     <x-dialog.content>
         <x-dialog.header>
             <x-dialog.title>Edit Presensi dan Keaktifan</x-dialog.title>
         </x-dialog.header>
-
-        @if ($errors->any())
-            <x-alert variant="destructive" class="my-4 rounded-sm">
-                <ul class="list-inside list-disc">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </x-alert>
-        @endif
 
         <div class="mx-auto flex h-80 w-full" wire:loading>
             <div class="flex h-full items-center justify-center text-center">
@@ -27,6 +17,16 @@
         </div>
 
         <div class="" wire:loading.class="hidden">
+            @if ($errors->any())
+                <x-alert variant="destructive" class="my-4 rounded-sm">
+                    <ul class="list-inside list-disc">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-alert>
+            @endif
+
             <x-form class="mx-auto w-full" id="editPertemuanForm" wire:submit="save">
                 @csrf
 
@@ -49,7 +49,6 @@
                         placeholder="0"
                         wire:model="editPresensi.student_present"
                         wire:loading.attr="disabled"
-                        tabindex="-1"
                     />
                 </x-form.item>
 
@@ -61,7 +60,6 @@
                         placeholder="0"
                         wire:model="editPresensi.student_active"
                         wire:loading.attr="disabled"
-                        tabindex="-1"
                     />
                 </x-form.item>
 
