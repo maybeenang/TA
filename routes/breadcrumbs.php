@@ -164,7 +164,7 @@ Breadcrumbs::for('tenaga-pengajar.laporan.select', function (BreadcrumbTrail $tr
 
 Breadcrumbs::for('tenaga-pengajar.laporan.edit', function (BreadcrumbTrail $trail, $laporan) {
     $trail->parent('tenaga-pengajar.laporan.select');
-    $trail->push('Edit Laporan', route('tenaga-pengajar.laporan.edit', $laporan));
+    $trail->push($laporan?->classRoom?->fullName, route('tenaga-pengajar.laporan.edit', $laporan));
 });
 
 Breadcrumbs::for('tenaga-pengajar.kelas.index', function (BreadcrumbTrail $trail) {
