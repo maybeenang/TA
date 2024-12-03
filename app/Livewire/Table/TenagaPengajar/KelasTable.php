@@ -17,7 +17,7 @@ class KelasTable extends DynamicTable
 {
     use WithAcademicYear;
 
-    public $searchColumns = ['name',];
+    public $searchColumns = ['name', 'course.name', 'course.code'];
 
     public $relations = ['course', 'lecturer', 'academicYear'];
 

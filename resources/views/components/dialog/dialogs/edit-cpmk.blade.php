@@ -1,21 +1,11 @@
 @props([
-    "model",
+    'model',
 ])
 <x-dialog x-model="{{$model}}" @open-edit-cpmk.window="{{$model}} = true">
     <x-dialog.content>
         <x-dialog.header>
             <x-dialog.title>Edit CPMK</x-dialog.title>
         </x-dialog.header>
-
-        @if ($errors->any())
-            <x-alert variant="destructive" class="my-4 rounded-sm">
-                <ul class="list-inside list-disc">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </x-alert>
-        @endif
 
         <div class="mx-auto flex h-96 w-full" wire:loading>
             <div class="flex h-full items-center justify-center text-center">
@@ -27,6 +17,16 @@
         </div>
 
         <div class="" wire:loading.remove>
+            @if ($errors->any())
+                <x-alert variant="destructive" class="my-4 rounded-sm">
+                    <ul class="list-inside list-disc">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-alert>
+            @endif
+
             <x-form class="mx-auto w-full" id="editForm" wire:submit="save">
                 @csrf
 
@@ -47,12 +47,29 @@
 
                 <x-form.item name="criteria">
                     <x-form.label>Kriteria dan Bentuk</x-form.label>
-                    <x-input x-form:control required name="criteria" placeholder="UTS UAS" wire:model="form.criteria" />
+
+                    <x-select id="criteria" name="criteria" class="" wire:model="form.criteria">
+                        <option value="" disabled>Pilih Kriteria</option>
+                        @foreach ($this->laporan->gradeComponents as $gradeComponent)
+                            <option
+                                value="{{ $gradeComponent->name }}"
+                                @selected($gradeComponent->name == $this->form->criteria)
+                            >
+                                {{ $gradeComponent->name }}
+                            </option>
+                        @endforeach
+                    </x-select>
                 </x-form.item>
 
                 <x-form.item name="average_score">
                     <x-form.label>Rata Rata Nilai</x-form.label>
-                    <x-input x-form:control name="average_score" placeholder="80" wire:model="form.average_score" />
+                    <x-input
+                        type="number"
+                        x-form:control
+                        name="average_score"
+                        placeholder="80"
+                        wire:model="form.average_score"
+                    />
                 </x-form.item>
 
                 <div class="flex justify-end">
