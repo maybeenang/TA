@@ -4,7 +4,10 @@ namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Enums\ReportStatusEnum;
 use App\Enums\RolesEnum;
+use App\Events\GradeComponentUpdated;
+use App\Exports\ExportReportPenilaian;
 use App\Http\Controllers\Controller;
+use App\Imports\ImportReportPenilaian;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Lecturer;
 use App\Models\Report;
@@ -17,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -137,6 +141,7 @@ class LaporanController extends Controller
     }
 
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -173,6 +178,34 @@ class LaporanController extends Controller
                 'message' => 'Gagal mengajukan verifikasi laporan',
                 'result' => false,
             ])->setStatusCode(500);
+        }
+    }
+
+    public function exportPenilaian(Report $laporan)
+    {
+        $name = 'penilaian-' . $laporan->classRoom->fullName . '.xlsx';
+        // replace space with dash
+        $name = str_replace(' ', '-', $name);
+        return (new ExportReportPenilaian($laporan))->download($name);
+    }
+
+    public function importPenilaian(Request $request, Report $laporan)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+            $file = $request->file('file');
+
+            (new ImportReportPenilaian($laporan))->import($file);
+
+            event(new GradeComponentUpdated($laporan));
+
+            return redirect()->back()->with('success', 'Berhasil mengimport data penilaian');
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return redirect()->back()->with('error', 'Gagal mengimport data penilaian');
         }
     }
 }

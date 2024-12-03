@@ -16,6 +16,10 @@ Route::group(
 
         Route::patch('laporan/pengajuan-verifikasi/{laporan}', [\App\Http\Controllers\TenagaPengajar\LaporanController::class, 'pengajuanVerifikasi'])->name('laporan.pengajuanVerifikasi');
 
+        Route::get('laporan/{laporan}/export-penilaian', [\App\Http\Controllers\TenagaPengajar\LaporanController::class, 'exportPenilaian'])->name('laporan.exportPenilaian');
+
+        Route::put('laporan/{laporan}/import-penilaian', [\App\Http\Controllers\TenagaPengajar\LaporanController::class, 'importPenilaian'])->name('laporan.importPenilaian');
+
         Route::resource('laporan', \App\Http\Controllers\TenagaPengajar\LaporanController::class);
 
         ROute::resource('cpmk', \App\Http\Controllers\TenagaPengajar\CpmkController::class);
