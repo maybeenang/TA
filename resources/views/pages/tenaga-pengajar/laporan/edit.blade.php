@@ -8,16 +8,6 @@
             Edit Laporan
         </span>
 
-        <div class="space-y-2 rounded-md border-2 border-l-8 border-zinc-100 border-l-red-500 p-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur pariatur mollitia perspiciatis
-                sequi similique magni porro fuga et facere totam unde, id quibusdam perferendis quisquam fugit ex,
-                dolore illo cum.
-            </p>
-            <x-button.index>Unduh Template Laporan</x-button.index>
-            <x-button.index variant="secondary">Import Template Laporan</x-button.index>
-        </div>
-
         <section class="flex gap-8">
             <!--form-->
             <div class="js-toc-content min-w-0 flex-1 space-y-8">
@@ -41,7 +31,7 @@
         </section>
     </div>
 
-    @pushOnce("scripts")
+    @pushOnce('scripts')
     <script>
         tocbot.init({
             tocSelector: '.js-toc',
