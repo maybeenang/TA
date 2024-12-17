@@ -50,6 +50,7 @@ class VerifikasiLaporanTable extends DynamicTable
             ->whereHas('reportStatus', function ($query) {
                 $query->where('name', ReportStatusEnum::DIKIRIM);
             })
+            ->where('signature_kaprodi_id', null)
             ->when($this->academicYearId, function ($query) {
                 $query->whereHas('classRoom.academicYear', function ($query) {
                     $query->where('id', $this->academicYearId);
