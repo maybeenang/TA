@@ -23,6 +23,7 @@ Route::group(
         Route::get('/laporan/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporan'])->name('laporan.verifikasi');
         Route::get('/laporan/arsip', [\App\Http\Controllers\Admin\LaporanController::class, 'arsipLaporan'])->name('laporan.arsip');
         Route::get('/laporan/{laporan}/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporanEdit'])->name('laporan.verifikasi.edit');
+        Route::get('laporan/verifikasi/count', [\App\Http\Controllers\Admin\LaporanController::class, 'countVerifikasi'])->name('laporan.verifikasi.count');
 
 
         Route::put('/laporan/{laporan}/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporanUpdate'])->name('laporan.verifikasi.update');

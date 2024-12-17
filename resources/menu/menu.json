@@ -41,7 +41,8 @@
                 {
                     "url": "kaprodi.laporan.index",
                     "name": "Verifikasi Laporan",
-                    "slug": "kaprodi.laporan.index"
+                    "slug": "kaprodi.laporan.index",
+                    "badge": "kaprodiLaporanVerifikasi"
                 },
                 {
                     "url": "kaprodi.laporan.arsip",
@@ -58,7 +59,8 @@
                 {
                     "url": "gkmp.laporan.index",
                     "name": "Verifikasi Laporan",
-                    "slug": "gkmp.laporan.index"
+                    "slug": "gkmp.laporan.index",
+                    "badge": "gkmpLaporanVerifikasi"
                 },
                 {
                     "url": "gkmp.laporan.arsip",
@@ -80,7 +82,8 @@
                 {
                     "url": "admin.laporan.verifikasi",
                     "name": "Verifikasi Laporan",
-                    "slug": ["admin.laporan.verifikasi"]
+                    "slug": ["admin.laporan.verifikasi"],
+                    "badge": "adminLaporanVerifikasi"
                 },
                 {
                     "url": "admin.laporan.arsip",
