@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <title>{{ config("app.name", "Laravel") }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net" />
@@ -26,7 +26,7 @@
         <!--select2 css-->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <!-- Scripts -->
-        @vite(["resources/css/luvi-ui.css", "resources/css/app.css", "resources/js/app.js"])
+        @vite(['resources/css/luvi-ui.css', 'resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
         @routes
@@ -36,12 +36,12 @@
         <div class="min-h-screen bg-gray-200">
             <!-- Page Content -->
             <main class="mx-auto min-h-screen max-w-screen-2xl bg-white" x-data>
-                @include("layouts.header")
+                @include('layouts.header')
 
-                @include("layouts.navigation")
+                @include('layouts.navigation')
 
                 <div class="flex flex-col gap-4 p-4 md:flex-row">
-                    @include("layouts.sidebar")
+                    @include('layouts.sidebar')
 
                     <section class="min-w-0 flex-1 space-y-2">
                         {{ Breadcrumbs::render() }}
@@ -62,6 +62,6 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         @livewireScripts
-        @stack("scripts")
+        @stack('scripts')
     </body>
 </html>

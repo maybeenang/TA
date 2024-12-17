@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // delete all pdf files in storage
         Storage::deleteDirectory('pdfs');
         Storage::deleteDirectory('signatures');
 

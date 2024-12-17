@@ -27,7 +27,5 @@ Route::group(
 
         Route::put('/laporan/{laporan}/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporanUpdate'])->name('laporan.verifikasi.update');
         Route::resource('laporan', \App\Http\Controllers\Admin\LaporanController::class);
-
-        Route::resource('signature', \App\Http\Controllers\Admin\SignatureController::class);
     }
 );

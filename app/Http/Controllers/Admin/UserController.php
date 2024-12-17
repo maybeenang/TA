@@ -40,7 +40,6 @@ class UserController extends Controller
 
         $hasRoles = $request->has('roles');
 
-        /*dd($request->all());*/
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',

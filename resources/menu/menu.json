@@ -34,6 +34,23 @@
             ]
         },
         {
+            "name": "Kaprodi",
+            "icon": "",
+            "role": "kaprodi",
+            "submenu": [
+                {
+                    "url": "kaprodi.laporan.index",
+                    "name": "Verifikasi Laporan",
+                    "slug": "kaprodi.laporan.index"
+                },
+                {
+                    "url": "kaprodi.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": "kaprodi.laporan.arsip"
+                }
+            ]
+        },
+        {
             "name": "Admin",
             "icon": "",
             "role": "admin",
@@ -52,11 +69,6 @@
                     "url": "admin.laporan.arsip",
                     "name": "Arsip Laporan",
                     "slug": ["admin.laporan.arsip"]
-                },
-                {
-                    "url": "admin.signature.index",
-                    "name": "Kelola Tanda Tangan",
-                    "slug": ["admin.signature.verifikasi"]
                 },
                 {
                     "url": "admin.kelas.index",
@@ -85,6 +97,11 @@
             "icon": "",
             "slug": "pengaturan",
             "submenu": [
+                {
+                    "url": "signature.index",
+                    "name": "Kelola Tanda Tangan",
+                    "slug": ["signatre.index", "signature.create"]
+                },
                 {
                     "url": "profile.edit",
                     "name": "Profil"

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Signature;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,8 +16,7 @@ class SignatureController extends Controller
     public function index()
     {
         $signatures = Auth::user()->signatures;
-
-        return view('pages.admin.signature.index', compact('signatures'));
+        return view('pages.signature.index', compact('signatures'));
     }
 
     public function show(Signature $signature)
@@ -36,7 +36,7 @@ class SignatureController extends Controller
     public function create()
     {
         session()->put('previous_url', url()->previous());
-        return view('pages.admin.signature.create');
+        return view('pages.signature.create');
     }
 
     public function store(Request $request)
@@ -63,15 +63,14 @@ class SignatureController extends Controller
 
         $signature->save();
 
-        // Redirect ke URL yang disimpan atau fallback ke halaman index
-        $redirectUrl = session()->pull('previous_url', route('admin.signature.index')) ?? route('admin.signature.index');
+        $redirectUrl = session()->pull('previous_url', route('signature.index')) ?? route('signature.index');
 
         return redirect()->to($redirectUrl)->with('success', 'Tanda tangan berhasil dibuat');
     }
 
     public function edit(Signature $signature)
     {
-        return view('pages.admin.signature.edit', compact('signature'));
+        return view('pages.signature.edit', compact('signature'));
     }
 
     public function update(Request $request, Signature $signature)
@@ -100,7 +99,7 @@ class SignatureController extends Controller
 
         $signature->save();
 
-        return redirect()->intended(route('admin.signature.index', absolute: false))->with('success', 'Tanda tangan berhasil diubah');
+        return redirect()->intended(route('signature.index', absolute: false))->with('success', 'Tanda tangan berhasil diubah');
     }
 
     public function destroy(Signature $signature)
@@ -110,6 +109,6 @@ class SignatureController extends Controller
 
         $signature->delete();
 
-        return redirect()->intended(route('admin.signature.index', absolute: false))->with('success', 'Tanda tangan berhasil dihapus');
+        return redirect()->intended(route('signature.index', absolute: false))->with('success', 'Tanda tangan berhasil dihapus');
     }
 }

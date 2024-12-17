@@ -18,9 +18,8 @@ class AdminArsipLaporan extends LaporanGrid
             });
     }
 
-
-    public function render()
+    public function mount(string $role = 'admin')
     {
-        return view('livewire.grid.laporan-grid');
+        $this->role = $role;
     }
 }

@@ -26,6 +26,16 @@ Route::group(
     }
 );
 
+Route::group(
+    [
+        'middleware' => ['auth', 'verified', 'role:admin|kaprodi']
+    ],
+    function () {
+        Route::resource('signature', \App\Http\Controllers\SignatureController::class);
+    }
+);
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/tenaga-pengajar.php';
+require __DIR__ . '/kaprodi.php';

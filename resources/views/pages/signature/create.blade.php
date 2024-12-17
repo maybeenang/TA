@@ -10,7 +10,7 @@
 
         <div class="mx-auto max-w-md" x-image-viewer>
             <h1 class="text-center text-xl font-semibold">Tambah Tanda Tangan</h1>
-            <x-form class="" method="POST" action="{{ route('admin.signature.store') }}" enctype="multipart/form-data">
+            <x-form class="" method="POST" action="{{ route('signature.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <x-form.item name="image">
