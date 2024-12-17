@@ -3,11 +3,14 @@
 namespace App\Livewire\Table\Kaprodi;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
 use App\Enums\ReportStatusEnum;
 use App\Livewire\DynamicTable;
 use App\Models\Report;
+use App\Services\ReportService;
 use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\On;
 
 class VerifikasiLaporanTable extends DynamicTable
 {
@@ -18,6 +21,27 @@ class VerifikasiLaporanTable extends DynamicTable
     public $relations = ['classRoom', 'reportStatus'];
 
     public $componentBefore = 'livewire.table.kelas';
+
+    public $componentAfter = 'livewire.table.after.cpmk-after';
+
+    private ReportService $reportService;
+
+    // forms
+    public $catatan;
+
+    public function tolakLaporan($id)
+    {
+        $this->reportService->tolakLaporan($id, $this->catatan ?? '');
+        $this->dispatch('close-modal');
+
+        session()->flash('message', 'Laporan Berhasil Ditolak');
+    }
+
+    #[On('close-modal')]
+    public function closeModal()
+    {
+        $this->reset('catatan');
+    }
 
     public function query(): Builder
     {
@@ -44,5 +68,17 @@ class VerifikasiLaporanTable extends DynamicTable
             Column::make('', 'Status')->component('columns.report-status'),
             Column::make('', '')->component('columns.partials.actions.verifikasi-laporan-kaprodi'),
         ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.tolak-laporan', 'tolakLaporan')
+        ];
+    }
+
+    public function boot(ReportService $reportService)
+    {
+        $this->reportService = $reportService;
     }
 }

@@ -52,11 +52,6 @@ class VerifikasiLaporanTable extends DynamicTable
         $this->reset('catatan');
     }
 
-    public function filterWithAcademicYear()
-    {
-        $this->resetPage();
-    }
-
     public function query(): Builder
     {
         return Report::query()
