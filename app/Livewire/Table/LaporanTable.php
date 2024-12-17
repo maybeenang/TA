@@ -98,8 +98,7 @@ class LaporanTable extends DynamicTable
                 $query->whereHas('classRoom', function ($query) {
                     $query->where('academic_year_id', $this->academicYearId);
                 });
-            })
-            ->orderBy('updated_at', 'desc');
+            });
     }
 
     public function columns(): array

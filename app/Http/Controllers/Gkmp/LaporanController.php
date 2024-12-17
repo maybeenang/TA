@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Kaprodi;
+namespace App\Http\Controllers\Gkmp;
 
 use App\Enums\ReportStatusEnum;
 use App\Http\Controllers\Controller;
@@ -28,7 +28,7 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('pages.kaprodi.laporan.index');
+        return view('pages.gkmp.laporan.index');
     }
 
     public function verifikasi(Report $laporan)
@@ -40,7 +40,7 @@ class LaporanController extends Controller
 
         $signatures = Auth::user()->signatures;
 
-        return view('pages.kaprodi.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures'));
+        return view('pages.gkmp.laporan.verifikasi-laporan-edit', compact('laporan', 'signatures'));
     }
 
     public function verifikasiLaporanUpdate(Request $request, Report $laporan)
@@ -49,7 +49,7 @@ class LaporanController extends Controller
             'signature' => 'required|exists:signatures,id',
         ]);
 
-        $validated['role'] = 'kaprodi';
+        $validated['role'] = 'gkmp';
 
         $signature = Auth::user()->signatures()->find($validated['signature']); // @intelliphense-ignore-line
 
@@ -65,7 +65,7 @@ class LaporanController extends Controller
                 $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
             }
 
-            return redirect()->route('kaprodi.laporan.index')->with('success', 'Berhasil verifikasi laporan');
+            return redirect()->route('gkmp.laporan.index')->with('success', 'Berhasil verifikasi laporan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal verifikasi laporan' . $e->getMessage());
         }
@@ -73,7 +73,7 @@ class LaporanController extends Controller
 
     public function arsipLaporan()
     {
-        return view('pages.kaprodi.laporan.arsip-laporan');
+        return view('pages.gkmp.laporan.arsip-laporan');
     }
 
     /**

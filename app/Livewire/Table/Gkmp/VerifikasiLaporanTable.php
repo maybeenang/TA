@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Livewire\Table\Gkmp;
+
+use App\Dynamics\Column;
+use App\Dynamics\Dialog;
+use App\Enums\ReportStatusEnum;
+use App\Livewire\DynamicTable;
+use App\Models\Report;
+use App\Services\ReportService;
+use App\Traits\WithAcademicYear;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\On;
+
+class VerifikasiLaporanTable extends DynamicTable
+{
+    use WithAcademicYear;
+
+    public $searchColumns = ['classRoom.name', 'classRoom.course.name', 'classRoom.course.code', 'reportStatus.name'];
+
+    public $relations = ['classRoom', 'reportStatus'];
+
+    public $componentBefore = 'livewire.table.kelas';
+
+    public $componentAfter = 'livewire.table.after.cpmk-after';
+
+    private ReportService $reportService;
+
+    // forms
+    public $catatan;
+
+    public function tolakLaporan($id)
+    {
+        $this->reportService->tolakLaporan($id, $this->catatan ?? '');
+        $this->dispatch('close-modal');
+
+        session()->flash('message', 'Laporan Berhasil Ditolak');
+    }
+
+    #[On('close-modal')]
+    public function closeModal()
+    {
+        $this->reset('catatan');
+    }
+
+    public function query(): Builder
+    {
+        return Report::query()
+            ->with($this->relations)
+            ->whereHas('reportStatus', function ($query) {
+                $query->where('name', ReportStatusEnum::DIKIRIM);
+            })
+            ->when($this->academicYearId, function ($query) {
+                $query->whereHas('classRoom.academicYear', function ($query) {
+                    $query->where('id', $this->academicYearId);
+                });
+            })
+            ->orderBy('updated_at', 'desc');
+    }
+
+    public function columns(): array
+    {
+        return [
+            Column::make('classRoom.id', 'Kode Kelas'),
+            Column::make('classRoom.name', 'Nama Kelas'),
+            Column::make('classRoom.course.code', 'Kode MK'),
+            Column::make('classRoom.course.name', 'Mata Kuliah'),
+            Column::make('', 'Status')->component('columns.report-status'),
+            Column::make('', '')->component('columns.partials.actions.verifikasi-laporan-gkmp'),
+        ];
+    }
+
+    public function dialogs()
+    {
+        return [
+            Dialog::make('dialog.dialogs.tolak-laporan', 'tolakLaporan')
+        ];
+    }
+
+    public function boot(ReportService $reportService)
+    {
+        $this->reportService = $reportService;
+    }
+}

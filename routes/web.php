@@ -28,10 +28,20 @@ Route::group(
 
 Route::group(
     [
-        'middleware' => ['auth', 'verified', 'role:admin|kaprodi']
+        'middleware' => ['auth', 'verified', 'role:admin|kaprodi|gkmp']
     ],
     function () {
         Route::resource('signature', \App\Http\Controllers\SignatureController::class);
+    }
+);
+
+Route::group(
+    [
+        'middleware' => ['auth', 'verified', 'role:kaprodi|gkmp']
+    ],
+    function () {
+        Route::get('transfer-role', [\App\Http\Controllers\TransferRole::class, 'index'])->name('transfer-role.index');
+        Route::put('transfer-role', [\App\Http\Controllers\TransferRole::class, 'update'])->name('transfer-role.update');
     }
 );
 
@@ -39,3 +49,4 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/tenaga-pengajar.php';
 require __DIR__ . '/kaprodi.php';
+require __DIR__ . '/gkmp.php';

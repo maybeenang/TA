@@ -16,6 +16,26 @@
                 @isset($item->submenu)
                     @foreach ($item->submenu as $subitem)
                         @php
+                            if (isset($subitem->role)) {
+                                if (is_array($subitem->role)) {
+                                    if (
+                                        ! auth()
+                                            ->user()
+                                            ->hasAnyRole($subitem->role)
+                                    ) {
+                                        continue;
+                                    }
+                                } else {
+                                    if (
+                                        ! auth()
+                                            ->user()
+                                            ->hasRole($subitem->role)
+                                    ) {
+                                        continue;
+                                    }
+                                }
+                            }
+
                             $isActive = isset($subitem->url) && strpos(Route::currentRouteName(), $subitem->url) !== false;
 
                             if (! $isActive && isset($subitem->slug)) {

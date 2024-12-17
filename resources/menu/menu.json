@@ -51,6 +51,23 @@
             ]
         },
         {
+            "name": "GKMP",
+            "icon": "",
+            "role": "gkmp",
+            "submenu": [
+                {
+                    "url": "gkmp.laporan.index",
+                    "name": "Verifikasi Laporan",
+                    "slug": "gkmp.laporan.index"
+                },
+                {
+                    "url": "gkmp.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": "gkmp.laporan.arsip"
+                }
+            ]
+        },
+        {
             "name": "Admin",
             "icon": "",
             "role": "admin",
@@ -100,7 +117,14 @@
                 {
                     "url": "signature.index",
                     "name": "Kelola Tanda Tangan",
-                    "slug": ["signatre.index", "signature.create"]
+                    "slug": ["signatre.index", "signature.create"],
+                    "role": ["admin", "kaprodi", "gkmp"]
+                },
+                {
+                    "url": "transfer-role.index",
+                    "name": "Transfer Role",
+                    "slug": "transfer-role.index",
+                    "role": ["kaprodi", "gkmp"]
                 },
                 {
                     "url": "profile.edit",
