@@ -19,7 +19,8 @@
                 {
                     "url": "tenaga-pengajar.laporan.select",
                     "name": "Buat Laporan Portofolio Perkuliahan",
-                    "slug": "tenaga-pengajar.laporan.edit"
+                    "slug": "tenaga-pengajar.laporan.edit",
+                    "badge": "buatLaporanCount"
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",
