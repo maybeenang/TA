@@ -31,6 +31,13 @@ class LaporanController extends Controller
         return view('pages.gkmp.laporan.index');
     }
 
+    public function verifikasiLaporan()
+    {
+
+        return view('pages.gkmp.laporan.verifikasi-laporan');
+    }
+
+
     public function verifikasi(Report $laporan)
     {
         // check is laporan status is not submitted
@@ -60,12 +67,7 @@ class LaporanController extends Controller
         try {
             $this->reportService->verifikasiLaporan($laporan, $validated);
 
-            // notify tenaga pengajar
-            if ($laporan?->classRoom?->lecturer?->user) {
-                $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
-            }
-
-            return redirect()->route('gkmp.laporan.index')->with('success', 'Berhasil verifikasi laporan');
+            return redirect()->route('gkmp.laporan.verifikasi')->with('success', 'Berhasil verifikasi laporan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal verifikasi laporan' . $e->getMessage());
         }

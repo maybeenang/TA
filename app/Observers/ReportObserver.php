@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\ReportUpdated;
 use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use App\Services\ReportService;
@@ -32,6 +33,10 @@ class ReportObserver
 
     public function updated(Report $report): void
     {
+        if ($report->isDirty(['signature_kaprodi_id', 'signature_gkmp_id', 'report_status_id'])) {
+            broadcast(new ReportUpdated($report));
+        }
+
         // check apakah yang di update adalah pdf_path atau pdf_status
         if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status')) {
             return;

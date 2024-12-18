@@ -59,8 +59,13 @@
             "submenu": [
                 {
                     "url": "gkmp.laporan.index",
+                    "name": "Semua Laporan",
+                    "slug": "gkmp.laporan.index"
+                },
+                {
+                    "url": "gkmp.laporan.verifikasi",
                     "name": "Verifikasi Laporan",
-                    "slug": "gkmp.laporan.index",
+                    "slug": "gkmp.laporan.verifikasi",
                     "badge": "gkmpLaporanVerifikasi"
                 },
                 {

@@ -65,11 +65,6 @@ class LaporanTable extends DynamicTable
 
         // check apakah oldStatusId sama dengan terverifikasi
         if ($oldStatusName === ReportStatusEnum::TERVERIFIKASI->value) {
-            /*'verified_at',*/
-            /*'signature_gkmp_id',*/
-            /*'signature_kaprodi_id',*/
-            /*'verifikator_gkmp',*/
-            /*'verifikator_kaprodi',*/
             $report->verified_at = null;
             $report->signature_gkmp_id = null;
             $report->signature_kaprodi_id = null;
@@ -102,11 +97,20 @@ class LaporanTable extends DynamicTable
         $this->reset('reportStatusName');
         $this->reset('selectedChangeReport');
         $this->reset('reportNote');
+        $this->reset('lecturerId');
     }
 
-    public function filterWithAcademicYear()
+    public $lecturerId;
+
+    public function addLecture($reportId)
     {
-        $this->resetPage();
+        $classroom = Report::find($reportId)->classRoom;
+
+        $classroom->lecturer_id = $this->lecturerId;
+
+        $classroom->save();
+
+        $this->dispatch('close-modal');
     }
 
     public function query(): Builder
@@ -127,6 +131,7 @@ class LaporanTable extends DynamicTable
             Column::make('classRoom.name', 'Nama Kelas'),
             Column::make('classRoom.course.code', 'Kode MK'),
             Column::make('classRoom.course.name', 'Mata Kuliah'),
+            Column::make('', 'Tenaga Pengajar')->component('columns.report-classroom-lecturers'),
             Column::make('', 'Status')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
             Column::make('', ' ')->component('columns.partials.actions.semua-laporan-admin'),

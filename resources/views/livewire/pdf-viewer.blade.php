@@ -12,7 +12,11 @@
                     <x-icons.loading-spinner class="h-8 w-8 animate-spin fill-blue-600 text-gray-200" />
                     <span class="sr-only">Loading...</span>
                 </div>
-                <p class="mt-2">Generating PDF...</p>
+                <p class="mt-2">
+                    Mohon tunggu beberapa saat untuk sistem melakukan generate PDF
+                    <br />
+                    Jika proses terasa terlalu lama silahkan coba refresh halaman ini
+                </p>
             </div>
         </div>
     @else

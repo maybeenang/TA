@@ -7,6 +7,7 @@ use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
 use App\Models\ReportStatus;
 use App\Notifications\ReportTolak;
+use App\Notifications\TenagaPengajarReportVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -258,6 +259,11 @@ class ReportService
                     'report_status_id' => $verifiedStatus->id,
                     'verified_at' => now(),
                 ]);
+
+                // notify tenaga pengajar
+                if ($laporan?->classRoom?->lecturer?->user) {
+                    $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
+                }
             }
 
             return $laporan;

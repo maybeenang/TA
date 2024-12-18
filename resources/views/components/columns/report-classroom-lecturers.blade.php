@@ -3,8 +3,8 @@
 ])
 
 <div class="">
-    @if ($value->lecturer)
-        {{ $value->lecturer?->user?->name ?? '-' }}
+    @if ($value->classRoom->lecturer)
+        {{ $value->classRoom->lecturer?->user?->name ?? '-' }}
     @else
         <p class="text-gray-400">Belum ada</p>
 
@@ -27,19 +27,19 @@
                         ];
                     });
 
-                    $classRoomName = $value->name;
-                    $courseName = $value->course->name;
+                    $classRoomName = $value->classRoom->name;
+                    $courseName = $value->classRoom->course->name;
                 @endphp
 
                 <form wire:submit="addLecture({{ $value->id }})">
                     <div class="grid gap-4 py-4">
                         <div class="grid grid-cols-4 items-center gap-4">
                             <x-label htmlFor="name" class="text-right">Mata Kuliah</x-label>
-                            <x-input id="name" readonly value="{{ $courseName }}" class="col-span-3" disabled />
+                            <x-input id="name" readonly value="{{ $courseName }}" class="col-span-3" />
                         </div>
                         <div class="grid grid-cols-4 items-center gap-4">
                             <x-label htmlFor="username" class="text-right">Kelas</x-label>
-                            <x-input id="username" readonly value="{{ $classRoomName }}" class="col-span-3" disabled />
+                            <x-input id="username" readonly value="{{ $classRoomName }}" class="col-span-3" />
                         </div>
                         <div class="grid grid-cols-4 items-center gap-4">
                             <x-label htmlFor="username" class="text-right">Tenaga Pengajar</x-label>

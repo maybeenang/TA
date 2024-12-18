@@ -87,10 +87,6 @@ class LaporanController extends Controller
         try {
             $this->reportService->verifikasiLaporan($laporan, $validated);
 
-            // notify tenaga pengajar
-            if ($laporan?->classRoom?->lecturer?->user) {
-                $laporan->classRoom->lecturer->user->notify(new TenagaPengajarReportVerification($laporan));
-            }
 
             return redirect()->route('admin.laporan.verifikasi')->with('success', 'Berhasil verifikasi laporan');
         } catch (\Exception $e) {

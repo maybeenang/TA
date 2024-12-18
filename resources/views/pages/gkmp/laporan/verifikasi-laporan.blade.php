@@ -8,6 +8,6 @@
             Laporan
         </span>
 
-        <livewire:table.laporan-table />
+        <livewire:table.gkmp.verifikasi-laporan-table />
     </div>
 </x-app-layout>
