@@ -60,9 +60,11 @@
                             </span>
 
                             @isset($subitem->badge)
-                                <span class="rounded-sm bg-red-500 px-2 py-1 text-white">
-                                    {{ $badgeCount[$subitem->badge] ?? 0 }}
-                                </span>
+                                @if ($badgeCount[$subitem->badge] ?? 0 > 0)
+                                    <span class="rounded-sm bg-red-500 px-2 py-1 text-white">
+                                        {{ $badgeCount[$subitem->badge] ?? 0 }}
+                                    </span>
+                                @endif
                             @endisset
                         </a>
                     @endforeach

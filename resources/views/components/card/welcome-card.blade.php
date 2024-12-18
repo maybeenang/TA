@@ -2,24 +2,18 @@
     <section class="flex items-center gap-2">
         <div class="h-[50px] w-[50px] rounded-full border border-zinc-300">
             <img
-                src="
-                {{ auth()->user()->profile_picture_path }}
-            "
-                alt="
-                {{ auth()->user()->name }}
-                "
+                src=" {{ auth()->user()->profile_picture_path }} "
+                alt=" {{ auth()->user()->name }} "
                 class="h-full w-full rounded-full object-cover"
             />
         </div>
 
         <div class="">
             <span class="font-semibold">Selamat Datang</span>
-            <p class="line-clamp-1">{{ auth()->user()->name }}</p>
+            <p class="line-clamp-1">{{ auth()->user()->name ?? '-' }}</p>
         </div>
     </section>
-    <form action="{{ route("logout") }}" method="post">
-        @csrf
-
-        <x-button type="submit" variant="destructive">Log Out</x-button>
-    </form>
+    <a href="{{ route('profile.edit') }}">
+        <x-button class="bg-blue-500 text-white hover:bg-blue-800">Edit Profil</x-button>
+    </a>
 </div>
