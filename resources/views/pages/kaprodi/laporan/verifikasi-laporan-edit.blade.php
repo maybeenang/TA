@@ -29,25 +29,10 @@
                     </div>
                 @endif
 
-                <x-form class="" method="POST" action="{{ route('admin.laporan.verifikasi.update', $laporan) }}">
+                <x-form class="" method="POST" action="{{ route('kaprodi.laporan.verifikasi.update', $laporan) }}">
                     @csrf
 
                     @method('PUT')
-
-                    <x-form.item class="space-y-3" name="role">
-                        <x-form.label>Verifikasi Sebagai</x-form.label>
-                        <x-radio-group x-form:control name="role" class="grid grid-cols-4">
-                            @foreach ($roles as $item)
-                                <x-form.item>
-                                    <x-radio-group.item x-form:control value="{{$item->value}}" />
-                                    <x-form.label class="font-normal">{{ $item->label }}</x-form.label>
-                                </x-form.item>
-                            @endforeach
-                        </x-radio-group>
-                        <x-form.description>
-                            Pilih sebagai siapa anda akan memverifikasi laporan ini.
-                        </x-form.description>
-                    </x-form.item>
 
                     <x-form.item class="space-y-3" name="signature">
                         <x-form.label>Pilih tanda tangan</x-form.label>

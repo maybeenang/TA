@@ -16,6 +16,26 @@
                 @isset($item->submenu)
                     @foreach ($item->submenu as $subitem)
                         @php
+                            if (isset($subitem->role)) {
+                                if (is_array($subitem->role)) {
+                                    if (
+                                        ! auth()
+                                            ->user()
+                                            ->hasAnyRole($subitem->role)
+                                    ) {
+                                        continue;
+                                    }
+                                } else {
+                                    if (
+                                        ! auth()
+                                            ->user()
+                                            ->hasRole($subitem->role)
+                                    ) {
+                                        continue;
+                                    }
+                                }
+                            }
+
                             $isActive = isset($subitem->url) && strpos(Route::currentRouteName(), $subitem->url) !== false;
 
                             if (! $isActive && isset($subitem->slug)) {
@@ -28,15 +48,22 @@
                         @endphp
 
                         <a
-                            wire:navigate
                             @class([
-                                'block cursor-pointer bg-white px-4 py-2 text-sm hover:bg-zinc-50',
+                                'flex cursor-pointer items-center justify-between gap-2 bg-white py-2 pl-4 pr-2 text-sm hover:bg-zinc-50',
                                 'rounded-b-md' => $loop->last,
                                 'bg-yellow-100' => $isActive,
                             ])
                             href="{{ route($subitem->url) }}"
                         >
-                            {{ $subitem->name }}
+                            <span>
+                                {{ $subitem->name }}
+                            </span>
+
+                            @isset($subitem->badge)
+                                <span class="rounded-sm bg-red-500 px-2 py-1 text-white">
+                                    {{ $badgeCount[$subitem->badge] ?? 0 }}
+                                </span>
+                            @endisset
                         </a>
                     @endforeach
                 @endisset

@@ -14,4 +14,9 @@ trait WithAcademicYear
         $this->currentAcademicYear = $service->getCurrentAcademicYear();
         $this->academicYearId = $this->currentAcademicYear->id;
     }
+
+    public function filterWithAcademicYear()
+    {
+        $this->resetPage();
+    }
 }

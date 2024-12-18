@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <div class="overflow-x-auto">
+    <div class="relative overflow-x-auto">
         <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
             <thead>
                 <tr class="whitespace-nowrap uppercase">
@@ -88,6 +88,14 @@
             </tbody>
         </table>
         <div class="h-[40px]"></div>
+        <div
+            wire:loading.flex
+            wire:target="gotoPage, nextPage, previousPage, search, perPage"
+            class="absolute top-0 flex h-full w-full items-center justify-center gap-2 bg-white/20 backdrop-blur-sm"
+        >
+            <x-icons.loading-spinner />
+            loading...
+        </div>
     </div>
     {{ $this->data()->links() }}
 

@@ -9,7 +9,7 @@
         </span>
 
         <div class="flex justify-end">
-            <a href="{{ route("admin.signature.create") }}">
+            <a href="{{ route('signature.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah tanda tangan</x-button>
             </a>
         </div>

@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Livewire\Table;
+namespace App\Livewire\Table\Gkmp;
 
 use App\Dynamics\Column;
 use App\Dynamics\Dialog;
 use App\Enums\ReportStatusEnum;
 use App\Livewire\DynamicTable;
-use App\Models\AcademicYear;
-use App\Models\ClassRoom;
 use App\Models\Report;
-use App\Models\ReportStatus;
 use App\Services\ReportService;
 use App\Traits\WithAcademicYear;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class VerifikasiLaporanTable extends DynamicTable
@@ -27,11 +23,6 @@ class VerifikasiLaporanTable extends DynamicTable
     public $componentBefore = 'livewire.table.kelas';
 
     public $componentAfter = 'livewire.table.after.cpmk-after';
-
-    public $customActionBunttons = 'components.columns.partials.actions.laporan';
-
-    public $routeName = 'admin.laporan';
-
 
     private ReportService $reportService;
 
@@ -56,20 +47,16 @@ class VerifikasiLaporanTable extends DynamicTable
     {
         return Report::query()
             ->with($this->relations)
-            ->whereHas(
-                'reportStatus',
-                function ($query) {
-                    $query->where('name', ReportStatusEnum::DIKIRIM);
-                }
-            )
-            ->when(
-                $this->academicYearId,
-                function ($query) {
-                    $query->whereHas('classRoom', function ($query) {
-                        $query->where('academic_year_id', $this->academicYearId);
-                    });
-                },
-            );
+            ->whereHas('reportStatus', function ($query) {
+                $query->where('name', ReportStatusEnum::DIKIRIM);
+            })
+            ->where('signature_gkmp_id', null)
+            ->when($this->academicYearId, function ($query) {
+                $query->whereHas('classRoom.academicYear', function ($query) {
+                    $query->where('id', $this->academicYearId);
+                });
+            })
+            ->orderBy('updated_at', 'desc');
     }
 
     public function columns(): array
@@ -80,8 +67,7 @@ class VerifikasiLaporanTable extends DynamicTable
             Column::make('classRoom.course.code', 'Kode MK'),
             Column::make('classRoom.course.name', 'Mata Kuliah'),
             Column::make('', 'Status')->component('columns.report-status'),
-            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('', '')->component('columns.partials.actions.verifikasi-laporan'),
+            Column::make('', '')->component('columns.partials.actions.verifikasi-laporan-gkmp'),
         ];
     }
 

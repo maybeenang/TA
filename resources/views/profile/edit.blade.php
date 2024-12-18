@@ -20,7 +20,7 @@
 
                 <div class="flex justify-end">
                     <form
-                        action="{{ route("profile.updatePhoto") }}"
+                        action="{{ route('profile.updatePhoto') }}"
                         method="post"
                         x-ref="profile_picture_form"
                         enctype="multipart/form-data"
@@ -40,24 +40,24 @@
                 </div>
             </section>
 
-            <form id="send-verification" method="post" action="{{ route("verification.send") }}">
+            <form id="send-verification" method="post" action="{{ route('verification.send') }}">
                 @csrf
             </form>
 
-            <section class="mt-8 flex flex-col gap-8 md:flex-row">
+            <section class="mt-8 grid grid-cols-2 gap-8 md:flex-row">
                 <x-form class="w-full" action="{{ route('profile.update') }}" method="POST">
                     <header>
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ __("Informasi Profil") }}
+                            {{ __('Informasi Profil') }}
                         </h2>
 
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ __(" Perbarui informasi profil dan alamat email akun anda. ") }}
+                            {{ __(' Perbarui informasi profil dan alamat email akun anda. ') }}
                         </p>
                     </header>
 
                     @csrf
-                    @method("PATCH")
+                    @method('PATCH')
 
                     <x-form.item name="name">
                         <x-form.label>Nama</x-form.label>
@@ -98,19 +98,19 @@
                     @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                         <div>
                             <p class="mt-2 text-sm text-gray-800">
-                                {{ __("Email anda belum terverifikasi") }}
+                                {{ __('Email anda belum terverifikasi') }}
 
                                 <button
                                     form="send-verification"
                                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
-                                    {{ __("Klik disini untuk melakukan verifikasi email") }}
+                                    {{ __('Klik disini untuk melakukan verifikasi email') }}
                                 </button>
                             </p>
 
-                            @if (session("status") === "verification-link-sent")
+                            @if (session('status') === 'verification-link-sent')
                                 <p class="mt-2 text-sm font-medium text-green-600">
-                                    {{ __("Email verifikasi berhasil dikirim") }}
+                                    {{ __('Email verifikasi berhasil dikirim') }}
                                 </p>
                             @endif
                         </div>
@@ -124,15 +124,15 @@
                 <x-form class="w-full" action="{{ route('password.update') }}" method="POST">
                     <header>
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ __("Ganti Password") }}
+                            {{ __('Ganti Password') }}
                         </h2>
 
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ __("Hanya isi kolom dibawah ini jika anda ingin mengganti password akun anda") }}
+                            {{ __('Hanya isi kolom dibawah ini jika anda ingin mengganti password akun anda') }}
                         </p>
                     </header>
 
-                    @if (session("status") === "password-updated")
+                    @if (session('status') === 'password-updated')
                         <p
                             x-data="{ show: true }"
                             x-show="show"
@@ -140,12 +140,12 @@
                             x-init="setTimeout(() => (show = false), 5000)"
                             class="text-sm text-green-600"
                         >
-                            {{ __("Password berhasil diperbarui") }}
+                            {{ __('Password berhasil diperbarui') }}
                         </p>
                     @endif
 
                     @csrf
-                    @method("PUT")
+                    @method('PUT')
 
                     <x-form.item name="current_password">
                         <x-form.label>Password saat ini</x-form.label>

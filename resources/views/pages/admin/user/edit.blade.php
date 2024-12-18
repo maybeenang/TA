@@ -19,7 +19,7 @@
             <section class="mx-auto max-w-screen-md rounded-md">
                 <x-form class="mx-auto max-w-md" action="{{ route('admin.user.update', $user) }}" method="POST">
                     @csrf
-                    @method("PUT")
+                    @method('PUT')
 
                     <x-form.item name="name">
                         <x-form.label>Nama</x-form.label>
@@ -66,7 +66,7 @@
                                 Pilih role yang sesuai dengan pengguna yang anda edit
                             </p>
                         </div>
-                        <div class="flex gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             @foreach ($roles as $role)
                                 <x-form.item class="">
                                     <x-checkbox

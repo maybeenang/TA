@@ -57,8 +57,27 @@ class LaporanTable extends DynamicTable
             return;
         }
         $report = Report::find($this->selectedChangeReport);
+
+        $oldStatusName = $report->reportStatus->name;
+
         $reportStatusId = ReportStatus::where('name', $this->reportStatusName)->first()->id;
         $report->report_status_id = $reportStatusId;
+
+        // check apakah oldStatusId sama dengan terverifikasi
+        if ($oldStatusName === ReportStatusEnum::TERVERIFIKASI->value) {
+            /*'verified_at',*/
+            /*'signature_gkmp_id',*/
+            /*'signature_kaprodi_id',*/
+            /*'verifikator_gkmp',*/
+            /*'verifikator_kaprodi',*/
+            $report->verified_at = null;
+            $report->signature_gkmp_id = null;
+            $report->signature_kaprodi_id = null;
+            $report->verifikator_gkmp = null;
+            $report->verifikator_kaprodi = null;
+        }
+
+
 
         if ($this->reportNote && $this->reportStatusName === 'ditolak') {
             $report->note = $this->reportNote;
@@ -98,8 +117,7 @@ class LaporanTable extends DynamicTable
                 $query->whereHas('classRoom', function ($query) {
                     $query->where('academic_year_id', $this->academicYearId);
                 });
-            })
-            ->orderBy('updated_at', 'desc');
+            });
     }
 
     public function columns(): array

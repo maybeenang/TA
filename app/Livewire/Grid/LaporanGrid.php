@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Grid;
 
+use App\Enums\RolesEnum;
 use App\Traits\WithAcademicYear;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +12,8 @@ abstract class LaporanGrid extends Component
     use WithPagination, WithAcademicYear;
 
     public $search = '';
+
+    public $role = RolesEnum::ADMIN->value;
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 

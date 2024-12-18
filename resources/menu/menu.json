@@ -19,7 +19,8 @@
                 {
                     "url": "tenaga-pengajar.laporan.select",
                     "name": "Buat Laporan Portofolio Perkuliahan",
-                    "slug": "tenaga-pengajar.laporan.edit"
+                    "slug": "tenaga-pengajar.laporan.edit",
+                    "badge": "buatLaporanCount"
                 },
                 {
                     "url": "tenaga-pengajar.laporan.index",
@@ -30,6 +31,42 @@
                     "url": "tenaga-pengajar.kelas.index",
                     "name": "Daftar Kelas",
                     "slug": ["tenaga-pengajar.kelas.index", "tenaga-pengajar.kelas.show"]
+                }
+            ]
+        },
+        {
+            "name": "Kaprodi",
+            "icon": "",
+            "role": "kaprodi",
+            "submenu": [
+                {
+                    "url": "kaprodi.laporan.index",
+                    "name": "Verifikasi Laporan",
+                    "slug": "kaprodi.laporan.index",
+                    "badge": "kaprodiLaporanVerifikasi"
+                },
+                {
+                    "url": "kaprodi.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": "kaprodi.laporan.arsip"
+                }
+            ]
+        },
+        {
+            "name": "GKMP",
+            "icon": "",
+            "role": "gkmp",
+            "submenu": [
+                {
+                    "url": "gkmp.laporan.index",
+                    "name": "Verifikasi Laporan",
+                    "slug": "gkmp.laporan.index",
+                    "badge": "gkmpLaporanVerifikasi"
+                },
+                {
+                    "url": "gkmp.laporan.arsip",
+                    "name": "Arsip Laporan",
+                    "slug": "gkmp.laporan.arsip"
                 }
             ]
         },
@@ -46,17 +83,13 @@
                 {
                     "url": "admin.laporan.verifikasi",
                     "name": "Verifikasi Laporan",
-                    "slug": ["admin.laporan.verifikasi"]
+                    "slug": ["admin.laporan.verifikasi"],
+                    "badge": "adminLaporanVerifikasi"
                 },
                 {
                     "url": "admin.laporan.arsip",
                     "name": "Arsip Laporan",
                     "slug": ["admin.laporan.arsip"]
-                },
-                {
-                    "url": "admin.signature.index",
-                    "name": "Kelola Tanda Tangan",
-                    "slug": ["admin.signature.verifikasi"]
                 },
                 {
                     "url": "admin.kelas.index",
@@ -85,6 +118,18 @@
             "icon": "",
             "slug": "pengaturan",
             "submenu": [
+                {
+                    "url": "signature.index",
+                    "name": "Kelola Tanda Tangan",
+                    "slug": ["signatre.index", "signature.create"],
+                    "role": ["admin", "kaprodi", "gkmp"]
+                },
+                {
+                    "url": "transfer-role.index",
+                    "name": "Transfer Role",
+                    "slug": "transfer-role.index",
+                    "role": ["kaprodi", "gkmp"]
+                },
                 {
                     "url": "profile.edit",
                     "name": "Profil"

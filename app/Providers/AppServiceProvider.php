@@ -6,6 +6,7 @@ use App\Events;
 use App\Listeners;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,11 +19,6 @@ class AppServiceProvider extends ServiceProvider
         //
         if (config('app.env') === 'production') {
             $this->app['request']->server->set('HTTPS', true);
-        }
-
-        if ($this->app->environment('local')) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
         }
     }
 

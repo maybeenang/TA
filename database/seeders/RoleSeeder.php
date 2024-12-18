@@ -19,6 +19,8 @@ class RoleSeeder extends Seeder
 
         $admin = app(Role::class)->findOrCreate(RolesEnum::ADMIN->value, 'web');
         $tenagaPengajar = app(Role::class)->findOrCreate(RolesEnum::TENAGAPENGAJAR->value, 'web');
+        $gkmp = app(Role::class)->findOrCreate(RolesEnum::GKMP->value, 'web');
+        $kaprodi = app(Role::class)->findOrCreate(RolesEnum::KAPRODI->value, 'web');
 
         $users = User::get();
 
@@ -34,10 +36,21 @@ class RoleSeeder extends Seeder
             })->each(function ($user) use ($admin) {
                 $user->assignRole($admin);
             });
+
+            $users->filter(function ($user) {
+                return str_contains($user->email, 'kaprodi');
+            })->each(function ($user) use ($kaprodi) {
+                $user->assignRole($kaprodi);
+            });
+
+            $users->filter(function ($user) {
+                return str_contains($user->email, 'gkmp');
+            })->each(function ($user) use ($gkmp) {
+                $user->assignRole($gkmp);
+            });
         }
 
         $me = User::where('email', 'elangpermadani123@gmail.com')->first();
-
         if ($me) {
             $me->assignRole($tenagaPengajar);
         }
