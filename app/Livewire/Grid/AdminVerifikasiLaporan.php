@@ -27,7 +27,7 @@ class AdminVerifikasiLaporan extends Component
                 $query->where('name', ReportStatusEnum::DIKIRIM->value);
             })
             ->latest()
-            ->limit(10)
+            ->limit(5)
             ->get();
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Enums\RolesEnum;
 use App\Models\Report;
 use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
@@ -43,13 +44,21 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
      */
     public function toMail(object $notifiable): MailMessage
     {
+        if ($notifiable->hasRole(RolesEnum::GKMP->value)) {
+            $url = 'gkmp.laporan.verifikasi.edit';
+        } elseif ($notifiable->hasRole(RolesEnum::KAPRODI->value)) {
+            $url = 'kaprodi.laporan.verifikasi.edit';
+        } else {
+            $url = 'admin.laporan.verifikasi.edit';
+        }
+
         return (new MailMessage)
             ->subject('Verifikasi Laporan')
             ->markdown(
                 'mail.admin-report-verification',
                 [
                     'report' => $this->report,
-                    'url' => route('admin.laporan.verifikasi.edit', $this->report),
+                    'url' => route($url, $this->report),
                 ]
             );
     }

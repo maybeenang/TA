@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Table;
+namespace App\Livewire\Table\Gkmp;
 
 use App\Dynamics\Column;
 use App\Dynamics\Dialog;
@@ -29,7 +29,7 @@ class LaporanTable extends DynamicTable
 
     public $customActionBunttons = 'components.columns.partials.actions.laporan';
 
-    public $routeName = 'admin.laporan';
+    public $routeName = 'gkmp.laporan';
 
     // forms
     public $reportStatusName;
@@ -134,7 +134,7 @@ class LaporanTable extends DynamicTable
             Column::make('', 'Tenaga Pengajar')->component('columns.report-classroom-lecturers'),
             Column::make('', 'Status')->component('columns.report-status'),
             Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
-            Column::make('', ' ')->component('columns.partials.actions.semua-laporan-admin'),
+            Column::make('', ' ')->component('columns.partials.actions.semua-laporan-gkmp'),
         ];
     }
 

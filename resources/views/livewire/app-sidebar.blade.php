@@ -1,4 +1,18 @@
-<div class="h-fit min-w-72 space-y-4">
+<div
+    class="h-fit min-w-72 space-y-4"
+    x-data="{
+        ev: null,
+        init() {
+            this.ev = new EventSource(
+                `${window.mercureUrl}?topic=${encodeURIComponent('report-updated')}`,
+            )
+
+            this.ev.onmessage = (e) => {
+                $wire.call('refreshBadgeCount')
+            }
+        },
+    }"
+>
     @isset($menuData)
         @foreach ($menuData[0]->menu as $item)
             @isset($item->role)
@@ -60,9 +74,11 @@
                             </span>
 
                             @isset($subitem->badge)
-                                <span class="rounded-sm bg-red-500 px-2 py-1 text-white">
-                                    {{ $badgeCount[$subitem->badge] ?? 0 }}
-                                </span>
+                                @if ($badgeCount[$subitem->badge] ?? 0 > 0)
+                                    <span class="rounded-sm bg-red-500 px-2 py-1 text-xs text-white">
+                                        {{ $badgeCount[$subitem->badge] ?? 0 }}
+                                    </span>
+                                @endif
                             @endisset
                         </a>
                     @endforeach

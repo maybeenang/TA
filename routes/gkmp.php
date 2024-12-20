@@ -17,6 +17,7 @@ Route::group(
     function () {
 
         Route::get('/laporan/{laporan}/verifikasi', [LaporanController::class, 'verifikasi'])->name('laporan.verifikasi.edit');
+        Route::get('/laporan/verifikasi', [LaporanController::class, 'verifikasiLaporan'])->name('laporan.verifikasi');
         Route::get('/laporan/arsip', [LaporanController::class, 'arsipLaporan'])->name('laporan.arsip');
 
         Route::put('/laporan/{laporan}/verifikasi', [LaporanController::class, 'verifikasiLaporanUpdate'])->name('laporan.verifikasi.update');

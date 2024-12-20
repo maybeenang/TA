@@ -165,8 +165,8 @@ class LaporanController extends Controller
         try {
             $this->reportService->ajukanVerifikasi($laporan);
 
-            // send notification to all admin
-            $admins = User::role(RolesEnum::ADMIN->value)->get();
+            // send notification to all admin, kaprodi, and gkmp
+            $admins = User::role([RolesEnum::ADMIN, RolesEnum::GKMP, RolesEnum::KAPRODI])->get();
             Notification::send($admins, new AdminReportVerification($laporan));
 
             return response()->json([
