@@ -176,3 +176,47 @@ Breadcrumbs::for('tenaga-pengajar.kelas.show', function (BreadcrumbTrail $trail,
     $trail->parent('tenaga-pengajar.kelas.index');
     $trail->push('Detail Kelas', route('tenaga-pengajar.kelas.show', $kelas));
 });
+
+// ===================== KAPRODI =====================
+
+Breadcrumbs::for('kaprodi.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Verifikasi Laporan', route('kaprodi.laporan.index'));
+});
+
+Breadcrumbs::for('kaprodi.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('kaprodi.laporan.index');
+    $trail->push('Detail Laporan', route('kaprodi.laporan.show', $laporan));
+});
+
+Breadcrumbs::for('kaprodi.laporan.verifikasi.edit', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('kaprodi.laporan.index');
+    $trail->push($laporan->classRoom->fullName, route('kaprodi.laporan.verifikasi.edit', $laporan));
+});
+
+Breadcrumbs::for('kaprodi.laporan.arsip', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Arsip Laporan', route('kaprodi.laporan.arsip'));
+});
+
+// ===================== KAPRODI =====================
+
+Breadcrumbs::for('gkmp.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Semua Laporan', route('gkmp.laporan.index'));
+});
+
+Breadcrumbs::for('gkmp.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('gkmp.laporan.index');
+    $trail->push('Detail Laporan', route('gkmp.laporan.show', $laporan));
+});
+
+Breadcrumbs::for('gkmp.laporan.verifikasi', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Verifikasi Laporan', route('gkmp.laporan.verifikasi'));
+});
+
+Breadcrumbs::for('gkmp.laporan.arsip', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Arsip Laporan', route('gkmp.laporan.arsip'));
+});

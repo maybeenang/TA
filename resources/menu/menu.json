@@ -42,7 +42,7 @@
                 {
                     "url": "kaprodi.laporan.index",
                     "name": "Verifikasi Laporan",
-                    "slug": "kaprodi.laporan.index",
+                    "slug": ["kaprodi.laporan.index", "kaprodi.laporan.verifikasi.edit"],
                     "badge": "kaprodiLaporanVerifikasi"
                 },
                 {
@@ -60,7 +60,7 @@
                 {
                     "url": "gkmp.laporan.index",
                     "name": "Semua Laporan",
-                    "slug": "gkmp.laporan.index"
+                    "slug": ["gkmp.laporan.index", "gkmp.laporan.show"]
                 },
                 {
                     "url": "gkmp.laporan.verifikasi",
