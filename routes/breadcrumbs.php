@@ -243,3 +243,48 @@ Breadcrumbs::for('super-admin.tahun-akademik.edit', function (BreadcrumbTrail $t
     $trail->parent('super-admin.tahun-akademik.index');
     $trail->push('Edit Tahun Akademik', route('super-admin.tahun-akademik.edit', $academicYear));
 });
+
+Breadcrumbs::for('super-admin.program-studi.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Program Studi', route('super-admin.program-studi.index'));
+});
+
+Breadcrumbs::for('super-admin.program-studi.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.program-studi.index');
+    $trail->push('Tambah Program Studi', route('super-admin.program-studi.create'));
+});
+
+Breadcrumbs::for('super-admin.program-studi.edit', function (BreadcrumbTrail $trail, $programStudi) {
+    $trail->parent('super-admin.program-studi.index');
+    $trail->push('Edit Program Studi', route('super-admin.program-studi.edit', $programStudi));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Mata Kuliah', route('super-admin.mata-kuliah.index'));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.mata-kuliah.index');
+    $trail->push('Tambah Mata Kuliah', route('super-admin.mata-kuliah.create'));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.edit', function (BreadcrumbTrail $trail, $course) {
+    $trail->parent('super-admin.mata-kuliah.index');
+    $trail->push('Edit Mata Kuliah', route('super-admin.mata-kuliah.edit', $course));
+});
+
+Breadcrumbs::for('super-admin.kelas.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Kelas', route('super-admin.kelas.index'));
+});
+
+Breadcrumbs::for('super-admin.kelas.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.kelas.index');
+    $trail->push('Tambah Kelas', route('super-admin.kelas.create'));
+});
+
+Breadcrumbs::for('super-admin.kelas.edit', function (BreadcrumbTrail $trail, $kelas) {
+    $trail->parent('super-admin.kelas.index');
+    $trail->push('Edit Kelas', route('super-admin.kelas.edit', $kelas));
+});

@@ -29,6 +29,13 @@ class AcademicYearService
         });
     }
 
+    public function getOptionsAcademicYears()
+    {
+        return Cache::remember('options_academic_years', 3600, function () {
+            return AcademicYear::pluck('fullName', 'id');
+        });
+    }
+
     public function getAllCountDashboard()
     {
         return Cache::remember('all_count_dashboard', 3600, function () {

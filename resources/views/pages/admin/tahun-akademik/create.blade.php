@@ -10,6 +10,14 @@
         <x-form class="mx-auto max-w-md" method="POST" action="{{ route('admin.tahun-akademik.store') }}">
             @csrf
 
+            <x-alert variant="destructive">
+                <x-alert.title>Perhatian !</x-alert.title>
+                <x-alert.description>
+                    Tahun akademik yang sudah dibuat tidak bisa dihapus atau diubah. Pastikan data yang diinputkan sudah
+                    benar.
+                </x-alert.description>
+            </x-alert>
+
             <x-form.item name="name">
                 <x-form.label>Nama Tahun Akademik</x-form.label>
                 <x-input x-form:control required name="name" placeholder="2024/2025" :value="old('name')" />
