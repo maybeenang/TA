@@ -37,7 +37,6 @@ class UserSeeder extends Seeder
             'email' => 'gkmp@email.com'
         ]);
 
-
         User::factory(20)->create();
     }
 }

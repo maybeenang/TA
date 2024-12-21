@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Table;
+namespace App\Livewire\Table\SuperAdmin;
 
 use App\Dynamics\Column;
 use App\Livewire\DynamicTable;
@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 class TahunAkademikTable extends DynamicTable
 {
     public $searchColumns = ['name', 'semester'];
-
-    public $routeName = 'admin.tahun-akademik';
 
     public function query(): Builder
     {
@@ -23,8 +21,9 @@ class TahunAkademikTable extends DynamicTable
     {
         return [
             Column::make('fullName', 'Nama'),
-            Column::make('start_date', 'Mulai')->component('columns.date')->sortable(false),
-            Column::make('end_date', 'Selesai')->component('columns.date')->sortable(false),
+            Column::make('start_date', 'Mulai')->component('columns.date'),
+            Column::make('end_date', 'Selesai')->component('columns.date'),
+            Column::make('id', ' ')->component('columns.partials.actions.super-admin.tahun-akademik-action'),
         ];
     }
 }

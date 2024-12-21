@@ -119,6 +119,19 @@
             ]
         },
         {
+            "name": "Super Admin",
+            "icon": "",
+            "slug": "super-admin",
+            "role": "super-admin",
+            "submenu": [
+                {
+                    "url": "super-admin.master-data.index",
+                    "name": "Master Data",
+                    "slug": "super-admin.master-data.index"
+                }
+            ]
+        },
+        {
             "name": "Pengaturan",
             "icon": "",
             "slug": "pengaturan",

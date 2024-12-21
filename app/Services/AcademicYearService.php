@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\ReportStatusEnum;
 use App\Models\AcademicYear;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class AcademicYearService
 {
@@ -55,6 +56,27 @@ class AcademicYearService
                 'laporanBelumSelesaiCount' => $laporanBelumSelesaiCount,
                 'laporanSudahSelesaiCount' => $laporanSudahSelesaiCount,
             ];
+        });
+    }
+
+    public function createAcademicYear(array $validated)
+    {
+        return DB::transaction(function () use ($validated) {
+            AcademicYear::create($validated);
+        });
+    }
+
+    public function updateAcademicYear(AcademicYear $academicYear, array $validated)
+    {
+        return DB::transaction(function () use ($academicYear, $validated) {
+            $academicYear->update($validated);
+        });
+    }
+
+    public function deleteAcademicYear(AcademicYear $academicYear)
+    {
+        return DB::transaction(function () use ($academicYear) {
+            $academicYear->delete();
         });
     }
 }

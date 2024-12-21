@@ -220,3 +220,26 @@ Breadcrumbs::for('gkmp.laporan.arsip', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Arsip Laporan', route('gkmp.laporan.arsip'));
 });
+
+
+// ===================== SUPER ADMIN =====================
+//
+Breadcrumbs::for('super-admin.master-data.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Master Data', route('super-admin.master-data.index'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Tahun Akademik', route('super-admin.tahun-akademik.index'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.tahun-akademik.index');
+    $trail->push('Tambah Tahun Akademik', route('super-admin.tahun-akademik.create'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.edit', function (BreadcrumbTrail $trail, $academicYear) {
+    $trail->parent('super-admin.tahun-akademik.index');
+    $trail->push('Edit Tahun Akademik', route('super-admin.tahun-akademik.edit', $academicYear));
+});
