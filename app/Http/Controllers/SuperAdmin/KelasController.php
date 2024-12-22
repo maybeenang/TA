@@ -121,4 +121,16 @@ class KelasController extends Controller
             return back()->with('error', 'Gagal menghapus kelas : ' . $e->getMessage());
         }
     }
+
+    public function scrapeData()
+    {
+        try {
+            $this->kelasService->scrapeData();
+
+            return redirect()->route('super-admin.kelas.index')
+                ->with('success', 'Kelas berhasil di scrape');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal mengambil data kelas : ' . $e->getMessage());
+        }
+    }
 }

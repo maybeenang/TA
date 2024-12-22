@@ -17,8 +17,12 @@ Route::group(
         Route::prefix('master-data')->group(
             function () {
                 Route::resource('tahun-akademik', \App\Http\Controllers\SuperAdmin\TahunAkademikController::class)->parameter('tahun-akademik', 'academicYear');
+                Route::get('program-studi/scrape-data', [\App\Http\Controllers\SuperAdmin\ProgramStudiController::class, 'scrapeData'])->name('program-studi.scrape-data');
                 Route::resource('program-studi', \App\Http\Controllers\SuperAdmin\ProgramStudiController::class);
+
                 Route::resource('mata-kuliah', \App\Http\Controllers\SuperAdmin\MataKuliahController::class)->parameter('mata-kuliah', 'course');
+
+                Route::get('kelas/scrape-data', [\App\Http\Controllers\SuperAdmin\KelasController::class, 'scrapeData'])->name('kelas.scrape-data');
                 Route::resource('kelas', \App\Http\Controllers\SuperAdmin\KelasController::class)->parameter('kelas', 'classRoom');
             }
         );

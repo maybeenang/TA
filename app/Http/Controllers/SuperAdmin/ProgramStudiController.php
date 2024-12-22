@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProgramStudi;
 use App\Services\ProgramStudiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ProgramStudiController extends Controller
 {
@@ -105,6 +106,17 @@ class ProgramStudiController extends Controller
                 ->with('success', 'Program Studi berhasil dihapus');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal menghapus program studi : ' . $e->getMessage());
+        }
+    }
+
+    public function scrapeData()
+    {
+        try {
+            $this->programStudiService->scrapeData();
+            return redirect()->route('super-admin.program-studi.index')
+                ->with('success', 'Data program studi berhasil di scrape');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Gagal mengambil data program studi' . $th->getMessage());
         }
     }
 }

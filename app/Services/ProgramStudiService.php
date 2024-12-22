@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ProgramStudi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class ProgramStudiService
 {
@@ -41,6 +42,24 @@ class ProgramStudiService
             $programStudi->delete();
 
             return $programStudi;
+        });
+    }
+
+
+    public function scrapeData()
+    {
+        DB::transaction(function () {
+            $response = Http::get('http://localhost:3000/prodi');
+            $data = $response->json('data');
+
+            foreach ($data as $item) {
+                ProgramStudi::updateOrCreate(
+                    ['name' => $item],
+                    ['name' => $item]
+                );
+            }
+
+            return $data;
         });
     }
 }
