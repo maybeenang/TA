@@ -288,3 +288,23 @@ Breadcrumbs::for('super-admin.kelas.edit', function (BreadcrumbTrail $trail, $ke
     $trail->parent('super-admin.kelas.index');
     $trail->push('Edit Kelas', route('super-admin.kelas.edit', $kelas));
 });
+
+Breadcrumbs::for('super-admin.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Laporan', route('super-admin.laporan.index'));
+});
+
+Breadcrumbs::for('super-admin.laporan.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Buat Laporan', route('super-admin.laporan.create'));
+});
+
+Breadcrumbs::for('super-admin.laporan.show', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Detail Laporan', route('super-admin.laporan.show', $report));
+});
+
+Breadcrumbs::for('super-admin.laporan.edit', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Edit Laporan', route('super-admin.laporan.edit', $report));
+});

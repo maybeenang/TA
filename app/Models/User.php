@@ -30,6 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_picture_path',
+        'program_studi_id',
     ];
 
     /**
@@ -73,6 +74,11 @@ class User extends Authenticatable
     public function signatures()
     {
         return $this->hasMany(Signature::class);
+    }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
     }
 
     public function updateProfilePhoto($photo)

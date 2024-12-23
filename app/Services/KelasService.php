@@ -104,4 +104,10 @@ class KelasService
             return $data;
         });
     }
+
+
+    public function getAllClassrooms()
+    {
+        return ClassRoom::all();
+    }
 }

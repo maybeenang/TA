@@ -24,6 +24,10 @@ Route::group(
 
                 Route::get('kelas/scrape-data', [\App\Http\Controllers\SuperAdmin\KelasController::class, 'scrapeData'])->name('kelas.scrape-data');
                 Route::resource('kelas', \App\Http\Controllers\SuperAdmin\KelasController::class)->parameter('kelas', 'classRoom');
+
+                Route::resource('laporan', \App\Http\Controllers\SuperAdmin\LaporanController::class)->parameter('laporan', 'report');
+
+                Route::resource('user', \App\Http\Controllers\SuperAdmin\UserController::class)->parameter('user', 'user');
             }
         );
     }

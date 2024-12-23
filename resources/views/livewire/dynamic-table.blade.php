@@ -97,7 +97,13 @@
             loading...
         </div>
     </div>
-    {{ $this->data()->links() }}
+    {{
+        $this->data()->links(
+            data: [
+                "scrollTo" => false,
+            ],
+        )
+    }}
 
     @includeWhen($this->componentAfter !== "", $this->componentAfter)
 </div>

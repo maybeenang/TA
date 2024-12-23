@@ -54,5 +54,15 @@ class RoleSeeder extends Seeder
         if ($superadminUser) {
             $superadminUser->assignRole($superadmin);
         }
+
+        $kaprodiUser = User::where('email', 'kaprodi@email.com')->first();
+        if ($kaprodiUser) {
+            $kaprodiUser->assignRole($kaprodi);
+        }
+
+        $gkmpUser = User::where('email', 'gkmp@email.com')->first();
+        if ($gkmpUser) {
+            $gkmpUser->assignRole($gkmp);
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\ReportStatusEnum;
 use App\Jobs\GenerateReportPDF;
+use App\Models\Lecturer;
 use App\Models\Report;
 use App\Models\ReportStatus;
 use App\Notifications\ReportTolak;
@@ -190,9 +191,8 @@ class ReportService
 
             $report = Report::create([
                 'class_room_id' => $validated['classroom'],
+                'report_status_id' => 1,
             ]);
-
-            $report->lecturers()->attach(Auth::id());
 
             return $report;
         });
@@ -290,4 +290,39 @@ class ReportService
     }
 
     public function exportExcelPenilaian(Report $laporan) {}
+
+
+    public function update(Report $report, array $validated)
+    {
+        return DB::transaction(function () use ($validated, &$report) {
+            $status = ReportStatus::where('name', $validated['reportStatus'])->first();
+
+            if (isset($validated['lecturer'])) {
+                $lecturer = Lecturer::find($validated['lecturer']);
+                $classroom = $report->classRoom;
+                $classroom->update([
+                    'lecturer_id' => $lecturer->id,
+                ]);
+            }
+
+            $report->update([
+                'report_status_id' => $status->id,
+            ]);
+
+            if ($validated['reportStatus'] === ReportStatusEnum::DITOLAK->value) {
+                $report->update([
+                    'note' => $validated['note'] ?? null,
+                ]);
+            }
+
+            return $report;
+        });
+    }
+
+    public function delete(Report $report)
+    {
+        return DB::transaction(function () use ($report) {
+            $report->delete();
+        });
+    }
 }

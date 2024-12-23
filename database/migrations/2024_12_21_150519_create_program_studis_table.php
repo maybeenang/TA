@@ -22,6 +22,10 @@ return new class extends Migration
         Schema::table('courses', function (Blueprint $table) {
             $table->foreignId('program_studi_id')->nullable()->constrained('program_studis');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('program_studi_id')->nullable()->constrained('program_studis')->onDelete('set null');
+        });
     }
 
     /**
@@ -30,6 +34,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign(['program_studi_id']);
+            $table->dropColumn('program_studi_id');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['program_studi_id']);
             $table->dropColumn('program_studi_id');
         });

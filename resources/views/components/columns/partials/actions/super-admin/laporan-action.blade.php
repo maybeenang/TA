@@ -3,11 +3,11 @@
 ])
 
 <div class="flex items-center justify-end gap-1 text-white">
-    <a href="{{ route('super-admin.kelas.edit', $value) }}">
+    <a href="{{ route('super-admin.laporan.edit', $value) }}">
         <button class="rounded bg-amber-500 px-2 py-1 text-xs text-white">Edit</button>
     </a>
 
-    <form action="{{ route('super-admin.kelas.destroy', $value) }}" method="post">
+    <form action="{{ route('super-admin.laporan.destroy', $value) }}" method="post">
         @csrf
         @method('DELETE')
 

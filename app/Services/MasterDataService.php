@@ -45,11 +45,13 @@ class MasterDataService
 
                 (object) [
                     'name' => 'Laporan',
+                    'route' => 'super-admin.laporan.index',
                     'icon' => 'fas fa-file-alt',
                 ],
 
                 (object) [
                     'name' => 'User',
+                    'route' => 'super-admin.user.index',
                     'icon' => 'fas fa-users',
                 ],
 

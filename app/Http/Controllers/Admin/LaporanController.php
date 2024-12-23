@@ -127,8 +127,7 @@ class LaporanController extends Controller
         try {
             $this->reportService->store($validated);
 
-            return redirect()->route('tenaga-pengajar.laporan.edit', Report::where('class_room_id', $validated['classroom'])->first())
-                ->with('success', 'Berhasil membuat laporan');
+            return redirect()->route('admin.laporan.index')->with('success', 'Berhasil membuat laporan');
         } catch (\Throwable $th) {
             Log::error($th);
             return redirect()->back()->with('error', 'Gagal membuat laporan ' . $th->getMessage());
