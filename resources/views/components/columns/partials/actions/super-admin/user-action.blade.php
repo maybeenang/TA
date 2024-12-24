@@ -3,12 +3,12 @@
 ])
 
 <div class="flex items-center justify-end gap-2 text-white">
-    <a href="{{ route('super-admin.tahun-akademik.edit', $value) }}">
+    <a href="{{ route('super-admin.user.edit', $value) }}">
         <button class="rounded bg-amber-500 px-2 py-1 text-xs text-white">Edit</button>
     </a>
 
     <form
-        action="{{ route('super-admin.tahun-akademik.destroy', $value) }}"
+        action="{{ route('super-admin.user.destroy', $value) }}"
         method="post"
         x-data
         @submit="

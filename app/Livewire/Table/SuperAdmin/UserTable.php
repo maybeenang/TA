@@ -27,6 +27,7 @@ class UserTable extends DynamicTable
             Column::make('roles', 'Role')->component('columns.user-role'),
             Column::make('programStudi.name', 'Program Studi'),
             Column::make('created_at', 'Terkahir online')->component('columns.diff-for-human'),
+            Column::make('id', '')->component('columns.partials.actions.super-admin.user-action'),
         ];
     }
 }

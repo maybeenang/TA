@@ -31,8 +31,9 @@ abstract class DynamicTable extends Component
     public $customActionBunttons = '';
     // end custom component
 
-
     public $routeName = '';
+
+    public $numbering = false;
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 

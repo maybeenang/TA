@@ -114,7 +114,7 @@
                 {
                     "url": "admin.user.index",
                     "name": "Kelola Pengguna",
-                    "slug": "admin.user"
+                    "slug": ["admin.user.index", "admin.user.show", "admin.user.create", "admin.user.edit"]
                 }
             ]
         },
@@ -150,7 +150,8 @@
                 },
                 {
                     "url": "profile.edit",
-                    "name": "Profil"
+                    "name": "Profil",
+                    "slug": "profile.edit"
                 }
             ]
         }

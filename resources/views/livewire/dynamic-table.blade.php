@@ -23,6 +23,10 @@
             <thead>
                 <tr class="whitespace-nowrap uppercase">
                     @foreach ($this->columns() as $column)
+                        @if ($this->numbering && $loop->first)
+                            <th class="border border-zinc-300 px-2 py-2">No</th>
+                        @endif
+
                         <th
                             scope="col"
                             @class([
@@ -50,6 +54,10 @@
             <tbody>
                 @forelse ($this->data() as $row)
                     <tr class="align-top odd:bg-zinc-50 even:bg-white">
+                        @if ($this->numbering)
+                            <td class="border border-zinc-300 px-2 py-2">{{ $loop->iteration }}</td>
+                        @endif
+
                         @foreach ($this->columns() as $column)
                             <td class="border border-zinc-300 px-2 py-2">
                                 @php

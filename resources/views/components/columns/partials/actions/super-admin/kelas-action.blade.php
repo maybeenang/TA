@@ -7,7 +7,14 @@
         <button class="rounded bg-amber-500 px-2 py-1 text-xs text-white">Edit</button>
     </a>
 
-    <form action="{{ route('super-admin.kelas.destroy', $value) }}" method="post">
+    <form
+        action="{{ route('super-admin.kelas.destroy', $value) }}"
+        method="post"
+        x-data
+        @submit="
+            confirm('Apakah Anda yakin?') || event.preventDefault()
+        "
+    >
         @csrf
         @method('DELETE')
 

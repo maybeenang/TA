@@ -308,3 +308,33 @@ Breadcrumbs::for('super-admin.laporan.edit', function (BreadcrumbTrail $trail, $
     $trail->parent('super-admin.laporan.index');
     $trail->push('Edit Laporan', route('super-admin.laporan.edit', $report));
 });
+
+Breadcrumbs::for('super-admin.user.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('User', route('super-admin.user.index'));
+});
+
+Breadcrumbs::for('super-admin.user.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.user.index');
+    $trail->push('Tambah User', route('super-admin.user.create'));
+});
+
+Breadcrumbs::for('super-admin.user.edit', function (BreadcrumbTrail $trail, User $user) {
+    $trail->parent('super-admin.user.index');
+    $trail->push('Edit User', route('super-admin.user.edit', $user));
+});
+
+Breadcrumbs::for('super-admin.student.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Mahasiswa', route('super-admin.student.index'));
+});
+
+Breadcrumbs::for('super-admin.student.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.student.index');
+    $trail->push('Tambah Mahasiswa', route('super-admin.student.create'));
+});
+
+Breadcrumbs::for('super-admin.student.edit', function (BreadcrumbTrail $trail, $student) {
+    $trail->parent('super-admin.student.index');
+    $trail->push('Edit Mahasiswa', route('super-admin.student.edit', $student));
+});

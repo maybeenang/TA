@@ -57,6 +57,7 @@ class MasterDataService
 
                 (object) [
                     'name' => 'Mahasiwa',
+                    'route' => 'super-admin.student.index',
                     'icon' => 'fas fa-user-graduate',
                 ],
 

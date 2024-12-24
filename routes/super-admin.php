@@ -28,6 +28,8 @@ Route::group(
                 Route::resource('laporan', \App\Http\Controllers\SuperAdmin\LaporanController::class)->parameter('laporan', 'report');
 
                 Route::resource('user', \App\Http\Controllers\SuperAdmin\UserController::class)->parameter('user', 'user');
+
+                Route::resource('student', \App\Http\Controllers\SuperAdmin\StudentController::class)->parameter('student', 'student');
             }
         );
     }

@@ -35,4 +35,12 @@ enum RolesEnum: string
             static::KAPRODI => view('components.badges.kaprodi'),
         };
     }
+
+    public static function toSelectArray(): array
+    {
+        foreach (self::cases() as $case) {
+            $selectArray[$case->value] = $case->label();
+        }
+        return $selectArray;
+    }
 }

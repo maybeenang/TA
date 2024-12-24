@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasRole(Role::findByName(RolesEnum::ADMIN->value));
     }
 
+    public function getIsSuperAdminAttribute()
+    {
+        return $this->hasRole(Role::findByName(RolesEnum::SUPERADMIN->value));
+    }
+
     public function getProfilePicturePathAttribute($value)
     {
         return $value ? Storage::url($value) : "https://ui-avatars.com/api/?name=" . urlencode($this->name) . "&color=7F9CF5&background=EBF4FF";
