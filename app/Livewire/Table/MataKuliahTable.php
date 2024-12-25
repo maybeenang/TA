@@ -5,10 +5,13 @@ namespace App\Livewire\Table;
 use App\Dynamics\Column;
 use App\Livewire\DynamicTable;
 use App\Models\Course;
+use App\Traits\WithAuthProgramStudi;
 use Illuminate\Database\Eloquent\Builder;
 
 class MataKuliahTable extends DynamicTable
 {
+    use WithAuthProgramStudi;
+
     public $searchColumns = ['name', 'code'];
     /*public $relations = ['lecturer'];*/
 
@@ -18,7 +21,8 @@ class MataKuliahTable extends DynamicTable
 
     public function query(): Builder
     {
-        return Course::query();
+        return Course::query()
+            ->where('program_studi_id', $this->authProgramStudiId);
     }
 
     public function columns(): array

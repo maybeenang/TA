@@ -6,23 +6,21 @@ use App\Dynamics\Column;
 use App\Dynamics\Dialog;
 use App\Enums\ReportStatusEnum;
 use App\Livewire\DynamicTable;
-use App\Models\AcademicYear;
-use App\Models\ClassRoom;
 use App\Models\Report;
 use App\Models\ReportStatus;
 use App\Services\ReportService;
 use App\Traits\WithAcademicYear;
+use App\Traits\WithAuthProgramStudi;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
 class VerifikasiLaporanTable extends DynamicTable
 {
-    use WithAcademicYear;
+    use WithAcademicYear, WithAuthProgramStudi;
 
     public $searchColumns = ['classRoom.name', 'classRoom.course.name', 'classRoom.course.code', 'reportStatus.name'];
 
-    public $relations = ['classRoom', 'reportStatus'];
+    public $relations = ['classRoom', 'reportStatus', 'classRoom.course', 'classRoom.course.programStudi'];
 
     public $componentBefore = 'livewire.table.kelas';
 
@@ -67,6 +65,9 @@ class VerifikasiLaporanTable extends DynamicTable
                 function ($query) {
                     $query->whereHas('classRoom', function ($query) {
                         $query->where('academic_year_id', $this->academicYearId);
+                        $query->whereHas('course', function ($query) {
+                            $query->where('program_studi_id', $this->authProgramStudiId);
+                        });
                     });
                 },
             );

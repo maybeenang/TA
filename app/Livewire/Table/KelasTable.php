@@ -8,12 +8,13 @@ use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Lecturer;
 use App\Traits\WithAcademicYear;
+use App\Traits\WithAuthProgramStudi;
 use Illuminate\Database\Eloquent\Builder;
 /*use Livewire\Component;*/
 
 class KelasTable extends DynamicTable
 {
-    use WithAcademicYear;
+    use WithAcademicYear, WithAuthProgramStudi;
 
     public $searchColumns = ['name', 'course.code', 'course.name', 'course.credit', 'lecturer.user.name'];
 
@@ -51,6 +52,9 @@ class KelasTable extends DynamicTable
             ->with($this->relations)
             ->when($this->academicYearId, function ($query) {
                 $query->where('academic_year_id', $this->academicYearId);
+            })
+            ->whereHas('course', function ($query) {
+                $query->where('program_studi_id', $this->authProgramStudiId);
             });
     }
 
