@@ -47,7 +47,10 @@
         <div class="mt-8 text-center">
             <div class="flex justify-between">
                 <div>
-                    <p>Gugus Kendali Mutu Program Studi</p>
+                    <p>
+                        Gugus Kendali Mutu Program Studi
+                        {{ $laporan->classRoom?->course?->programStudi?->name ?? '' }}
+                    </p>
                     <div class="mx-auto mb-2 h-28 w-28">
                         @if (isset($verifikasiData?->signatureGkmp))
                             @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureGkmp))
@@ -61,7 +64,10 @@
                 </div>
 
                 <div>
-                    <p>Kepala Program Studi</p>
+                    <p>
+                        Kepala Program Studi
+                        {{ $laporan->classRoom?->course?->programStudi?->name ?? '' }}
+                    </p>
                     <div class="mx-auto mb-2 h-28 w-28">
                         @if (isset($verifikasiData?->signatureKaprodi))
                             @inlinedImage(asset('storage/signatures/' . $verifikasiData?->signatureKaprodi))

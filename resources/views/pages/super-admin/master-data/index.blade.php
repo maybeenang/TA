@@ -5,6 +5,11 @@
     >
         <span class="flex items-center gap-1 text-sm">Master Data</span>
 
+        <form action="{{ route('super-admin.scrape') }}" method="post" class="flex items-center justify-end">
+            @csrf
+            <x-button type="submit" class="">Import Data</x-button>
+        </form>
+
         <section class="grid grid-cols-2 gap-2 md:grid-cols-5">
             @foreach ($menus as $menu)
                 <a

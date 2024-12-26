@@ -12,6 +12,7 @@ class ProgramStudi extends Model
 
     protected $fillable = [
         'name',
+        'fakultas_id',
     ];
 
 
@@ -28,5 +29,10 @@ class ProgramStudi extends Model
     public function students()
     {
         return $this->hasMany(Student::class);
+    }
+
+    public function fakultas()
+    {
+        return $this->belongsTo(Fakultas::class);
     }
 }

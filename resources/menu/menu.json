@@ -132,7 +132,7 @@
                 {
                     "url": "super-admin.master-data.index",
                     "name": "Master Data",
-                    "slug": "super-admin.master-data.index"
+                    "slug": ["super-admin.master-data.index"]
                 }
             ]
         },
@@ -144,19 +144,19 @@
                 {
                     "url": "signature.index",
                     "name": "Kelola Tanda Tangan",
-                    "slug": ["signatre.index", "signature.create"],
+                    "slug": ["signature.index", "signature.create"],
                     "role": ["admin", "kaprodi", "gkmp"]
                 },
                 {
                     "url": "transfer-role.index",
                     "name": "Transfer Role",
-                    "slug": "transfer-role.index",
+                    "slug": ["transfer-role.index"],
                     "role": ["kaprodi", "gkmp"]
                 },
                 {
                     "url": "profile.edit",
                     "name": "Profil",
-                    "slug": "profile.edit"
+                    "slug": ["profile.edit"]
                 }
             ]
         }

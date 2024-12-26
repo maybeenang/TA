@@ -6,6 +6,7 @@ use App\Enums\RolesEnum;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
@@ -25,7 +26,8 @@ class UserController extends Controller
     public function create()
     {
 
-        $roles = RolesEnum::cases();
+        $roles = RolesEnum::toSelectArray();
+        unset($roles[RolesEnum::SUPERADMIN->value]);
 
         return view('pages.admin.user.create', compact('roles'));
     }
@@ -36,37 +38,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // check if tenaga_pengajar is checked
-        $isTenagaPengajar = $request->has('tenaga_pengajar');
-
-        $hasRoles = $request->has('roles');
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            $isTenagaPengajar ? 'nip' : '' => $isTenagaPengajar ? 'required|unique:lecturers,nip|digits_between:10,20' : '',
-            // check if roles is exists in database
-            'roles.*' => 'exists:roles,name',
+            'nip' => 'required|unique:lecturers,nip|digits_between:10,20',
+            'roles.*' => 'required|exists:roles,name',
         ]);
 
         try {
-            DB::transaction(function () use ($validated, $isTenagaPengajar, $hasRoles) {
+            DB::transaction(function () use ($validated) {
                 $user = User::create([
                     'email' => $validated['email'],
                     'name' => $validated['name'],
                     'password' => bcrypt($validated['password']),
+                    'program_studi_id' => Auth::user()->program_studi_id ?? null,
                 ]);
 
-                if ($isTenagaPengajar) {
-                    $user->lecturer()->create([
-                        'nip' => $validated['nip'],
-                    ]);
-                }
+                $user->lecturer()->create([
+                    'nip' => $validated['nip'],
+                ]);
 
-                if ($hasRoles) {
-                    $roles = Role::whereIn('name', $validated['roles'])->get();
-                    $user->assignRole($roles);
-                }
+                $roles = Role::whereIn('name', $validated['roles'])->get();
+
+                $user->syncRoles($roles);
             });
         } catch (\Throwable $th) {
             return redirect()->back()
@@ -93,7 +89,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = RolesEnum::cases();
+        $roles = RolesEnum::toSelectArray();
+        unset($roles[RolesEnum::SUPERADMIN->value]);
 
         return view('pages.admin.user.edit', compact('user', 'roles'));
     }
