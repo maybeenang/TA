@@ -3,10 +3,13 @@
 namespace App\Livewire\Table;
 
 use App\Dynamics\Column;
+use App\Dynamics\Dialog;
 use App\Livewire\DynamicTable;
 use App\Models\ClassRoom;
+use App\Models\Student;
 use App\Models\StudentClassroom;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\On;
 
 class ClassroomStudentTable extends DynamicTable
 {

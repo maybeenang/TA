@@ -103,8 +103,6 @@ class LaporanController extends Controller
     {
         $reportStatus = $laporan->reportStatus->name;
 
-        Log::info('Report status: ' . $reportStatus);
-
         if ($reportStatus !== ReportStatusEnum::DRAFT->value && $reportStatus !== ReportStatusEnum::DITOLAK->value) {
             $msg = 'Laporan tidak dapat diedit karena sudah ' . $reportStatus . ', jika anda merasa ini adalah kesalahan, silahkan hubungi admin';
             return view('pages.tenaga-pengajar.laporan.laporan-terverifikasi', compact('laporan', 'msg'));

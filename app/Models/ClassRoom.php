@@ -46,6 +46,11 @@ class ClassRoom extends Model
         return $this->belongsToMany(Student::class, 'students_class_rooms');
     }
 
+    public function studentClassrooms()
+    {
+        return $this->hasMany(StudentClassroom::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this?->course?->code . ' ' . $this->course?->name . ' ' . $this->name;

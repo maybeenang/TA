@@ -110,4 +110,21 @@ class KelasService
     {
         return ClassRoom::all();
     }
+
+    public function addStudentClassroom(ClassRoom $classroom, array $studentIds)
+    {
+        return DB::transaction(function () use ($classroom, $studentIds) {
+
+            // filter student id yang sudah ada di kelas
+            $studentIds = array_diff($studentIds, $classroom->students->pluck('id')->toArray());
+
+            $classroom->studentClassrooms()->createMany(
+                array_map(function ($studentId) {
+                    return ['student_id' => $studentId];
+                }, $studentIds)
+            );
+
+            return $classroom;
+        });
+    }
 }

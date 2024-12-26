@@ -34,7 +34,7 @@ class StudentService
             $student->update([
                 'nim' => $data['nim'],
                 'name' => $data['name'],
-                'program_studi_id' => $data['programStudi'],
+                'program_studi_id' => $data['programStudi'] ?? $student->program_studi_id,
             ]);
             return $student;
         });

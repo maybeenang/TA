@@ -43,7 +43,6 @@ class SidebarService
             'gkmpLaporanVerifikasi' => $gkmpLaporanVerifikasi,
             'kaprodiLaporanVerifikasi' => $kaprodiLaporanVerifikasi,
             'buatLaporanCount' => $buatLaporanCount
-
         ];
     }
 

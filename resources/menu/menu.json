@@ -19,7 +19,7 @@
                 {
                     "url": "tenaga-pengajar.laporan.select",
                     "name": "Buat Laporan Portofolio Perkuliahan",
-                    "slug": "tenaga-pengajar.laporan.edit",
+                    "slug": ["tenaga-pengajar.laporan.edit", "tenaga-pengajar.laporan.select"],
                     "badge": "buatLaporanCount"
                 },
                 {
@@ -109,12 +109,17 @@
                 {
                     "url": "admin.tahun-akademik.index",
                     "name": "Kelola Tahun Akademik",
-                    "slug": "admin.tahun-akademik"
+                    "slug": ["admin.tahun-akademik.index"]
                 },
                 {
                     "url": "admin.user.index",
                     "name": "Kelola Pengguna",
                     "slug": ["admin.user.index", "admin.user.show", "admin.user.create", "admin.user.edit"]
+                },
+                {
+                    "url": "admin.student.index",
+                    "name": "Kelola Mahasiswa",
+                    "slug": ["admin.student.index", "admin.student.show", "admin.student.create", "admin.student.edit"]
                 }
             ]
         },

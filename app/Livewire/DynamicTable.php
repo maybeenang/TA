@@ -35,6 +35,7 @@ abstract class DynamicTable extends Component
 
     public $numbering = false;
 
+
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 
     public abstract function columns(): array;
