@@ -16,6 +16,10 @@ class ProgramStudiService
         //
     }
 
+    /**
+     * @return mixed
+     * @param mixed $validated
+     */
     public function create($validated)
     {
         return DB::transaction(function () use ($validated) {
@@ -24,7 +28,11 @@ class ProgramStudiService
             return $programStudi;
         });
     }
-
+    /**
+     * @return mixed
+     * @param mixed $id
+     * @param mixed $validated
+     */
     public function update($id, $validated)
     {
         return DB::transaction(function () use ($id, $validated) {
@@ -35,6 +43,10 @@ class ProgramStudiService
         });
     }
 
+    /**
+     * @return mixed
+     * @param mixed $id
+     */
     public  function delete($id)
     {
         return DB::transaction(function () use ($id) {
@@ -44,9 +56,10 @@ class ProgramStudiService
             return $programStudi;
         });
     }
-
-
-    public function scrapeData()
+    /**
+     * @return void
+     */
+    public function scrapeData(): void
     {
         DB::transaction(function () {
             $response = Http::get('http://localhost:3000/prodi');
