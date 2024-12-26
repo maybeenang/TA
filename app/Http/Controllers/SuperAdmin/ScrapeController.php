@@ -18,7 +18,7 @@ class ScrapeController extends Controller
 
         try {
             $this->scraperService->scrapeAll();
-            return redirect()->route('superadmin.master-data.index')
+            return redirect()->route('super-admin.master-data.index')
                 ->with('success', 'Berhasil melakukan scraping');
         } catch (\Throwable $th) {
 

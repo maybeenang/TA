@@ -41,9 +41,11 @@
 </div>
 <div class="absolute bottom-0 w-full text-center">
     <h1 class="text-center text-xl font-bold">
-        PROGRAM STUDI {{ strtoupper($laporan->classRoom?->course?->programStudi?->name) ?? '' }}
+        {{ strtoupper($laporan->classRoom?->course?->programStudi?->name) ?? '' }}
     </h1>
-    <h1 class="text-center text-xl font-bold">FAKULTAS TEKNOLOGI INDUSTRI</h1>
+    <h1 class="text-center text-xl font-bold">
+        {{ strtoupper($laporan->classRoom?->course?->programStudi?->fakultas?->name) ?? '' }}
+    </h1>
     <h1 class="text-center text-xl font-bold">INSTITUT TEKNOLOGI SUMATERA</h1>
     <h1 class="text-center text-xl font-bold">
         {{ date('Y') }}

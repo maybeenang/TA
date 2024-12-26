@@ -13,6 +13,7 @@ class ClassRoom extends Model
     use SoftDeletes;
 
     public $fillable = [
+        'id',
         'name',
         'schedule',
         'mode',

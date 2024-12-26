@@ -32,6 +32,8 @@ Route::group(
                 Route::resource('user', \App\Http\Controllers\SuperAdmin\UserController::class)->parameter('user', 'user');
 
                 Route::resource('student', \App\Http\Controllers\SuperAdmin\StudentController::class)->parameter('student', 'student');
+
+                Route::resource('fakultas', \App\Http\Controllers\SuperAdmin\FakultasController::class)->parameter('fakultas', 'fakultas');
             }
         );
     }

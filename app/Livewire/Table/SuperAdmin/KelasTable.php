@@ -16,8 +16,6 @@ class KelasTable extends DynamicTable
 
     public $relations = ['course', 'lecturer', 'academicYear'];
 
-    public $componentBefore = 'livewire.table.kelas';
-
     public function query(): Builder
     {
         return ClassRoom::query()

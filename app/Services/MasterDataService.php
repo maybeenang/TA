@@ -20,6 +20,12 @@ class MasterDataService
 
             $menus = [
                 (object) [
+                    'name' => 'Fakultas',
+                    'route' => 'super-admin.fakultas.index',
+                    'icon' => 'fas fa-university',
+                ],
+
+                (object) [
                     'name' => 'Program Studi',
                     'route' => 'super-admin.program-studi.index',
                     'icon' => 'fas fa-graduation-cap',

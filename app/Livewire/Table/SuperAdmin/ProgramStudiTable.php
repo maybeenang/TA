@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProgramStudiTable extends DynamicTable
 {
-    public $searchColumns = ['name'];
+    public $searchColumns = ['name', 'fakultas.name'];
 
     public function query(): Builder
     {
-        return ProgramStudi::query();
+        return ProgramStudi::query()
+            ->with(['fakultas']);
     }
 
     public function columns(): array
@@ -22,6 +23,7 @@ class ProgramStudiTable extends DynamicTable
         return [
             Column::make('id', 'Kode'),
             Column::make('name', 'Nama'),
+            Column::make('fakultas.name', 'Fakultas'),
             Column::make('id', ' ')->component('columns.partials.actions.super-admin.program-studi-action'),
         ];
     }
