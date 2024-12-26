@@ -24,6 +24,22 @@
                 <x-form.message />
             </x-form.item>
 
+            <x-form.item name="fakultas">
+                <x-form.label>Fakultas</x-form.label>
+                <x-select class="" id="fakultas" name="fakultas">
+                    <option disabled value="-">Pilih Fakultas</option>
+                    @foreach ($fakultas as $key => $value)
+                        <option
+                            value="{{ $key }}"
+                            {{ $key === old('fakultas', $programStudi->fakultas?->id) ? 'selected' : '' }}
+                        >
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </x-select>
+                <x-form.message />
+            </x-form.item>
+
             <div class="flex justify-end">
                 <x-button type="submit">Submit</x-button>
             </div>

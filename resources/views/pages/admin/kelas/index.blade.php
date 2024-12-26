@@ -8,14 +8,8 @@
             Kelas
         </span>
         <div class="flex justify-end">
-            <x-button
-                class="bg-blue-500 hover:bg-blue-600"
-                x-on:click="
-                    window.location.href = '{{ route('admin.kelas.create') }}'
-                "
-            >
-                Tambah Kelas
-            </x-button>
+            <a href="{{ route('admin.kelas.create') }}"></a>
+            <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
         </div>
 
         <livewire:table.kelas-table />

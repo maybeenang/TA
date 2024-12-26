@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Services\ProgramStudiService;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class ProgramStudiController extends Controller
      */
     public function create()
     {
-        return view('pages.super-admin.program-studi.create');
+        $fakultas = Fakultas::pluck('name', 'id')->toArray();
+        return view('pages.super-admin.program-studi.create', compact('fakultas'));
     }
 
     /**
@@ -42,7 +44,10 @@ class ProgramStudiController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string',
+            'fakultas' => 'required|exists:fakultas,id',
         ]);
+
+        $validated['fakultas_id'] = $validated['fakultas'];
 
         try {
 
@@ -68,8 +73,8 @@ class ProgramStudiController extends Controller
      */
     public function edit(ProgramStudi $programStudi)
     {
-
-        return view('pages.super-admin.program-studi.edit', compact('programStudi'));
+        $fakultas = Fakultas::pluck('name', 'id')->toArray();
+        return view('pages.super-admin.program-studi.edit', compact('programStudi', 'fakultas'));
     }
 
     /**
@@ -80,10 +85,12 @@ class ProgramStudiController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string',
+            'fakultas' => 'required|exists:fakultas,id',
         ]);
 
-        try {
+        $validated['fakultas_id'] = $validated['fakultas'];
 
+        try {
             $this->programStudiService->update($programStudi->id, $validated);
 
             return redirect()->route('super-admin.program-studi.index')
