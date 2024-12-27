@@ -5,9 +5,6 @@
     >
         <span class="flex items-center gap-1 text-sm">Kelas</span>
         <div class="flex justify-end gap-2">
-            <a href="{{ route('super-admin.kelas.scrape-data') }}">
-                <x-button class="bg-blue-500 hover:bg-blue-600">Scrape Data</x-button>
-            </a>
             <a href="{{ route('super-admin.kelas.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
             </a>

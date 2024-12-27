@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/** {*/
+/*    border: 1px solid red !important;*/
+/*}*/
+
 .select2-container {
     /* The container where the selectbox is housing*/
     @apply relative m-0 mb-2 box-border inline-block align-middle;
