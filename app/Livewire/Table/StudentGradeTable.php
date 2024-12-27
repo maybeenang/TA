@@ -95,6 +95,7 @@ class StudentGradeTable extends Component
                 'NIM' => $student->nim,
                 'Nama' => $student->name,
                 'Nilai' => $letterScore,
+                'Pembulatan' => round($totalScore),
                 'Total Nilai' => $totalScore,
             ];
             foreach ($gradeComponents as $gradeComponent) {
@@ -111,6 +112,7 @@ class StudentGradeTable extends Component
             'NIM',
             'Nama',
             'Nilai',
+            'Pembulatan',
             'Total Nilai',
             ...$this->gradeComponents()->pluck('name')->toArray(),
         ];

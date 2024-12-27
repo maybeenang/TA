@@ -45,29 +45,29 @@ class ReportService
         $report->gradeComponents()->createMany([
             [
                 'name' => "UTS",
-                'weight' => 0.25,
+                'weight' => 0,
             ],
             [
                 'name' => "UAS",
-                'weight' => 0.25,
+                'weight' => 0,
             ],
             [
                 'name' => "Kuis",
             ],
             [
                 'name' => "Tugas",
-                'weight' => 0.2,
+                'weight' => 0,
             ],
             [
                 'name' => "Praktikum",
-                'weight' => 0.1,
+                'weight' => 0,
             ],
             [
                 'name' => "RBL",
             ],
             [
                 'name' => "Kehadiran",
-                'weight' => 0.1,
+                'weight' => 0,
             ],
         ]);
 

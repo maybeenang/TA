@@ -1,7 +1,7 @@
 <div class="w-full">
-    @if (session()->has("message"))
+    @if (session()->has('message'))
         <div class="relative mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700" role="alert">
-            <span class="block sm:inline">{{ session("message") }}</span>
+            <span class="block sm:inline">{{ session('message') }}</span>
         </div>
     @endif
 
@@ -21,13 +21,13 @@
         <div class="min-w-max">
             <table class="mb-8 mt-2 w-full table-auto border-collapse border border-zinc-300 text-left">
                 <thead>
-                    <tr class="whitespace-nowrap bg-zinc-100 uppercase">
+                    <tr class="bg-zinc-100 uppercase">
                         @if ($this->laporan->isEditable)
                             <th class="border border-zinc-300 px-2 py-2">Aksi</th>
                         @endif
 
                         @foreach ($this->headers() as $header)
-                            <th class="border border-zinc-300 px-2 py-2">{{ $header }}</th>
+                            <th class="break-words border border-zinc-300 px-2 py-2 tracking-wider">{{ $header }}</th>
                         @endforeach
 
                         @if ($this->laporan->isEditable)
@@ -39,13 +39,13 @@
                     @foreach ($this->data() as $row)
                         <tr
                             @class([
-                                "whitespace-nowrap align-top",
-                                "bg-amber-100" => $editingId === $row["student_id"],
+                                'whitespace-nowrap align-top',
+                                'bg-amber-100' => $editingId === $row['student_id'],
                             ])
                         >
                             @if ($this->laporan->isEditable)
                                 <td class="border border-zinc-300 px-2 py-2 text-center">
-                                    @if ($editingId === $row["student_id"])
+                                    @if ($editingId === $row['student_id'])
                                         <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
                                             <x-icons.check-alt-icon />
                                         </button>
@@ -54,7 +54,7 @@
                                         </button>
                                     @else
                                         <button
-                                            wire:click="startEditing({{ $row["student_id"] }})"
+                                            wire:click="startEditing({{ $row['student_id'] }})"
                                             class="text-blue-600 hover:text-blue-900"
                                         >
                                             <x-icons.pencil-icon />
@@ -64,12 +64,12 @@
                             @endif
 
                             @foreach ($row as $key => $cell)
-                                @if (strpos($key, "id") !== false)
+                                @if (strpos($key, 'id') !== false)
                                     @continue
                                 @endif
 
                                 <td class="border border-zinc-300 p-2">
-                                    @if ($editingId === $row["student_id"] && $key !== "NIM" && $key !== "Nama" && $key !== "Total Nilai" && $key !== "Nilai")
+                                    @if ($editingId === $row['student_id'] && $key !== 'NIM' && $key !== 'Nama' && $key !== 'Total Nilai' && $key !== 'Nilai' && $key !== 'Pembulatan')
                                         <input
                                             type="text"
                                             wire:model="editingData.{{ $key }}"
@@ -85,7 +85,7 @@
 
                             @if ($this->laporan->isEditable)
                                 <td class="border border-zinc-300 px-2 py-2 text-center">
-                                    @if ($editingId === $row["student_id"])
+                                    @if ($editingId === $row['student_id'])
                                         <button wire:click="saveEdit" class="text-green-600 hover:text-green-900">
                                             <x-icons.check-alt-icon />
                                         </button>
@@ -94,7 +94,7 @@
                                         </button>
                                     @else
                                         <button
-                                            wire:click="startEditing({{ $row["student_id"] }})"
+                                            wire:click="startEditing({{ $row['student_id'] }})"
                                             class="text-blue-600 hover:text-blue-900"
                                         >
                                             <x-icons.pencil-icon />

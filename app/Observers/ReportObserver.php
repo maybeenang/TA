@@ -39,7 +39,7 @@ class ReportObserver
         }
 
         // check apakah yang di update adalah pdf_path atau pdf_status
-        if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status')) {
+        if ($report->isDirty(['pdf_path', 'pdf_status'])) {
             return;
         }
 
