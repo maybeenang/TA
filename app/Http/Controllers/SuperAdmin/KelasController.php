@@ -72,7 +72,23 @@ class KelasController extends Controller
      */
     public function show(ClassRoom $classRoom)
     {
-        //
+
+        $classroomLecturers = $classRoom->report->lecturers->map(function ($lecturer) {
+            return $lecturer->user->name;
+        })->implode(', ');
+
+        if ($classRoom->report->lecturers->isEmpty()) {
+            $classroomLecturers = $classRoom->lecturer->user->name ?? '-';
+        }
+
+        $informasiUmum = [
+            'Kode/Nama Kelas' => $classRoom->id . '/' . $classRoom->name,
+            'Kode Mata Kuliah' => $classRoom->course->code,
+            'Dosen' => $classroomLecturers,
+            'SKS' => $classRoom->course->credit,
+        ];
+
+        return view('pages.super-admin.kelas.show', compact('classRoom', 'informasiUmum'));
     }
 
     /**
@@ -132,7 +148,7 @@ class KelasController extends Controller
             $this->scraperService->screpaKelas($classRoom->id);
 
 
-            return redirect()->route('super-admin.kelas.index')
+            return back()
                 ->with('success', 'Kelas berhasil di scrape');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal mengambil data kelas : ' . $e->getMessage());

@@ -7,6 +7,10 @@
         <button class="rounded bg-blue-500 px-2 py-1 text-xs text-white">Scrape</button>
     </a>
 
+    <a href="{{ route('super-admin.kelas.show', $value) }}">
+        <button class="rounded bg-blue-500 px-2 py-1 text-xs text-white">Lihat</button>
+    </a>
+
     <a href="{{ route('super-admin.kelas.edit', $value) }}">
         <button class="rounded bg-amber-500 px-2 py-1 text-xs text-white">Edit</button>
     </a>

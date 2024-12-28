@@ -197,12 +197,13 @@ class ScraperService
             $dosen = $data['dosen'];
 
             // hilangkan semua titik dan koma
-            $namaDosen = str_replace(['.', ','], '', $dosen);
-            $namaDosen = strtolower($namaDosen);
+            $namaDosen = strtolower($dosen);
 
             // ambil 2 kata pertama
             $namaDosen = explode(' ', $namaDosen);
             $namaDosen = $namaDosen[0] . ' ' . $namaDosen[1];
+
+            $namaDosen = preg_replace('/[^a-zA-Z0-9]+$/', '', $namaDosen);
 
             $lecturer = Lecturer::whereHas('user', function ($query) use ($namaDosen) {
                 $query->whereRaw('LOWER(name) like ?', ["%$namaDosen%"]);

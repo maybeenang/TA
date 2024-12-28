@@ -105,6 +105,7 @@
             loading...
         </div>
     </div>
+
     {{
         $this->data()->links(
             data: [

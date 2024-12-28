@@ -16,13 +16,16 @@ class KelasTable extends DynamicTable
 
     public $relations = ['course', 'lecturer', 'academicYear', 'lecturer.user'];
 
+    public $perPage = 500;
+
     public function query(): Builder
     {
         return ClassRoom::query()
             ->with($this->relations)
             ->when($this->academicYearId, function ($query) {
                 $query->where('academic_year_id', $this->academicYearId);
-            });
+            })
+            ->orderBy('id', 'asc');
     }
 
     public function columns(): array
