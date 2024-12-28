@@ -29,7 +29,7 @@ class SidebarService
         $buatLaporanCount = Report::query()
             ->with(['classRoom', 'reportStatus'])
             ->whereHas('classRoom', function ($query) {
-                $query->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()->id);
+                $query->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()?->id);
                 $query->whereHas('lecturer.user', fn($query) => $query->where('id', auth()->id()));
             })
             ->whereHas('reportStatus', function ($query) {
@@ -54,7 +54,7 @@ class SidebarService
                 $q->where('name', ReportStatusEnum::DIKIRIM->value);
             })
             ->whereHas('classRoom', function ($q) {
-                $q->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()->id);
+                $q->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()?->id);
                 $q->whereHas('course.programStudi', function ($q) {
                     $q->where('id', auth()->user()->program_studi_id);
                 });

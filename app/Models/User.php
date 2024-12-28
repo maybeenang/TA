@@ -31,6 +31,7 @@ class User extends Authenticatable
         'password',
         'profile_picture_path',
         'program_studi_id',
+        'notification_email',
     ];
 
     /**

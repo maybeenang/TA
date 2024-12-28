@@ -43,7 +43,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'nip' => 'required|unique:lecturers,nip|digits_between:10,20',
+            'nip' => 'required|unique:lecturers,nip|regex:/^[0-9 ]+$/',
             'roles.*' => 'required|exists:roles,name',
         ]);
 
@@ -109,7 +109,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
-            'nip' => 'nullable|unique:lecturers,nip' . ($user->lecturer ? ',' . $user->lecturer->id : '') . '|digits_between:10,20',
+            'nip' => 'nullable|unique:lecturers,nip' . ($user->lecturer ? ',' . $user->lecturer->id : '') . '|regex:/^[0-9 ]+$/',
             'roles.*' => 'exists:roles,name',
         ]);
 

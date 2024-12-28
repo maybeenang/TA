@@ -12,7 +12,7 @@ trait WithAcademicYear
     public function bootWithAcademicYear(AcademicYearService $service)
     {
         $this->currentAcademicYear = $service->getCurrentAcademicYear();
-        $this->academicYearId = $this->currentAcademicYear->id;
+        $this->academicYearId = $this->currentAcademicYear?->id;
     }
 
     public function filterWithAcademicYear()

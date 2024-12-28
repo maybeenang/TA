@@ -3,6 +3,10 @@
 ])
 
 <div class="flex items-center justify-end gap-1 text-white">
+    <a href="{{ route('super-admin.kelas.scrape-data', $value) }}">
+        <button class="rounded bg-blue-500 px-2 py-1 text-xs text-white">Scrape</button>
+    </a>
+
     <a href="{{ route('super-admin.kelas.edit', $value) }}">
         <button class="rounded bg-amber-500 px-2 py-1 text-xs text-white">Edit</button>
     </a>

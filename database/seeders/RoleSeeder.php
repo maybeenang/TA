@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         $gkmp = app(Role::class)->findOrCreate(RolesEnum::GKMP->value, 'web');
         $kaprodi = app(Role::class)->findOrCreate(RolesEnum::KAPRODI->value, 'web');
 
-        $users = User::get();
+        /*$users = User::get();*/
 
         /*if ($users->isNotEmpty()) {*/
         /*    $users->each(function ($user) use ($tenagaPengajar) {*/

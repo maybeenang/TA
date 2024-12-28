@@ -44,7 +44,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'nip' => 'required|string|unique:lecturers,nip|digits_between:10,20',
+            'nip' => 'required|string|unique:lecturers,nip|regex:/^[0-9 ]+$/',
             'roles.*' => 'exists:roles,name',
             'programStudi' => 'required|exists:program_studis,id',
             'password' => 'required|string|min:8|confirmed',
@@ -87,7 +87,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'nip' => 'required|string|unique:lecturers,nip,' . $user->lecturer->id,
+            'nip' => 'required|unique:lecturers,nip,' . $user->lecturer->id . '|regex:/^[0-9 ]+$/',
             'roles.*' => 'exists:roles,name',
             'programStudi' => 'required|exists:program_studis,id',
             'password' => 'nullable|string|min:8|confirmed',

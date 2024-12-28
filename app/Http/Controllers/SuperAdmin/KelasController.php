@@ -7,16 +7,19 @@ use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Course;
 use App\Services\KelasService;
+use App\Services\ScraperService;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
 {
 
     protected KelasService $kelasService;
+    protected ScraperService $scraperService;
 
-    public function __construct(KelasService $kelasService)
+    public function __construct(KelasService $kelasService, ScraperService $scraperService)
     {
         $this->kelasService = $kelasService;
+        $this->scraperService = $scraperService;
     }
 
     /**
@@ -122,10 +125,12 @@ class KelasController extends Controller
         }
     }
 
-    public function scrapeData()
+    public function scrapeData(ClassRoom $classRoom)
     {
         try {
-            $this->kelasService->scrapeData();
+
+            $this->scraperService->screpaKelas($classRoom->id);
+
 
             return redirect()->route('super-admin.kelas.index')
                 ->with('success', 'Kelas berhasil di scrape');

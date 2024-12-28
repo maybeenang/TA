@@ -15,7 +15,7 @@
 
             <x-form.item name="nip">
                 <x-form.label>NIP</x-form.label>
-                <x-input x-form:control placeholder="1234567890" name="nip" type="number" :value="old('nip')" />
+                <x-input x-form:control placeholder="1234567890" name="nip" :value="old('nip')" />
                 <x-form.message />
             </x-form.item>
 

@@ -81,7 +81,6 @@ class VerifikasiLaporanTable extends DynamicTable
             Column::make('classRoom.course.code', 'Kode MK'),
             Column::make('classRoom.course.name', 'Mata Kuliah'),
             Column::make('', 'Status')->component('columns.report-status'),
-            Column::make('updated_at', 'Terakhir Diupdate')->component('columns.terakhir-di-update'),
             Column::make('', '')->component('columns.partials.actions.verifikasi-laporan'),
         ];
     }

@@ -12,6 +12,7 @@ class AcademicYear extends Model
     use SoftDeletes, HasFactory;
 
     public $fillable = [
+        'id',
         'name',
         'semester',
         'start_date',

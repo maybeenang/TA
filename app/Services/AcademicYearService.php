@@ -18,14 +18,16 @@ class AcademicYearService
                 ->first()
                 ?? AcademicYear::where('start_date', '>=', $now)
                 ->orderBy('start_date', 'asc')
-                ->first();
+                ->first() ?? null;
         });
     }
 
     public function getAllAcademicYears()
     {
         return Cache::remember('all_academic_years', 3600, function () {
-            return AcademicYear::all();
+            return AcademicYear::query()
+                ->orderBy('id', 'desc')
+                ->get();
         });
     }
 

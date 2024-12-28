@@ -36,7 +36,13 @@ class AdminReportVerification extends Notification implements ShouldQueue, Shoul
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database', 'broadcast'];
+        $channel =  ['database', 'broadcast'];
+
+        if ($notifiable->notification_email) {
+            $channel[] = 'mail';
+        }
+
+        return $channel;
     }
 
     /**

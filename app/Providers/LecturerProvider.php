@@ -30,7 +30,6 @@ class LecturerProvider extends ServiceProvider
 
             $view->with([
                 'allLecturers' => $lecturerService->getAllLecturers(),
-                'selfLecturer' => $lecturerService->getLecturerById()
             ]);
         });
     }

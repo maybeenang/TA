@@ -26,7 +26,6 @@
                     x-form:control
                     placeholder="1234567890"
                     name="nip"
-                    type="number"
                     :value="old('nip', $user->lecturer->nip)"
                 />
                 <x-form.message />

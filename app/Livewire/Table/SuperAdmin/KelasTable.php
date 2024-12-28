@@ -14,7 +14,7 @@ class KelasTable extends DynamicTable
 
     public $searchColumns = ['name', 'course.code', 'course.name', 'course.credit'];
 
-    public $relations = ['course', 'lecturer', 'academicYear'];
+    public $relations = ['course', 'lecturer', 'academicYear', 'lecturer.user'];
 
     public function query(): Builder
     {
@@ -33,6 +33,7 @@ class KelasTable extends DynamicTable
             Column::make('course.code', 'Kode Mata Kuliah'),
             Column::make('course.name', 'Nama Mata Kuliah'),
             Column::make('course.credit', 'SKS'),
+            Column::make('lecturer.user.name', 'Tenaga Pengajar'),
             Column::make('id', '')->component('columns.partials.actions.super-admin.kelas-action'),
         ];
     }

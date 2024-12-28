@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 ReportStatusSeeder::class,
                 LecturerSeeder::class,
-                AcademicYearSeeder::class,
+                /*AcademicYearSeeder::class,*/
                 /*CourseSeeder::class,*/
-                StudentSeeder::class,
+                /*StudentSeeder::class,*/
             ]
         );
     }

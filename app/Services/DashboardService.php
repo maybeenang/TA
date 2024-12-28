@@ -22,7 +22,7 @@ class DashboardService
     {
         return Report::query()
             ->whereHas('classRoom', function ($query) {
-                $query->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()->id);
+                $query->where('academic_year_id', $this->academicYearService->getCurrentAcademicYear()?->id ?? null);
                 $query->whereHas('course', function ($query) {
                     $query->where('program_studi_id', auth()->user()->program_studi_id);
                 });
