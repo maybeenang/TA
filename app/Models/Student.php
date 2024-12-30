@@ -12,7 +12,8 @@ class Student extends Model
 
     protected $fillable = [
         'name',
-        'nim'
+        'nim',
+        'program_studi_id',
     ];
 
     public function classrooms()
@@ -28,5 +29,10 @@ class Student extends Model
     public function grades()
     {
         return $this->hasMany(Grade::class);
+    }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
     }
 }

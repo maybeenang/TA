@@ -1,14 +1,13 @@
 <x-app-layout>
     <x-alert.flash />
-    <div class="border-zinc-100 border p-2 rounded-md border-t-red-500 border-t-4 border-b-yellow-500 border-b-4 space-y-4"
-        x-data="{
-            tenagaPengajar: {{ old('tenaga_pengajar', 'false') === 'on' ? 'true' : 'false' }}
-        }">
-        <span class="text-sm flex items-center gap-1">
+    <div
+        class="space-y-4 rounded-md border border-b-4 border-t-4 border-zinc-100 border-b-yellow-500 border-t-red-500 p-2"
+    >
+        <span class="flex items-center gap-1 text-sm">
             <x-icons.person-icon />
             Tambah Pengguna
         </span>
-        <x-form class="max-w-md mx-auto" action="{{ route('admin.user.store') }}" method="POST">
+        <x-form class="mx-auto max-w-md" action="{{ route('admin.user.store') }}" method="POST">
             @csrf
 
             <x-form.item name="name">
@@ -17,35 +16,22 @@
                 <x-form.message />
             </x-form.item>
 
-            <div class="space-y-2">
-
-                <x-form.item class=" flex items-center space-x-4 rounded-md border p-4">
-                    <div class="flex-1 space-y-1">
-                        <p class="text-sm font-medium leading-none">Tenaga Pengajar</p>
-                        <p class="text-sm text-muted-foreground">
-                            Apakah pengguna yang anda buat adalah tenaga pengajar?
-                        </p>
-                    </div>
-                    <x-switch x-model="tenagaPengajar" name="tenaga_pengajar" :value="old('tenaga_pengajar')" />
-                </x-form.item>
-
-                <x-form.item name="nip" x-show="tenagaPengajar" x-cloak
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 transform scale-95"
-                    x-transition:enter-end="opacity-100 transform scale-100"
-                    x-transition:leave="transition ease-in duration-100"
-                    x-transition:leave-end="opacity-0 transform scale-95">
-                    <x-form.label>NIP</x-form.label>
-                    <x-input x-form:control placeholder="1234567890" name="nip" :value="old('nip')" />
-                    <x-form.message />
-                </x-form.item>
-
-            </div>
+            <x-form.item name="nip">
+                <x-form.label>NIP</x-form.label>
+                <x-input x-form:control placeholder="1234567890" name="nip" :value="old('nip')" />
+                <x-form.message />
+            </x-form.item>
 
             <x-form.item name="email">
                 <x-form.label>Email</x-form.label>
-                <x-input type="email" x-form:control required placeholder="johndoe@email.com" name="email"
-                    :value="old('email')" />
+                <x-input
+                    type="email"
+                    x-form:control
+                    required
+                    placeholder="johndoe@email.com"
+                    name="email"
+                    :value="old('email')"
+                />
                 <x-form.message />
             </x-form.item>
             <x-form.item name="password">
@@ -62,21 +48,21 @@
             <x-form.item class="flex flex-col space-y-4 rounded-md border p-4" name="roles[]">
                 <div class="flex-1 space-y-1">
                     <p class="text-sm font-medium leading-none">Role</p>
-                    <p class="text-sm text-muted-foreground">
-                        Pilih role yang sesuai dengan pengguna yang anda buat
-                    </p>
+                    <p class="text-sm text-muted-foreground">Pilih role yang sesuai dengan pengguna yang anda buat</p>
                 </div>
-                <div class="grid grid-cols-4">
-
-                    @foreach ($roles as $role)
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ($roles as $value => $role)
                         <div class="flex items-center space-x-2">
-                            <x-checkbox id="{{ $role->value }}" x-form:control name="roles[]"
-                                value="{{ $role->value }}" :checked="in_array($role->value, old('roles', []))" />
-                            <x-label htmlFor="{{ $role->value }}"
-                                class="whitespace-nowrap">{{ $role->label() }}</x-label>
+                            <x-checkbox
+                                id="{{ $value }}"
+                                x-form:control
+                                name="roles[]"
+                                value="{{ $value }}"
+                                :checked="in_array($value, old('roles', []))"
+                            />
+                            <x-label htmlFor="{{ $value }}" class="whitespace-nowrap">{{ $role }}</x-label>
                         </div>
                     @endforeach
-
                 </div>
                 <x-form.message />
             </x-form.item>

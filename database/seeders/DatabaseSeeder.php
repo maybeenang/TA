@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Storage::deleteDirectory('pdfs');
-        Storage::deleteDirectory('signatures');
+        Storage::disk('public')->deleteDirectory('signatures');
+        Storage::disk('public')->deleteDirectory('profile-photos');
 
         $this->call(
             [
@@ -24,22 +25,10 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 ReportStatusSeeder::class,
                 LecturerSeeder::class,
-                AcademicYearSeeder::class,
-                CourseSeeder::class,
+                /*AcademicYearSeeder::class,*/
+                /*CourseSeeder::class,*/
+                /*StudentSeeder::class,*/
             ]
         );
-        Student::factory(200)->create();
-
-        // assign random classrooms to random students
-        $students = Student::all();
-
-        $students->each(function ($student) {
-            $classrooms = \App\Models\ClassRoom::inRandomOrder()->limit(rand(1, 3))->get();
-            $student->studentClassrooms()->createMany(
-                $classrooms->map(function ($classroom) {
-                    return ['class_room_id' => $classroom->id];
-                })->toArray()
-            );
-        });
     }
 }

@@ -32,6 +32,13 @@
 
         <section>
             <h1 class="text-center text-xl">Daftar Mahasiswa</h1>
+
+            <div class="mb-4 flex items-center justify-end">
+                <a href="{{ route('admin.kelas.tambah-mahasiswa', $kelas->id) }}">
+                    <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Mahasiswa</x-button>
+                </a>
+            </div>
+
             <livewire:table.classroom-student-table :$kelas />
         </section>
     </div>

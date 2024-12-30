@@ -4,10 +4,17 @@ namespace App\Http\Controllers\TenagaPengajar;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
+use App\Models\Student;
+use App\Services\KelasService;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
 {
+
+    public function __construct(
+        protected KelasService $kelasService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -79,5 +86,35 @@ class KelasController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function tambahMahasiswa(ClassRoom $kelas)
+    {
+
+        $students = Student::all()->map(function ($student) {
+            return [
+                'value' => $student->id,
+                'label' => $student->nim . ' ' . $student->name,
+            ];
+        });
+
+        session()->put('previous_url', url()->previous());
+
+        return view('pages.tenaga-pengajar.kelas.tambah-mahasiswa', compact('kelas', 'students'));
+    }
+
+    public function storeMahasiswa(Request $request, ClassRoom $kelas)
+    {
+        $validated = $request->validate([
+            'students' => 'required|array',
+            'students.*' => 'required|exists:students,id',
+        ]);
+
+        $this->kelasService->addStudentClassroom($kelas, $validated['students']);
+
+        $redirectUrl = session()->pull('previous_url', route('tenaga-pengajar.kelas.show', $kelas->id)) ?? route('tenaga-pengajar.kelas.show', $kelas->id);
+
+        return redirect()->to($redirectUrl)
+            ->with('success', 'Mahasiswa berhasil ditambahkan');
     }
 }

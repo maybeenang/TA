@@ -67,19 +67,19 @@
                             </p>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
-                            @foreach ($roles as $role)
+                            @foreach ($roles as $value => $role)
                                 <x-form.item class="">
                                     <x-checkbox
-                                        id="{{ $role->value }}"
+                                        id="{{ $value }}"
                                         x-form:control
                                         name="roles[]"
-                                        value="{{ $role->value }}"
+                                        value="{{ $value }}"
                                         :checked="in_array(
-                                            $role->value,
+                                            $value,
                                             old('roles', $user->roles->pluck('name')->toArray()),
                                         )"
                                     />
-                                    <x-form.label class="whitespace-nowrap">{{ $role->label() }}</x-form.label>
+                                    <x-form.label class="whitespace-nowrap">{{ $role }}</x-form.label>
                                 </x-form.item>
                             @endforeach
                         </div>

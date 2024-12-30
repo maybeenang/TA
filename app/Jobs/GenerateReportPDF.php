@@ -33,11 +33,6 @@ class GenerateReportPDF implements ShouldQueue
     {
         try {
 
-            // check if student is not empty
-            if ($this->report->classRoom->students->isEmpty()) {
-                throw new \Exception('Tidak ada mahasiswa yang terdaftar di kelas ini');
-            }
-
             // get min, max, range (max-min), average, from each graadecomponent score
             $distribusiNilai = $this->report->gradeComponents
                 ->map(function ($gradeComponent) {

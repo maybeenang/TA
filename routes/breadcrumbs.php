@@ -220,3 +220,121 @@ Breadcrumbs::for('gkmp.laporan.arsip', function (BreadcrumbTrail $trail) {
     $trail->parent('welcome');
     $trail->push('Arsip Laporan', route('gkmp.laporan.arsip'));
 });
+
+
+// ===================== SUPER ADMIN =====================
+//
+Breadcrumbs::for('super-admin.master-data.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Master Data', route('super-admin.master-data.index'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Tahun Akademik', route('super-admin.tahun-akademik.index'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.tahun-akademik.index');
+    $trail->push('Tambah Tahun Akademik', route('super-admin.tahun-akademik.create'));
+});
+
+Breadcrumbs::for('super-admin.tahun-akademik.edit', function (BreadcrumbTrail $trail, $academicYear) {
+    $trail->parent('super-admin.tahun-akademik.index');
+    $trail->push('Edit Tahun Akademik', route('super-admin.tahun-akademik.edit', $academicYear));
+});
+
+Breadcrumbs::for('super-admin.program-studi.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Program Studi', route('super-admin.program-studi.index'));
+});
+
+Breadcrumbs::for('super-admin.program-studi.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.program-studi.index');
+    $trail->push('Tambah Program Studi', route('super-admin.program-studi.create'));
+});
+
+Breadcrumbs::for('super-admin.program-studi.edit', function (BreadcrumbTrail $trail, $programStudi) {
+    $trail->parent('super-admin.program-studi.index');
+    $trail->push('Edit Program Studi', route('super-admin.program-studi.edit', $programStudi));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Mata Kuliah', route('super-admin.mata-kuliah.index'));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.mata-kuliah.index');
+    $trail->push('Tambah Mata Kuliah', route('super-admin.mata-kuliah.create'));
+});
+
+Breadcrumbs::for('super-admin.mata-kuliah.edit', function (BreadcrumbTrail $trail, $course) {
+    $trail->parent('super-admin.mata-kuliah.index');
+    $trail->push('Edit Mata Kuliah', route('super-admin.mata-kuliah.edit', $course));
+});
+
+Breadcrumbs::for('super-admin.kelas.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Kelas', route('super-admin.kelas.index'));
+});
+
+Breadcrumbs::for('super-admin.kelas.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.kelas.index');
+    $trail->push('Tambah Kelas', route('super-admin.kelas.create'));
+});
+
+Breadcrumbs::for('super-admin.kelas.edit', function (BreadcrumbTrail $trail, $kelas) {
+    $trail->parent('super-admin.kelas.index');
+    $trail->push('Edit Kelas', route('super-admin.kelas.edit', $kelas));
+});
+
+Breadcrumbs::for('super-admin.laporan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Laporan', route('super-admin.laporan.index'));
+});
+
+Breadcrumbs::for('super-admin.laporan.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Buat Laporan', route('super-admin.laporan.create'));
+});
+
+Breadcrumbs::for('super-admin.laporan.show', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Detail Laporan', route('super-admin.laporan.show', $report));
+});
+
+Breadcrumbs::for('super-admin.laporan.edit', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('super-admin.laporan.index');
+    $trail->push('Edit Laporan', route('super-admin.laporan.edit', $report));
+});
+
+Breadcrumbs::for('super-admin.user.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('User', route('super-admin.user.index'));
+});
+
+Breadcrumbs::for('super-admin.user.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.user.index');
+    $trail->push('Tambah User', route('super-admin.user.create'));
+});
+
+Breadcrumbs::for('super-admin.user.edit', function (BreadcrumbTrail $trail, User $user) {
+    $trail->parent('super-admin.user.index');
+    $trail->push('Edit User', route('super-admin.user.edit', $user));
+});
+
+Breadcrumbs::for('super-admin.student.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.master-data.index');
+    $trail->push('Mahasiswa', route('super-admin.student.index'));
+});
+
+Breadcrumbs::for('super-admin.student.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('super-admin.student.index');
+    $trail->push('Tambah Mahasiswa', route('super-admin.student.create'));
+});
+
+Breadcrumbs::for('super-admin.student.edit', function (BreadcrumbTrail $trail, $student) {
+    $trail->parent('super-admin.student.index');
+    $trail->push('Edit Mahasiswa', route('super-admin.student.edit', $student));
+});

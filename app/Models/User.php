@@ -30,6 +30,8 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_picture_path',
+        'program_studi_id',
+        'notification_email',
     ];
 
     /**
@@ -60,6 +62,11 @@ class User extends Authenticatable
         return $this->hasRole(Role::findByName(RolesEnum::ADMIN->value));
     }
 
+    public function getIsSuperAdminAttribute()
+    {
+        return $this->hasRole(Role::findByName(RolesEnum::SUPERADMIN->value));
+    }
+
     public function getProfilePicturePathAttribute($value)
     {
         return $value ? Storage::url($value) : "https://ui-avatars.com/api/?name=" . urlencode($this->name) . "&color=7F9CF5&background=EBF4FF";
@@ -73,6 +80,11 @@ class User extends Authenticatable
     public function signatures()
     {
         return $this->hasMany(Signature::class);
+    }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
     }
 
     public function updateProfilePhoto($photo)

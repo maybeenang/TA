@@ -35,10 +35,11 @@ class ReportObserver
     {
         if ($report->isDirty(['signature_kaprodi_id', 'signature_gkmp_id', 'report_status_id'])) {
             broadcast(new ReportUpdated($report));
+            Cache::forget('sidebar_badge_count');
         }
 
         // check apakah yang di update adalah pdf_path atau pdf_status
-        if ($report->isDirty('pdf_path') || $report->isDirty('pdf_status')) {
+        if ($report->isDirty(['pdf_path', 'pdf_status'])) {
             return;
         }
 

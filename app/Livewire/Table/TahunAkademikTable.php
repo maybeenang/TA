@@ -25,7 +25,6 @@ class TahunAkademikTable extends DynamicTable
             Column::make('fullName', 'Nama'),
             Column::make('start_date', 'Mulai')->component('columns.date')->sortable(false),
             Column::make('end_date', 'Selesai')->component('columns.date')->sortable(false),
-            Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
         ];
     }
 }

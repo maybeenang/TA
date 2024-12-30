@@ -95,6 +95,8 @@
                         <x-form.message />
                     </x-form.item>
 
+                    <livewire:email-notification-switch :user="$user" />
+
                     @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                         <div>
                             <p class="mt-2 text-sm text-gray-800">

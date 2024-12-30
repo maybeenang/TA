@@ -42,8 +42,8 @@ return new class extends Migration
             $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('letter');
             $table->decimal('score', 5, 2)->default(0);
-            $table->decimal('max_score', 5, 2)->default(0);
-            $table->decimal('min_score', 5, 2)->default(0);
+            $table->integer('max_score')->default(0);
+            $table->integer('min_score')->default(0);
             $table->timestamps();
         });
     }

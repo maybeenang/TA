@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
 use App\Models\ClassRoom;
 use App\Models\Course;
+use App\Models\Student;
+use App\Services\KelasService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class KelasController extends Controller
 {
+
+    public function __construct(
+        protected KelasService $kelasService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -129,5 +136,33 @@ class KelasController extends Controller
         $kelas->delete();
         return redirect()->route('admin.kelas.index')
             ->with('success', 'Kelas berhasil dihapus');
+    }
+
+    public function tambahMahasiswa(ClassRoom $kelas)
+    {
+
+        $students = Student::all()->map(function ($student) {
+            return [
+                'value' => $student->id,
+                'label' => $student->nim . ' ' . $student->name,
+            ];
+        });
+
+        return view('pages.admin.kelas.tambah-mahasiswa', compact('kelas', 'students'));
+    }
+
+    public function storeMahasiswa(Request $request, ClassRoom $kelas)
+    {
+        $validated = $request->validate([
+            'students' => 'required|array',
+        ]);
+
+        try {
+            $this->kelasService->addStudentClassroom($kelas, $validated['students']);
+            return redirect()->route('admin.kelas.show', $kelas)
+                ->with('success', 'Mahasiswa berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Gagal menambahkan mahasiswa : ' . $th->getMessage());
+        }
     }
 }

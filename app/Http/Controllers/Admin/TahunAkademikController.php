@@ -3,12 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TahunAkademikRequest;
 use App\Models\AcademicYear;
+use App\Services\AcademicYearService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TahunAkademikController extends Controller
 {
+
+    protected AcademicYearService $academicYearService;
+
+    public function __construct()
+    {
+        $this->academicYearService = app(AcademicYearService::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -29,23 +39,14 @@ class TahunAkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TahunAkademikRequest $request)
     {
 
-        $validated = $request->validate([
-            'name' => 'required|max:255',
-            'semester' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-        ]);
+        $validated = $request->validated();
 
         // implement db transaction
         try {
-
-            DB::transaction(function () use ($validated) {
-                AcademicYear::create($validated);
-            });
-
+            $this->academicYearService->createAcademicYear($validated);
             return redirect()->route('admin.tahun-akademik.index')
                 ->with('success', 'Tahun Akademik berhasil dibuat');
         } catch (\Exception $e) {

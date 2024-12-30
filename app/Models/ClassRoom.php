@@ -13,6 +13,7 @@ class ClassRoom extends Model
     use SoftDeletes;
 
     public $fillable = [
+        'id',
         'name',
         'schedule',
         'mode',
@@ -44,6 +45,11 @@ class ClassRoom extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'students_class_rooms');
+    }
+
+    public function studentClassrooms()
+    {
+        return $this->hasMany(StudentClassroom::class);
     }
 
     public function getFullNameAttribute()

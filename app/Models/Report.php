@@ -161,8 +161,7 @@ class Report extends Model
     {
         $gradeScale = $this->gradeScales->first(function ($gradeScale) use ($score) {
 
-            // round to upper score
-            $score = ceil($score ?? 0);
+            $score = round($score);
 
             // check if score is between min and max score
             if ($score >= $gradeScale->min_score && $score <= $gradeScale->max_score) {

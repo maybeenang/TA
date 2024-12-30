@@ -26,6 +26,7 @@ class TransferRole extends Controller
         $users = User::query()
             ->select('id', 'name')
             ->where('id', '!=', auth()->id())
+            ->where('program_studi_id', auth()->user()->program_studi_id)
             ->get();
 
         return view('pages.transfer-role.index', compact('currentRoles', 'users'));

@@ -13,7 +13,8 @@ class Course extends Model
     public $fillable = [
         'code',
         'name',
-        'credit'
+        'credit',
+        'program_studi_id',
     ];
 
     protected $hidden = [
@@ -26,5 +27,15 @@ class Course extends Model
     public function classRooms()
     {
         return $this->hasMany(ClassRoom::class);
+    }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->code} {$this->name}";
     }
 }

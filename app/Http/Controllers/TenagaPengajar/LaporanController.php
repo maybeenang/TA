@@ -103,8 +103,6 @@ class LaporanController extends Controller
     {
         $reportStatus = $laporan->reportStatus->name;
 
-        Log::info('Report status: ' . $reportStatus);
-
         if ($reportStatus !== ReportStatusEnum::DRAFT->value && $reportStatus !== ReportStatusEnum::DITOLAK->value) {
             $msg = 'Laporan tidak dapat diedit karena sudah ' . $reportStatus . ', jika anda merasa ini adalah kesalahan, silahkan hubungi admin';
             return view('pages.tenaga-pengajar.laporan.laporan-terverifikasi', compact('laporan', 'msg'));
@@ -166,7 +164,14 @@ class LaporanController extends Controller
             $this->reportService->ajukanVerifikasi($laporan);
 
             // send notification to all admin, kaprodi, and gkmp
-            $admins = User::role([RolesEnum::ADMIN, RolesEnum::GKMP, RolesEnum::KAPRODI])->get();
+            $admins = User::query()
+                ->where('program_studi_id', $laporan->classRoom->course->program_studi_id)
+                ->whereHas('roles', function ($query) {
+                    $query->where('name', RolesEnum::ADMIN->value);
+                    $query->orWhere('name', RolesEnum::KAPRODI->value);
+                    $query->orWhere('name', RolesEnum::GKMP->value);
+                })
+                ->get();
             Notification::send($admins, new AdminReportVerification($laporan));
 
             return response()->json([

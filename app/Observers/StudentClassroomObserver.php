@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 
 class StudentClassroomObserver
 {
+    public $afterCommit = true;
+
     /**
      * Handle the StudentClassroom "created" event.
      */

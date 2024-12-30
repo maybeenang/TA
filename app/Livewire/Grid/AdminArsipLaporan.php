@@ -13,6 +13,7 @@ class AdminArsipLaporan extends LaporanGrid
     public function query(): Builder
     {
         return Report::query()
+            ->with(['reportStatus', 'classRoom', 'classRoom.course'])
             ->whereHas('reportStatus', function ($query) {
                 $query->where('name', ReportStatusEnum::TERVERIFIKASI->value);
             });

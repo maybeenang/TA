@@ -27,17 +27,16 @@ class UserSeeder extends Seeder
             'email' => 'elangpermadani123@gmail.com',
         ]);
 
-        User::factory()->create([
-            'name' => 'Kaprodi',
-            'email' => 'kaprodi@email.com'
-        ]);
-
-        User::factory()->create([
-            'name' => 'GKMP',
-            'email' => 'gkmp@email.com'
-        ]);
-
-
-        User::factory(20)->create();
+        /*User::factory()->create([*/
+        /*    'name' => 'Kaprodi',*/
+        /*    'email' => 'kaprodi@email.com'*/
+        /*]);*/
+        /**/
+        /*User::factory()->create([*/
+        /*    'name' => 'GKMP',*/
+        /*    'email' => 'gkmp@email.com'*/
+        /*]);*/
+        /**/
+        /*User::factory(20)->create();*/
     }
 }

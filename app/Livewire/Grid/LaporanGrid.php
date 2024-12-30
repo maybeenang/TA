@@ -4,12 +4,13 @@ namespace App\Livewire\Grid;
 
 use App\Enums\RolesEnum;
 use App\Traits\WithAcademicYear;
+use App\Traits\WithAuthProgramStudi;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 abstract class LaporanGrid extends Component
 {
-    use WithPagination, WithAcademicYear;
+    use WithPagination, WithAcademicYear, WithAuthProgramStudi;
 
     public $search = '';
 
@@ -17,16 +18,14 @@ abstract class LaporanGrid extends Component
 
     public abstract function query(): \Illuminate\Database\Eloquent\Builder;
 
-    public function filterWithAcademicYear()
-    {
-        $this->resetPage();
-    }
-
     public function data()
     {
         return $this->query()
-            ->whereHas('classroom.academicYear', function ($query) {
-                $query->where('id', $this->academicYearId);
+            ->whereHas('classRoom', function ($query) {
+                $query->where('academic_year_id', $this->academicYearId);
+                $query->whereHas('course', function ($query) {
+                    $query->where('program_studi_id', $this->authProgramStudiId);
+                });
             })
             ->when($this->search !== '', function ($query) {
                 // search by classroom name or classroom course name or classroom course code

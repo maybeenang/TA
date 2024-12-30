@@ -50,9 +50,7 @@
                                 }
                             }
 
-                            $isActive = isset($subitem->url) && strpos(Route::currentRouteName(), $subitem->url) !== false;
-
-                            if (! $isActive && isset($subitem->slug)) {
+                            if (isset($subitem->slug)) {
                                 if (is_array($subitem->slug)) {
                                     $isActive = in_array(Route::currentRouteName(), $subitem->slug);
                                 } else {

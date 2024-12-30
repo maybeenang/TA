@@ -12,6 +12,7 @@ class Lecturer extends Model
 
     public $fillable = [
         'nip',
+        'user_id',
     ];
 
 

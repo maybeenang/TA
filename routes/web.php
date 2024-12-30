@@ -47,6 +47,7 @@ Route::group(
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/super-admin.php';
 require __DIR__ . '/tenaga-pengajar.php';
 require __DIR__ . '/kaprodi.php';
 require __DIR__ . '/gkmp.php';

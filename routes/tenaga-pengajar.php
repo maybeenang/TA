@@ -22,7 +22,11 @@ Route::group(
 
         Route::resource('laporan', \App\Http\Controllers\TenagaPengajar\LaporanController::class);
 
-        ROute::resource('cpmk', \App\Http\Controllers\TenagaPengajar\CpmkController::class);
+        Route::resource('cpmk', \App\Http\Controllers\TenagaPengajar\CpmkController::class);
+
+
+        Route::get('kelas/tambah-mahasiswa/{kelas}', [\App\Http\Controllers\TenagaPengajar\KelasController::class, 'tambahMahasiswa'])->name('kelas.tambah-mahasiswa');
+        Route::post('kelas/tambah-mahasiswa/{kelas}', [\App\Http\Controllers\TenagaPengajar\KelasController::class, 'storeMahasiswa'])->name('kelas.store-mahasiswa');
 
         Route::resource('kelas', \App\Http\Controllers\TenagaPengajar\KelasController::class)
             ->parameters(['kelas' => 'kelas']);
