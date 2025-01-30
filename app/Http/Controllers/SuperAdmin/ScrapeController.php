@@ -25,4 +25,16 @@ class ScrapeController extends Controller
             return back()->withInput()->with('error', 'Gagal melakukan scraping ' . $th->getMessage());
         }
     }
+
+    public function scrapeAllKelas()
+    {
+        try {
+            $this->scraperService->scrapeAllKelas();
+            return redirect()->route('super-admin.kelas.index')
+                ->with('success', 'Berhasil melakukan scraping');
+        } catch (\Throwable $th) {
+
+            return back()->withInput()->with('error', 'Gagal melakukan scraping ' . $th->getMessage());
+        }
+    }
 }

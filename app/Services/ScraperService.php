@@ -249,4 +249,84 @@ class ScraperService
             throw $th;
         }
     }
+
+    protected function getDosenFromName(string $dosen)
+    {
+        try {
+            $namaDosen = strtolower($dosen);
+            // ambil 2 kata pertama
+            $namaDosen = explode(' ', $namaDosen);
+            $namaDosen = $namaDosen[0] . ' ' . $namaDosen[1];
+            $namaDosen = preg_replace('/[^a-zA-Z0-9]+$/', '', $namaDosen);
+            $lecturer = Lecturer::whereHas('user', function ($query) use ($namaDosen) {
+                $query->whereRaw('LOWER(name) like ?', ["%$namaDosen%"]);
+            })->first();
+            return $lecturer;
+        } catch (\Throwable $th) {
+
+            return null;
+        }
+    }
+
+    public function scrapeAllKelas()
+    {
+
+        try {
+            DB::beginTransaction();
+            // get all ids classroom
+            $ids = ClassRoom::all()->pluck('id')->toArray();
+
+            $response = Http::timeout(-1)->post('http://localhost:3000/kelas', [
+                'ids' => $ids
+            ]);
+
+            $data = $response->json('data');
+            foreach ($data as $item) {
+                $mahasiswas = $item['mahasiswa'];
+                $dosen = $item['dosen'];
+                $id = $item['id'];
+
+                $lecturer = $this->getDosenFromName($dosen);
+
+                if ($lecturer) {
+                    $classroom = ClassRoom::where('id', $id)->first();
+                    $classroom->lecturer_id = $lecturer->id;
+                    $classroom->save();
+                }
+
+                foreach ($mahasiswas as $mahasiswa) {
+                    Student::upsert(
+                        [
+                            'nim' => $mahasiswa['nim'],
+                            'name' => $mahasiswa['name'],
+                            'program_studi_id' => ProgramStudi::where('name', 'like', '%' . "Teknik Informatika" . '%')->first()->id,
+                        ],
+                        uniqueBy: ['nim'],
+                        update: ['name']
+                    );
+                }
+
+                $classroom = ClassRoom::where('id', $id)->first();
+
+                $students = Student::whereIn('nim', array_map(function ($mahasiswa) {
+                    return $mahasiswa['nim'];
+                }, $mahasiswas))->get();
+
+                // get all student id to array
+                $studentIds = $students->map(function ($student) {
+                    return $student->id;
+                })->toArray();
+
+                $this->kelasService->addStudentClassroom($classroom, $studentIds);
+            }
+
+            DB::commit();
+
+            return $ids;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
+        }
+    }
 }
