@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         $user = $user->load(['roles', 'lecturer']);
         // hide crucial information
-        $user->makeHidden(['email_verified_at', 'password', 'remember_token', 'id', 'deleted_at', 'profile_picture_path']);
+        $user->makeHidden(['email_verified_at', 'password', 'remember_token', 'id', 'deleted_at', 'profile_picture_path', 'program_studi_id', 'notification_email']);
         return view('pages.admin.user.show', compact('user'));
     }
 

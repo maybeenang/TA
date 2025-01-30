@@ -6,6 +6,7 @@
         <span class="flex items-center gap-1 text-sm">Fakultas</span>
 
         <div class="flex justify-end gap-2">
+            <x-import-export type="fakultas" />
             <a href="{{ route('super-admin.fakultas.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Fakultas</x-button>
             </a>

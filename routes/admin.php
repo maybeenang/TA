@@ -34,3 +34,16 @@ Route::group(
         Route::resource('student', \App\Http\Controllers\Admin\StudentController::class);
     }
 );
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => [
+        'auth',
+        'role:admin|super-admin'
+    ],
+], function () {
+
+    Route::get('export-template/{type}', [\App\Http\Controllers\Admin\ImportExportController::class, 'export'])->name('export-template');
+    Route::post('import/{type}', [\App\Http\Controllers\Admin\ImportExportController::class, 'import'])->name('import');
+});

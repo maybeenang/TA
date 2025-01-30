@@ -30,17 +30,17 @@ class MataKuliahController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'code' => 'required|string|max:255|unique:courses,code',
             'name' => 'required|string|max:255',
             'credit' => 'required|numeric',
         ]);
 
-        $code = strtoupper(substr($validated['name'], 0, 3)) . '-' . rand(100, 999);
-
         try {
             Course::create([
                 'name' => $validated['name'],
-                'code' => $code,
+                'code' => $validated['code'],
                 'credit' => $validated['credit'],
+                'program_studi_id' => auth()->user()->program_studi_id,
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()
@@ -83,13 +83,13 @@ class MataKuliahController extends Controller
                 'name' => $validated['name'],
                 'credit' => $validated['credit'],
             ]);
+
+            return redirect()->route('admin.mata-kuliah.index')
+                ->with('success', 'Mata Kuliah berhasil diubah');
         } catch (\Throwable $th) {
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan saat mengubah mata kuliah');
         }
-
-        return redirect()->route('admin.mata-kuliah.index')
-            ->with('success', 'Mata Kuliah berhasil diubah');
     }
 
     /**

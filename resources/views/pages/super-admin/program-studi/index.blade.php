@@ -6,6 +6,7 @@
         <span class="flex items-center gap-1 text-sm">Program Studi</span>
 
         <div class="flex justify-end gap-2">
+            <x-import-export type="prodi" />
             <a href="{{ route('super-admin.program-studi.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Program Studi</x-button>
             </a>

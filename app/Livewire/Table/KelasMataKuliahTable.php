@@ -22,8 +22,6 @@ class KelasMataKuliahTable extends DynamicTable
 
     public $routeName = 'admin.kelas';
 
-    public $componentBefore = 'livewire.table.kelas';
-
     public $lecturerId;
 
     public function filterWithAcademicYear()
@@ -75,7 +73,7 @@ class KelasMataKuliahTable extends DynamicTable
             Column::make('course.code', 'Kode Mata Kuliah')->sortable(false),
             Column::make('course.name', 'Nama Mata Kuliah')->sortable(false),
             Column::make('course.credit', 'SKS')->sortable(false),
-            Column::make('id', 'Nama Tenaga Pengajar')->component('columns.classroom-lecturers')->sortable(false),
+            Column::make('', 'Nama Tenaga Pengajar')->component('columns.classroom-lecturers')->sortable(false),
             Column::make('created_at', 'Dibuat Pada')->component('columns.diff-for-human')->sortable(false),
             Column::make('id', ' ')->component('columns.actions')->sortable(false),
         ];

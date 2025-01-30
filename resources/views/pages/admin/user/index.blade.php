@@ -1,20 +1,19 @@
 <x-app-layout>
     <x-alert.flash />
     <div
-        class="border-zinc-100 border p-2 rounded-md border-t-red-500 border-t-4 border-b-yellow-500 border-b-4 space-y-4">
-
-        <span class="text-sm flex items-center gap-1">
+        class="space-y-4 rounded-md border border-b-4 border-t-4 border-zinc-100 border-b-yellow-500 border-t-red-500 p-2"
+        x-data
+    >
+        <span class="flex items-center gap-1 text-sm">
             <x-icons.person-icon />
             Pengguna
         </span>
 
-        <div class="flex justify-end">
-            <x-button class="bg-blue-500 hover:bg-blue-600" x-data
-                x-on:click="
-                    window.location.href = '{{ route('admin.user.create') }}'
-                ">
-                Tambah Pengguna
-            </x-button>
+        <div class="flex justify-end gap-2">
+            <x-import-export type="pengguna" />
+            <a href="{{ route('admin.user.create') }}">
+                <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Pengguna</x-button>
+            </a>
         </div>
 
         <livewire:table.user-table />
