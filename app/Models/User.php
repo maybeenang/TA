@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->belongsTo(ProgramStudi::class);
     }
 
+    public function scopeAuthProgramStudi($query)
+    {
+        return $query->where('program_studi_id', auth()->user()->program_studi_id);
+    }
+
     public function updateProfilePhoto($photo)
     {
         $this->deleteProfilePhoto();

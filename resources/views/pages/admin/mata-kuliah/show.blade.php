@@ -17,9 +17,9 @@
                 @foreach ($mataKuliah->toArray() as $key => $value)
                     @php
                         match ($key) {
-                            "name" => ($key = "Nama"),
-                            "code" => ($key = "Kode"),
-                            "credit" => ($key = "SKS"),
+                            'name' => ($key = 'Nama'),
+                            'code' => ($key = 'Kode'),
+                            'credit' => ($key = 'SKS'),
                             default => ($key = $key),
                         };
                     @endphp

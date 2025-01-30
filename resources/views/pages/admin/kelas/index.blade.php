@@ -7,9 +7,11 @@
             <x-icons.backpack-icon />
             Kelas
         </span>
-        <div class="flex justify-end">
-            <a href="{{ route('admin.kelas.create') }}"></a>
-            <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
+        <div class="flex justify-end gap-2">
+            <x-import-export type="kelas" />
+            <a href="{{ route('admin.kelas.create') }}">
+                <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
+            </a>
         </div>
 
         <livewire:table.kelas-table />

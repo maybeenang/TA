@@ -32,5 +32,8 @@ Route::group(
         Route::resource('laporan', \App\Http\Controllers\Admin\LaporanController::class);
 
         Route::resource('student', \App\Http\Controllers\Admin\StudentController::class);
+
+        Route::get('export-template/{type}', [\App\Http\Controllers\Admin\ImportExportController::class, 'export'])->name('export-template');
+        Route::post('import/{type}', [\App\Http\Controllers\Admin\ImportExportController::class, 'import'])->name('import');
     }
 );

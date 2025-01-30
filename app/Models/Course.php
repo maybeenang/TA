@@ -34,6 +34,11 @@ class Course extends Model
         return $this->belongsTo(ProgramStudi::class);
     }
 
+    public function scopeAuthProgramStudi($query)
+    {
+        return $query->where('program_studi_id', auth()->user()->program_studi_id);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->code} {$this->name}";

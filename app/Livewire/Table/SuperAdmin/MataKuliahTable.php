@@ -16,7 +16,8 @@ class MataKuliahTable extends DynamicTable
     public function query(): Builder
     {
         return Course::query()
-            ->with(['programStudi']);
+            ->with(['programStudi'])
+            ->authProgramStudi();
     }
 
     public function columns(): array

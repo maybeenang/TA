@@ -99,17 +99,12 @@
                 {
                     "url": "admin.kelas.index",
                     "name": "Kelola Kelas",
-                    "slug": ["admin.kelas.index", "admin.kelas.show"]
+                    "slug": ["admin.kelas.index", "admin.kelas.show", "admin.kelas.create"]
                 },
                 {
                     "url": "admin.mata-kuliah.index",
                     "name": "Kelola Mata Kuliah",
                     "slug": ["admin.mata-kuliah.index", "admin.mata-kuliah.show"]
-                },
-                {
-                    "url": "admin.tahun-akademik.index",
-                    "name": "Kelola Tahun Akademik",
-                    "slug": ["admin.tahun-akademik.index"]
                 },
                 {
                     "url": "admin.user.index",

@@ -6,6 +6,18 @@
 /*    border: 1px solid red !important;*/
 /*}*/
 
+.tooltip {
+    @apply invisible absolute -left-8 -top-10 z-50 h-fit w-48 cursor-default rounded-lg border border-zinc-300 p-2 text-center text-sm text-black opacity-0 shadow-lg transition-all duration-300 ease-in-out;
+}
+
+.has-tooltip:hover .tooltip {
+    @apply visible z-50 opacity-100 transition-all duration-300 ease-in-out;
+}
+
+.tooltip:hover {
+    @apply visible z-50 opacity-100 transition-all duration-300 ease-in-out;
+}
+
 .select2-container {
     /* The container where the selectbox is housing*/
     @apply relative m-0 mb-2 box-border inline-block align-middle;

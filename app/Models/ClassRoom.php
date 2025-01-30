@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Observers\ClassRoomObserver;
+use App\Services\AcademicYearService;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,6 +51,18 @@ class ClassRoom extends Model
     public function studentClassrooms()
     {
         return $this->hasMany(StudentClassroom::class);
+    }
+
+    public function scopeAuthProgramStudi($query)
+    {
+        return $query->whereHas('course', function ($query) {
+            $query->where('program_studi_id', auth()->user()->program_studi_id);
+        });
+    }
+
+    public function scopeCurrentAcademicYear($query)
+    {
+        return $query->where('academic_year_id', app(AcademicYearService::class)->getCurrentAcademicYear()->id);
     }
 
     public function getFullNameAttribute()
