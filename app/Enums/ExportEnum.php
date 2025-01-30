@@ -2,13 +2,17 @@
 
 namespace App\Enums;
 
+use App\Exports\FakultasExport;
 use App\Exports\KelasExport;
 use App\Exports\MahasiswaExport;
 use App\Exports\MatakuliahExport;
+use App\Exports\ProdiExport;
 use App\Exports\UsersExport;
+use App\Imports\FakultasImport;
 use App\Imports\KelasImport;
 use App\Imports\MahasiswaImport;
 use App\Imports\MatakuliahImport;
+use App\Imports\ProdiImport;
 use App\Imports\UsersImport;
 
 enum ExportEnum: string
@@ -28,6 +32,8 @@ enum ExportEnum: string
             static::MATAKULIAH => (new MatakuliahExport)->download('matakuliah.xlsx'),
             static::MAHASISWA => (new MahasiswaExport)->download('mahasiswa.xlsx'),
             static::KELAS => (new KelasExport)->download('kelas.xlsx'),
+            static::FAKULTAS => (new FakultasExport)->download('fakultas.xlsx'),
+            static::PRODI => (new ProdiExport)->download('prodi.xlsx'),
             default => null,
         };
     }
@@ -39,6 +45,8 @@ enum ExportEnum: string
             static::MATAKULIAH => (new MatakuliahImport)->import($file),
             static::MAHASISWA => (new MahasiswaImport)->import($file),
             static::KELAS => (new KelasImport)->import($file),
+            static::FAKULTAS => (new FakultasImport)->import($file),
+            static::PRODI => (new ProdiImport)->import($file),
             default => null,
         };
     }

@@ -43,13 +43,13 @@ class UsersImport implements ToModel, WithHeadingRow
             $user->assignRole($tenagaPengajar);
 
             DB::commit();
+
+            return $user;
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             return null;
         }
-
-        return $user;
     }
 }

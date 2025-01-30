@@ -37,6 +37,8 @@ class KelasImport implements ToModel, WithHeadingRow
             ]);
 
             DB::commit();
+
+            return $course;
         } catch (\Throwable $th) {
             DB::rollBack();
 
