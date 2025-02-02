@@ -5,7 +5,8 @@
     >
         <span class="flex items-center gap-1 text-sm">Tahun Akademik</span>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end gap-2">
+            <x-import-export type="superadmintahunakademik" label="tahun akademik" />
             <a href="{{ route('super-admin.tahun-akademik.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Tahun Akademik</x-button>
             </a>

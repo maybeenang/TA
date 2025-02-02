@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\ClassRoom;
+use App\Models\Course;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -10,24 +10,22 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
+class SuperAdminMatakuliahExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
 {
     use Exportable;
 
     public function query()
     {
-        return ClassRoom::query()->authProgramStudi()->currentAcademicYear();
+        return Course::query();
     }
 
     public function map($row): array
     {
         return [
-            $row->id,
+            $row->code,
             $row->name,
-            $row->course->code,
-            $row->course->name,
-            $row->course->credit,
-            $row->lecturer?->user?->name,
+            $row->credit,
+            $row->programStudi->name,
         ];
     }
 
@@ -36,10 +34,8 @@ class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSiz
         return [
             'Kode',
             'Nama',
-            'Kode Matakuliah',
-            'Nama Matakuliah',
             'SKS',
-            'Nama Dosen',
+            'Program Studi',
         ];
     }
 }

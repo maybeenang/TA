@@ -10,13 +10,13 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
+class SuperAdminKelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
 {
     use Exportable;
 
     public function query()
     {
-        return ClassRoom::query()->authProgramStudi()->currentAcademicYear();
+        return ClassRoom::query();
     }
 
     public function map($row): array
@@ -24,10 +24,13 @@ class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSiz
         return [
             $row->id,
             $row->name,
-            $row->course->code,
-            $row->course->name,
-            $row->course->credit,
+            $row->course?->code,
+            $row->course?->name,
+            $row->course?->credit,
+            $row->course?->programStudi?->name,
             $row->lecturer?->user?->name,
+            $row->academicYear?->name,
+            $row->academicYear?->semester,
         ];
     }
 
@@ -36,10 +39,13 @@ class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSiz
         return [
             'Kode',
             'Nama',
-            'Kode Matakuliah',
-            'Nama Matakuliah',
+            'Kode Mata Kuliah',
+            'Nama Mata Kuliah',
             'SKS',
+            'Program Studi',
             'Nama Dosen',
+            'Tahun Akademik',
+            'Semester',
         ];
     }
 }

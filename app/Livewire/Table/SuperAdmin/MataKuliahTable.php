@@ -15,9 +15,9 @@ class MataKuliahTable extends DynamicTable
 
     public function query(): Builder
     {
+        $this->perPage = 150;
         return Course::query()
-            ->with(['programStudi'])
-            ->authProgramStudi();
+            ->with(['programStudi']);
     }
 
     public function columns(): array

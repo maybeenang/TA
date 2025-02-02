@@ -1,7 +1,10 @@
-@props(['type' => 'pengguna'])
+@props([
+    'type' => 'pengguna',
+    'label',
+])
 <div class="has-tooltip relative">
     <x-button class="relative bg-green-500 hover:bg-green-600" x-on:click.prevent="$refs.file.click()">
-        Import {{ $type }}
+        Import {{ $label ?? $type }}
     </x-button>
 
     <span class="tooltip">

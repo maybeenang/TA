@@ -5,7 +5,8 @@
     >
         <span class="flex items-center gap-1 text-sm">User</span>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end gap-2">
+            <x-import-export type="superadminpengguna" label="pengguna" />
             <a href="{{ route('super-admin.user.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah User</x-button>
             </a>

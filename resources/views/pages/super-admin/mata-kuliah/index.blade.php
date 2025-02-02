@@ -5,7 +5,8 @@
     >
         <span class="flex items-center gap-1 text-sm">Mata Kuliah</span>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end gap-2">
+            <x-import-export type="superadminmatakuliah" label="mata kuliah" />
             <a href="{{ route('super-admin.mata-kuliah.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Mata Kuliah</x-button>
             </a>

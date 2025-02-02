@@ -17,6 +17,7 @@ Route::group(
         Route::prefix('master-data')->group(
             function () {
                 Route::post('scrape', [\App\Http\Controllers\SuperAdmin\ScrapeController::class, 'scrape'])->name('scrape');
+                Route::get('scrape-all-kelas', [\App\Http\Controllers\SuperAdmin\ScrapeController::class, 'scrapeAllKelas'])->name('scrape-all-kelas');
 
                 Route::resource('tahun-akademik', \App\Http\Controllers\SuperAdmin\TahunAkademikController::class)->parameter('tahun-akademik', 'academicYear');
                 Route::get('program-studi/scrape-data', [\App\Http\Controllers\SuperAdmin\ProgramStudiController::class, 'scrapeData'])->name('program-studi.scrape-data');
