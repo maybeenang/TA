@@ -2,7 +2,9 @@
 
 namespace App\Imports;
 
+use App\Models\ClassRoom;
 use App\Models\Course;
+use App\Models\User;
 use App\Services\AcademicYearService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -30,11 +32,24 @@ class KelasImport implements ToModel, WithHeadingRow
 
             $course->save();
 
-            $course->classRooms()->create([
+            $kelas = ClassRoom::firstOrNew([
                 'id' => $row['kode'],
                 'name' => $row['nama'],
-                'academic_year_id' => app(AcademicYearService::class)->getCurrentAcademicYear()->id,
+                'course_id' => $course->id,
+                'academic_year_id' => app(AcademicYearService::class)->getCurrentAcademicYear()->id
             ]);
+
+            $kelas->save();
+
+            if ($row['nama_dosen']) {
+
+                $dosen = User::where('name', $row['nama_dosen'])->first();
+                $lecturer = $dosen?->lecturer;
+
+                $kelas->lecturer_id = $lecturer->id;
+                $kelas->save();
+            }
+
 
             DB::commit();
 

@@ -32,7 +32,38 @@
         <section>
             <h1 class="text-center text-xl">Daftar Mahasiswa</h1>
 
-            <div class="mb-4 flex items-center justify-end">
+            <div class="mb-4 flex items-center justify-end gap-2">
+                <div class="has-tooltip relative" x-data>
+                    <x-button class="relative bg-green-500 hover:bg-green-600" x-on:click.prevent="$refs.file.click()">
+                        Import Mahasiswa
+                    </x-button>
+
+                    <span class="tooltip">
+                        <a href="{{ route('export-mhs', $kelas->id) }}" class="text-blue-500 hover:text-blue-600">
+                            Unduh template
+                        </a>
+                    </span>
+
+                    <form
+                        action="{{ route('import-mhs', $kelas->id) }}"
+                        class="sr-only"
+                        method="post"
+                        enctype="multipart/form-data"
+                        x-ref="form"
+                    >
+                        @csrf
+
+                        <input
+                            type="file"
+                            name="file"
+                            id="file"
+                            accept=".xlsx"
+                            class="hidden"
+                            x-ref="file"
+                            x-on:change="$refs.form.submit()"
+                        />
+                    </form>
+                </div>
                 <a href="{{ route('tenaga-pengajar.kelas.tambah-mahasiswa', $kelas->id) }}">
                     <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Mahasiswa</x-button>
                 </a>

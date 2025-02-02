@@ -29,4 +29,13 @@ class StudentClassroom extends Model
     {
         return $this->belongsTo(ClassRoom::class);
     }
+
+    public function scopeAuthProgramStudi($query)
+    {
+        return $query->whereHas('classRoom', function ($query) {
+            $query->whereHas('course', function ($query) {
+                $query->where('program_studi_id', auth()->user()->program_studi_id);
+            });
+        });
+    }
 }

@@ -26,7 +26,8 @@ class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSiz
             $row->name,
             $row->course->code,
             $row->course->name,
-            $row->course->credit
+            $row->course->credit,
+            $row->lecturer?->user?->name,
         ];
     }
 
@@ -37,7 +38,8 @@ class KelasExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSiz
             'Nama',
             'Kode Matakuliah',
             'Nama Matakuliah',
-            'SKS'
+            'SKS',
+            'Nama Dosen',
         ];
     }
 }

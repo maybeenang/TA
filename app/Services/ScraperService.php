@@ -179,6 +179,7 @@ class ScraperService
                 }
             });
 
+
             return $datas;
         } catch (\Throwable $th) {
             throw $th;
