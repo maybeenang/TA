@@ -42,4 +42,23 @@ class DashboardService
             'jumlahLaporanBelumSelesai' => $jumlahLaporan - $jumlahLaporanSelesai,
         ];
     }
+
+    public function tenagaPengajarLaporanata()
+    {
+        $jumlahLaporan = $this->laporanQuery()->whereHas('classRoom', function ($query) {
+            $query->where('lecturer_id', auth()->user()->lecturer->id);
+        })->count();
+
+        $jumlahLaporanSelesai = $this->laporanQuery()->whereHas('classRoom', function ($query) {
+            $query->where('lecturer_id', auth()->user()->lecturer->id);
+        })->whereHas('reportStatus', function ($q) {
+            $q->where('name', ReportStatusEnum::TERVERIFIKASI->value);
+        })->count();
+
+        return (object) [
+            'jumlahLaporan' => $jumlahLaporan,
+            'jumlahLaporanSelesai' => $jumlahLaporanSelesai,
+            'jumlahLaporanBelumSelesai' => $jumlahLaporan - $jumlahLaporanSelesai,
+        ];
+    }
 }
