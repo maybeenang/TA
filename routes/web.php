@@ -11,7 +11,7 @@ Route::group(
         'middleware' => ['auth', 'verified']
     ],
     function () {
-        Route::get('/', fn() => view('pages.welcome'))->name('welcome');
+        Route::get('/', [Controllers\DashboardController::class, 'welcome'])->name('welcome');
         Route::get('/dashboard', [Controllers\DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');

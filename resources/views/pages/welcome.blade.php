@@ -20,11 +20,13 @@
             <x-card.dashboard-card :number="$academicYearNow?->fullName" class="bg-blue-500 text-white">
                 Tahun Ajaran
             </x-card.dashboard-card>
-            <x-card.dashboard-card :number="0" class="bg-green-500 text-white">Jumlah Laporan</x-card.dashboard-card>
-            <x-card.dashboard-card :number="0" class="bg-amber-500 text-white">
+            <x-card.dashboard-card :number="$laporanCount->jumlahLaporan" class="bg-green-500 text-white">
+                Jumlah Laporan
+            </x-card.dashboard-card>
+            <x-card.dashboard-card :number="$laporanCount->jumlahLaporanSelesai" class="bg-amber-500 text-white">
                 Laporan Belum Selesai
             </x-card.dashboard-card>
-            <x-card.dashboard-card :number="0" class="bg-red-500 text-white">
+            <x-card.dashboard-card :number="$laporanCount->jumlahLaporanBelumSelesai" class="bg-red-500 text-white">
                 Laporan Sudah Selesai
             </x-card.dashboard-card>
         @endrole
