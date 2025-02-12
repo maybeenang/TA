@@ -7,6 +7,7 @@ export default {
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
+        "./app/Services/**/*.php",
     ],
 
     theme: {
@@ -82,10 +83,5 @@ export default {
         },
     },
 
-    plugins: [
-        require("@tailwindcss/forms")({
-            strategy: "base",
-        }),
-        require("tailwindcss-animate"),
-    ],
+    plugins: [require("@tailwindcss/forms")({}), require("tailwindcss-animate")],
 };

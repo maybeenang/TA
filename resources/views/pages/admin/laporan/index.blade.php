@@ -9,15 +9,9 @@
         </span>
 
         <div class="flex justify-end">
-            <x-button
-                class="bg-blue-500 hover:bg-blue-600"
-                x-data
-                x-on:click="
-                    window.location.href = '{{ route('admin.laporan.create') }}'
-                "
-            >
-                Tambah Laporan
-            </x-button>
+            <a href="{{ route('admin.laporan.create') }}">
+                <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Laporan</x-button>
+            </a>
         </div>
 
         <livewire:table.laporan-table />
