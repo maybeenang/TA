@@ -4,7 +4,12 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    plugins: [forms, animate],
+    plugins: [
+        forms({
+            strategy: "base",
+        }),
+        animate,
+    ],
     darkMode: "class",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
