@@ -101,6 +101,11 @@ class LaporanController extends Controller
      */
     public function edit(Report $laporan)
     {
+
+        if ($laporan->classRoom->lecturer->user_id !== Auth::id()) {
+            return redirect()->route('tenaga-pengajar.laporan.index')->with('error', 'Anda tidak memiliki akses ke laporan ini');
+        }
+
         $reportStatus = $laporan->reportStatus->name;
 
         if ($reportStatus !== ReportStatusEnum::DRAFT->value && $reportStatus !== ReportStatusEnum::DITOLAK->value) {

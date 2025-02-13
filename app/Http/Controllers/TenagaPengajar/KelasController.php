@@ -7,6 +7,7 @@ use App\Models\ClassRoom;
 use App\Models\Student;
 use App\Services\KelasService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KelasController extends Controller
 {
@@ -44,6 +45,10 @@ class KelasController extends Controller
      */
     public function show(ClassRoom $kelas)
     {
+
+        if ($kelas->lecturer?->user_id !== Auth::id()) {
+            return redirect()->route('tenaga-pengajar.kelas.index')->with('error', 'Anda tidak memiliki akses ke kelas ini');
+        }
 
         $classroomlecturers = $kelas->report->lecturers->map(function ($lecturer) {
             return $lecturer->user->name;
@@ -90,6 +95,10 @@ class KelasController extends Controller
 
     public function tambahMahasiswa(ClassRoom $kelas)
     {
+
+        if ($kelas->lecturer?->user_id !== Auth::id()) {
+            return redirect()->route('tenaga-pengajar.kelas.index')->with('error', 'Anda tidak memiliki akses ke kelas ini');
+        }
 
         $students = Student::all()->map(function ($student) {
             return [

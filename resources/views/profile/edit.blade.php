@@ -95,8 +95,6 @@
                         <x-form.message />
                     </x-form.item>
 
-                    <livewire:email-notification-switch :user="$user" />
-
                     @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                         <div>
                             <p class="mt-2 text-sm text-gray-800">
@@ -117,6 +115,8 @@
                             @endif
                         </div>
                     @endif
+
+                    <livewire:email-notification-switch :user="$user" />
 
                     <div class="flex justify-end">
                         <x-button type="submit">Submit</x-button>

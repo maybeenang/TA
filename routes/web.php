@@ -14,16 +14,23 @@ Route::group(
         Route::get('/', [Controllers\DashboardController::class, 'welcome'])->name('welcome');
         Route::get('/dashboard', [Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::post('/profile/update_photo', [Controllers\ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
-
         Route::get('laporan/{laporan}/print', [\App\Http\Controllers\PDFController::class, 'print'])->name('laporan.print');
         Route::get('laporan/{laporan}/pdf', [\App\Http\Controllers\PDFController::class, 'pdf'])->name('laporan.pdf');
 
         Route::get('export-mhs/{kelas}', [\App\Http\Controllers\Admin\ImportExportController::class, 'exportMahasiswaKelas'])->name('export-mhs');
         Route::post('import-mhs/{kelas}', [\App\Http\Controllers\Admin\ImportExportController::class, 'importMahasiswaKelas'])->name('import-mhs');
+    }
+);
+
+Route::group(
+    [
+        'middleware' => ['auth']
+    ],
+    function () {
+        Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [Controllers\ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::post('/profile/update_photo', [Controllers\ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     }
 );
 

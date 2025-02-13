@@ -33,10 +33,7 @@
                         <x-form.message />
                     </x-form.item>
                     <x-form.item name="nip">
-                        <x-form.label>
-                            NIP
-                            <span class="text-sm font-normal">(optional)</span>
-                        </x-form.label>
+                        <x-form.label>NIP</x-form.label>
                         <x-input
                             x-form:control
                             placeholder="1234567890"

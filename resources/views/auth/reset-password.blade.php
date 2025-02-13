@@ -1,13 +1,15 @@
 <x-guest-layout>
     <form
         method="POST"
-        action="{{ route("password.store") }}"
+        action="{{ route('password.store') }}"
         class="mx-auto max-w-md flex-1 bg-white/50 p-8 backdrop-blur"
     >
         @csrf
 
+        <h1 class="mb-2 text-xl font-semibold">Lupa Password</h1>
+
         <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route("token") }}" />
+        <input type="hidden" name="token" value="{{ $request->route('token') }}" />
 
         <!-- Email Address -->
         <div>
@@ -57,7 +59,7 @@
 
         <div class="mt-4 flex items-center justify-end">
             <x-primary-button>
-                {{ __("Reset Password") }}
+                {{ __('Reset Password') }}
             </x-primary-button>
         </div>
     </form>

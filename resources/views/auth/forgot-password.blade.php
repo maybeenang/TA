@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="mx-auto max-w-md flex-1 bg-white/50 p-8 backdrop-blur">
-        {{ __("Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.") }}
-
+        <h1 class="mb-2 text-xl font-semibold">Lupa Password</h1>
+        <p class="mb-4">Silahkan masukkan email anda, kami akan mengirimkan link untuk mereset password anda.</p>
         <!-- Session Status -->
         <x-auth-session-status class="my-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route("password.email") }}">
+        <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
             <!-- Email Address -->
