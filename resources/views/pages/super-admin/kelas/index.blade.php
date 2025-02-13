@@ -6,9 +6,13 @@
         <span class="flex items-center gap-1 text-sm">Kelas</span>
         <div class="flex justify-end gap-2">
             <x-import-export type="superadminkelas" label="kelas" />
-            <a href="{{ route('super-admin.scrape-all-kelas') }}">
-                <x-button class="bg-blue-500 hover:bg-blue-600">Input Semua data kelas</x-button>
-            </a>
+
+            @env('local')
+                <a href="{{ route('super-admin.scrape-all-kelas') }}">
+                    <x-button class="bg-blue-500 hover:bg-blue-600">Input Semua data kelas</x-button>
+                </a>
+            @endenv
+
             <a href="{{ route('super-admin.kelas.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
             </a>
