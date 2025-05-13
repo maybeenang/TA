@@ -9,7 +9,7 @@
         </span>
 
         <div class="flex justify-end gap-2">
-            <x-import-export type="matakuliah" />
+            <!-- <x-import-export type="matakuliah"  /> -->
             <a href="{{ route('admin.mata-kuliah.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Mata Kuliah</x-button>
             </a>

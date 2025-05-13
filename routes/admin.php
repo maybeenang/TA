@@ -23,7 +23,21 @@ Route::group(
 
         Route::resource('tahun-akademik', \App\Http\Controllers\Admin\TahunAkademikController::class);
 
-        Route::resource('master-data', \App\Http\Controllers\Admin\MasterdataController::class);
+        Route::group(
+            [
+                'prefix' => 'master-data',
+                'as' => 'master-data.',
+            ],
+            function () {
+                Route::resource('/', \App\Http\Controllers\Admin\MasterdataController::class);
+                Route::put('program-studi-update', [\App\Http\Controllers\Admin\MasterdataController::class, 'programStudiUpdate'])->name('program-studi.update');
+                Route::get('export/{type}', [\App\Http\Controllers\Admin\MasterdataController::class, 'export'])->name('export');
+                Route::post('import/{type}', [\App\Http\Controllers\Admin\MasterdataController::class, 'import'])->name('import');
+                Route::post('sync/{type}', [\App\Http\Controllers\Admin\MasterdataController::class, 'sync'])->name('sync');
+            }
+        );
+
+
 
         Route::get('/laporan/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporan'])->name('laporan.verifikasi');
         Route::get('/laporan/arsip', [\App\Http\Controllers\Admin\LaporanController::class, 'arsipLaporan'])->name('laporan.arsip');

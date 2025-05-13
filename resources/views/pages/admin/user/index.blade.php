@@ -10,7 +10,7 @@
         </span>
 
         <div class="flex justify-end gap-2">
-            <x-import-export type="pengguna" />
+            <!-- <x-import-export type="pengguna"  /> -->
             <a href="{{ route('admin.user.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Pengguna</x-button>
             </a>

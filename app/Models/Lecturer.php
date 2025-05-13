@@ -15,6 +15,10 @@ class Lecturer extends Model
         'user_id',
     ];
 
+    protected $casts = [
+        'nip' => 'string',
+    ];
+
 
     public function user()
     {

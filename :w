@@ -30,7 +30,7 @@
         </div>
 
         <div class="mb-8 max-w-fit">
-            <h2 class="mb-4 text-lg font-semibold">Kelola Data Akademik {{ $programStudi->name }}</h2>
+            <h2 class="mb-4 text-lg font-semibold">Data Akademik</h2>
             <x-alert>
                 <x-alert.title>Catatan</x-alert.title>
                 <x-alert.description>
@@ -38,24 +38,7 @@
                     <ul class="list-disc pl-4">
                         <li>Export: Mengunduh data akademik dalam format Excel.</li>
                         <li>Import: Mengunggah data akademik dari file Excel.</li>
-                        <li>
-                            Sinkron: Menyinkronkan data akademik dengan sistem lain.
-                            <ul class="list-disc pl-4">
-                                <li>
-                                    Tahun akademik: akan mencoba untuk mengambil data, lalu menambahkan dan atau
-                                    mengupdate tahun akademik
-                                </li>
-                                <li>
-                                    Pengguna: akan mencoba untuk mengambil data, lalu menambahkan dan atau mengupdate
-                                    pengguna, dengan default role tenaga pengajar
-                                </li>
-                                <li>
-                                    Kelas: akan mencoba untuk mengambil data, lalu menambahkan dan atau mengupdate mata
-                                    kuliah dan kelas (untuk tahun akademik yang aktif)
-                                </li>
-                                <li>Mahasiswa: akan mencoba mengambil mahasiswa yang sudah terdaftar di kelas.</li>
-                            </ul>
-                        </li>
+                        <li>Sinkron: Menyinkronkan data akademik dengan sistem lain.</li>
                     </ul>
                 </x-alert.description>
             </x-alert>
@@ -80,7 +63,7 @@
                                     {{ $item->name }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                    {{ $item->last_updated_at ?? 'Belum ada data' }}
+                                    {{ $item->last_synced_at ?? 'Belum ada data' }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                     {{ $item->last_synced_at ?? 'Belum ada data' }}
@@ -90,34 +73,9 @@
                                         <a href="{{ route('admin.master-data.export', $item->key) }}">
                                             <x-button>Export</x-button>
                                         </a>
-                                        <form
-                                            action="{{ route('admin.master-data.import', $item->key) }}"
-                                            method="post"
-                                            x-ref="form"
-                                            x-data
-                                            enctype="multipart/form-data"
-                                        >
-                                            @csrf
-
-                                            <input
-                                                type="file"
-                                                name="file"
-                                                id="file"
-                                                accept=".xlsx, .xls"
-                                                class="hidden"
-                                                x-ref="file"
-                                                x-on:change="
-                                                    if ($event.target.files.length > 0) {
-                                                        $refs.form.submit()
-                                                    }
-                                                "
-                                            />
-
-                                            <x-button x-on:click="$refs.file.click()">Import</x-button>
-                                        </form>
-                                        <form action="{{ route('admin.master-data.sync', $item->key) }}" method="post">
-                                            @csrf
-                                            <x-button type="submit">Sync</x-button>
+                                        <x-button>Import</x-button>
+                                        <form action="{{route('admin.master-data.sync', $item->type)}}" method="post">
+                                        <x-button type="submit">Sync</x-button>
                                         </form>
                                     </div>
                                 </td>
