@@ -31,8 +31,13 @@ class ImportReportPenilaian implements ToModel, WithHeadingRow
                     // convert name to lower case and replace space with underscore
                     $name = strtolower(str_replace(' ', '_', $studentGrade->gradeComponent->name));
 
+                    // check if score is greater than 100 and less than 0
+                    if (!is_numeric($row[$name]) || $row[$name] > 100 || $row[$name] < 0) {
+                        return;
+                    }
+
                     $studentGrade->update([
-                        'score' => $row[$name] ?? 0,
+                        'score' => $row[$name],
                     ]);
                 });
             });

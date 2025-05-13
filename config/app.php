@@ -125,6 +125,11 @@ return [
 
     'sync_api_endpoint' => [
         'url' => env('SYNC_API_ENDPOINT', 'http://localhost:3000')
+    ],
+
+    'nodejs' => [
+        'nodejs_path' => env('NODE_PATH', '/usr/bin/node'),
+        'npm_path' => env('NPM_PATH', '/usr/bin/npm'),
     ]
 
 ];

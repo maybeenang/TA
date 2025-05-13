@@ -2,53 +2,69 @@
 
 namespace App\Livewire;
 
-use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
+use App\Services\PDFGeneratorService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PdfViewer extends Component
 {
     public Report $report;
-
-    public bool $isGenerating = true;
+    public bool $isGenerating = false;
     public bool $isFailed = false;
+    public bool $pdfExists = false;
+    public $number = 0;
+
+    public function mount(Report $report)
+    {
+        $this->report = $report;
+        $this->checkPdfStatus();
+    }
 
     public function checkPdfStatus()
     {
         if (!$this->report->pdf_path || !Storage::exists('pdfs/' . $this->report->pdf_path)) {
-            $this->isGenerating = true;
-            GenerateReportPDF::dispatch($this->report);
+            $this->pdfExists = false;
+            return false;
         } else {
-            $this->isGenerating = false;
+            $this->pdfExists = true;
+            return true;
         }
     }
 
-    public function getReportIdProperty()
+    public function add()
     {
-        return $this->report->id;
-    }
-
-    public function pdfHasGenerated()
-    {
-        $this->isGenerating = false;
+        $this->number++;
     }
 
     public function regeneratePdf()
     {
         Log::info('Regenerating PDF');
+
         if ($this->isGenerating) {
             return;
         }
+
         $this->isGenerating = true;
-        GenerateReportPDF::dispatch($this->report);
+
+        try {
+            $result = app(PDFGeneratorService::class)->generate($this->report);
+            $this->isFailed = !$result;
+            $this->checkPdfStatus();
+        } catch (\Exception $e) {
+            Log::error("PDF generation failed: " . $e->getMessage());
+            $this->isFailed = true;
+        } finally {
+            $this->isGenerating = false;
+        }
     }
 
-    public function mount(Report $report)
+    public function generatePdfIfNeeded()
     {
-        $this->report = $report;
+        if (!$this->checkPdfStatus()) {
+            $this->regeneratePdf();
+        }
     }
 
     public function render()

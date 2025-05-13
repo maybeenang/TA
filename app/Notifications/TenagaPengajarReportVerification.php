@@ -5,16 +5,12 @@ namespace App\Notifications;
 use App\Models\Report;
 use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TenagaPengajarReportVerification extends Notification implements ShouldQueue
+class TenagaPengajarReportVerification extends Notification
 {
-    use Queueable;
-
     protected $userId;
 
     /**

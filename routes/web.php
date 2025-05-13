@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::post('laporan/render', [\App\Http\Controllers\PDFController::class, 'render'])->name('laporan.render');
 Route::group(
     [
         'middleware' => ['auth', 'verified']
