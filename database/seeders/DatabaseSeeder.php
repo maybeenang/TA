@@ -21,11 +21,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
-                UserSeeder::class,
-                RoleSeeder::class,
+                // constanta
                 ReportStatusSeeder::class,
-                LecturerSeeder::class,
-                /*AcademicYearSeeder::class,*/
+                RoleSeeder::class,
+
+                // data
+                AcademicYearSeeder::class,
+                FakultasSeeder::class,
+
+                UserSeeder::class,
+                /* LecturerSeeder::class, */
                 /*CourseSeeder::class,*/
                 /*StudentSeeder::class,*/
             ]

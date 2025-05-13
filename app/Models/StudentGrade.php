@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentGrade extends Model
 {
-
     use ReportRelatedModel;
     protected $fillable = [
         'grade_id',

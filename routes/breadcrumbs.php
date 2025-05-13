@@ -19,6 +19,11 @@ Breadcrumbs::for('admin.tenaga-pengajar.index', function (BreadcrumbTrail $trail
     $trail->push('Tenaga Pengajar', route('admin.tenaga-pengajar.index'));
 });
 
+Breadcrumbs::for('admin.master-data.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('welcome');
+    $trail->push('Pengaturan', route('admin.master-data.index'));
+});
+
 Breadcrumbs::for('admin.tenaga-pengajar.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.tenaga-pengajar.index');
     $trail->push('Tambah Tenaga Pengajar', route('admin.tenaga-pengajar.create'));

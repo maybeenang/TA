@@ -10,6 +10,21 @@ class ProgramStudi extends Model
 {
     use SoftDeletes, HasFactory;
 
+
+    protected static function booted()
+    {
+        static::created(function (ProgramStudi $programStudi) {
+            $default = [
+                ['key' => 'tahun_akademik', 'name' => 'Tahun Akademik', 'is_shown' => true,],
+                ['key' => 'pengguna', 'name' => 'Pengguna', 'is_shown' => true,],
+                ['key' => 'kelas', 'name' => 'Kelas', 'is_shown' => true,],
+                ['key' => 'mahasiswa', 'name' => 'Mahasiswa', 'is_shown' => true,],
+            ];
+
+            $programStudi->settings()->createMany($default);
+        });
+    }
+
     protected $fillable = [
         'name',
         'fakultas_id',
@@ -34,5 +49,10 @@ class ProgramStudi extends Model
     public function fakultas()
     {
         return $this->belongsTo(Fakultas::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(Setting::class);
     }
 }

@@ -6,7 +6,7 @@
         <span class="flex items-center gap-1 text-sm">Mahasiswa</span>
 
         <div class="flex justify-end gap-2">
-            <x-import-export type="mahasiswa" />
+            <!-- <x-import-export type="mahasiswa"  /> -->
             <a href="{{ route('admin.student.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Mahasiswa</x-button>
             </a>

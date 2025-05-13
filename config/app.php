@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'sync_api_endpoint' => [
+        'url' => env('SYNC_API_ENDPOINT', 'http://localhost:3000')
+    ]
+
 ];

@@ -8,7 +8,7 @@
             Kelas
         </span>
         <div class="flex justify-end gap-2">
-            <x-import-export type="kelas" />
+            <!-- <x-import-export type="kelas"  /> -->
             <a href="{{ route('admin.kelas.create') }}">
                 <x-button class="bg-blue-500 hover:bg-blue-600">Tambah Kelas</x-button>
             </a>

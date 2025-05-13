@@ -32,6 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_picture_path',
         'program_studi_id',
         'notification_email',
+        'email_verified_at',
     ];
 
     /**
