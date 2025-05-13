@@ -3,20 +3,21 @@
 namespace App\Observers;
 
 use App\Events\ReportUpdated;
-use App\Jobs\GenerateReportPDF;
 use App\Models\Report;
+use App\Services\PDFGeneratorService;
 use App\Services\ReportService;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 class ReportObserver
 {
 
     protected $reportService;
+    protected $pdfGeneratorService;
 
-    public function __construct(ReportService $reportService)
+    public function __construct(ReportService $reportService, PDFGeneratorService $pdfGeneratorService)
     {
         $this->reportService = $reportService;
+        $this->pdfGeneratorService = $pdfGeneratorService;
     }
 
     /**
@@ -34,7 +35,7 @@ class ReportObserver
     public function updated(Report $report): void
     {
         if ($report->isDirty(['signature_kaprodi_id', 'signature_gkmp_id', 'report_status_id'])) {
-            broadcast(new ReportUpdated($report));
+            event(new ReportUpdated($report));
             Cache::forget('sidebar_badge_count');
         }
 
@@ -43,13 +44,8 @@ class ReportObserver
             return;
         }
 
-        $cacheKey = "report_regenerating_{$report->id}";
-        if (!Cache::has($cacheKey)) {
-            Cache::put($cacheKey, true, now()->addSeconds(10));
-
-            GenerateReportPDF::dispatch($report)
-                ->delay(now()->addSeconds(5));
-        }
+        // Generate PDF langsung secara sinkron
+        /* $this->pdfGeneratorService->generate($report); */
 
         $userId = $report->classRoom?->lecturer?->user_id;
 

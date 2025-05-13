@@ -65,6 +65,7 @@
                     <x-form.label>Rata Rata Nilai</x-form.label>
                     <x-input
                         type="number"
+                        step="0.01"
                         x-form:control
                         name="average_score"
                         placeholder="80"

@@ -5,18 +5,14 @@ namespace App\Notifications;
 use App\Models\Report;
 use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 
-class ReportStatusUpdated extends Notification implements ShouldQueue, ShouldBroadcast
+class ReportStatusUpdated extends Notification implements ShouldBroadcast
 {
-    use Queueable;
-
     /**
      * Create a new notification instance.
      */

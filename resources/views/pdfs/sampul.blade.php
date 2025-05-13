@@ -1,6 +1,6 @@
 <h1 class="text-center text-2xl font-bold">PORTOFOLIO PERKULIAHAN</h1>
 <div class="mx-auto mt-24 h-[300px] w-[300px]">
-    @inlinedImage(asset('itera.png'))
+    <img src="data:image/png;base64,{{ $iteraLogoBase64 }}" alt="Logo ITERA" />
 </div>
 <div class="mt-16 flex w-full justify-center">
     <table class="w-fit whitespace-nowrap text-xs">

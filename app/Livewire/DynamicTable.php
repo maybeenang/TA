@@ -3,11 +3,13 @@
 namespace App\Livewire;
 
 use App\Traits\AdvanceSearchAndSort;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Lazy]
 abstract class DynamicTable extends Component
 {
     use WithPagination, AdvanceSearchAndSort;

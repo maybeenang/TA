@@ -6,18 +6,14 @@ use App\Enums\RolesEnum;
 use App\Models\Report;
 use Carbon\Carbon;
 use Duijker\LaravelMercureBroadcaster\Broadcasting\Channel;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Laravel\Reverb\Loggers\Log;
 
-class AdminReportVerification extends Notification implements ShouldQueue, ShouldBroadcast
+class AdminReportVerification extends Notification implements ShouldBroadcast
 {
-    use Queueable;
-
     protected $userId;
 
     /**
