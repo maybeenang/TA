@@ -97,6 +97,11 @@
                     "slug": ["admin.laporan.arsip"]
                 },
                 {
+                    "url": "admin.tahun-akademik.index",
+                    "name": "Kelola Tahun Akademik",
+                    "slug": ["admin.tahun-akademik.index", "admin.tahun-akademik.show", "admin.tahun-akademik.create"]
+                },
+                {
                     "url": "admin.kelas.index",
                     "name": "Kelola Kelas",
                     "slug": ["admin.kelas.index", "admin.kelas.show", "admin.kelas.create"]
@@ -115,6 +120,11 @@
                     "url": "admin.student.index",
                     "name": "Kelola Mahasiswa",
                     "slug": ["admin.student.index", "admin.student.show", "admin.student.create", "admin.student.edit"]
+                },
+                {
+                    "url": "admin.master-data.index",
+                    "name": "Pengaturan",
+                    "slug": ["admin.master-data.index", "admin.master-data.show", "admin.master-data.create"]
                 }
             ]
         },

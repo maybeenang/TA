@@ -24,7 +24,6 @@ class TahunAkademikController extends Controller
      */
     public function index()
     {
-
         return view('pages.admin.tahun-akademik.index');
     }
 

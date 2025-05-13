@@ -20,49 +20,29 @@ class RoleSeeder extends Seeder
         $gkmp = app(Role::class)->findOrCreate(RolesEnum::GKMP->value, 'web');
         $kaprodi = app(Role::class)->findOrCreate(RolesEnum::KAPRODI->value, 'web');
 
-        /*$users = User::get();*/
-
-        /*if ($users->isNotEmpty()) {*/
-        /*    $users->each(function ($user) use ($tenagaPengajar) {*/
-        /*        $user->assignRole($tenagaPengajar);*/
-        /*    });*/
+        /* $me = User::where('email', 'elangpermadani123@gmail.com')->first(); */
+        /* if ($me) { */
+        /*     $me->assignRole($tenagaPengajar); */
+        /* } */
         /**/
-        /*    $users->filter(function ($user) {*/
-        /*        return str_contains($user->email, 'kaprodi');*/
-        /*    })->each(function ($user) use ($kaprodi) {*/
-        /*        $user->assignRole($kaprodi);*/
-        /*    });*/
+        /* $userAdmin = User::where('email', 'admin@admin.com')->first(); */
+        /* if ($userAdmin) { */
+        /*     $userAdmin->assignRole($admin); */
+        /* } */
         /**/
-        /*    $users->filter(function ($user) {*/
-        /*        return str_contains($user->email, 'gkmp');*/
-        /*    })->each(function ($user) use ($gkmp) {*/
-        /*        $user->assignRole($gkmp);*/
-        /*    });*/
-        /*}*/
-
-        $me = User::where('email', 'elangpermadani123@gmail.com')->first();
-        if ($me) {
-            $me->assignRole($tenagaPengajar);
-        }
-
-        $userAdmin = User::where('email', 'admin@admin.com')->first();
-        if ($userAdmin) {
-            $userAdmin->assignRole($admin);
-        }
-
-        $superadminUser = User::where('email', 'superadmin@admin.com')->first();
-        if ($superadminUser) {
-            $superadminUser->assignRole($superadmin);
-        }
-
-        $kaprodiUser = User::where('email', 'kaprodi@email.com')->first();
-        if ($kaprodiUser) {
-            $kaprodiUser->assignRole($kaprodi);
-        }
-
-        $gkmpUser = User::where('email', 'gkmp@email.com')->first();
-        if ($gkmpUser) {
-            $gkmpUser->assignRole($gkmp);
-        }
+        /* $superadminUser = User::where('email', 'superadmin@admin.com')->first(); */
+        /* if ($superadminUser) { */
+        /*     $superadminUser->assignRole($superadmin); */
+        /* } */
+        /**/
+        /* $kaprodiUser = User::where('email', 'kaprodi@email.com')->first(); */
+        /* if ($kaprodiUser) { */
+        /*     $kaprodiUser->assignRole($kaprodi); */
+        /* } */
+        /**/
+        /* $gkmpUser = User::where('email', 'gkmp@email.com')->first(); */
+        /* if ($gkmpUser) { */
+        /*     $gkmpUser->assignRole($gkmp); */
+        /* } */
     }
 }

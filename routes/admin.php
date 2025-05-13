@@ -23,6 +23,8 @@ Route::group(
 
         Route::resource('tahun-akademik', \App\Http\Controllers\Admin\TahunAkademikController::class);
 
+        Route::resource('master-data', \App\Http\Controllers\Admin\MasterdataController::class);
+
         Route::get('/laporan/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporan'])->name('laporan.verifikasi');
         Route::get('/laporan/arsip', [\App\Http\Controllers\Admin\LaporanController::class, 'arsipLaporan'])->name('laporan.arsip');
         Route::get('/laporan/{laporan}/verifikasi', [\App\Http\Controllers\Admin\LaporanController::class, 'verifikasiLaporanEdit'])->name('laporan.verifikasi.edit');
