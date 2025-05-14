@@ -1,4 +1,4 @@
-<div wire:init>
+<div>
     <div class="mb-4 flex justify-end">
         <x-button variant="secondary" wire:click="regeneratePdf" wire:loading.attr="disabled">
             <span wire:loading wire:target="regeneratePdf">
@@ -8,8 +8,8 @@
         </x-button>
     </div>
 
-    @if (! $this->pdfExists || $this->isGenerating)
-        <div class="flex h-full items-center justify-center">
+    @if (! $this->pdfExists)
+        <div wire:init="generatePdfIfNeeded" class="flex h-full items-center justify-center">
             <div class="text-center" id="pdfLoading">
                 @if ($this->isGenerating)
                     <div role="status">

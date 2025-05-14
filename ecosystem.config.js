@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: "laravel-caddy",
+            name: "maybeenang-portoif",
             interpreter: "none",
             cwd: "/var/www/laravel",
             script: "/usr/bin/frankenphp",
@@ -9,10 +9,6 @@ module.exports = {
             autorestart: true,
             watch: false,
             max_memory_restart: "1G",
-            env: {
-                NODE_ENV: "production",
-                // Jika perlu environment variables khusus
-            },
             output: "/var/log/pm2/laravel-caddy-out.log",
             error: "/var/log/pm2/laravel-caddy-err.log",
             merge_logs: true,
