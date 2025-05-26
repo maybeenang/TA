@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('program_studis', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->unique();
 
             $table->softDeletes();
@@ -20,15 +20,15 @@ return new class extends Migration
         });
 
         Schema::table('courses', function (Blueprint $table) {
-            $table->foreignId('program_studi_id')->nullable()->constrained('program_studis');
+            $table->foreignUuid('program_studi_id')->nullable()->constrained('program_studis');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('program_studi_id')->nullable()->constrained('program_studis')->onDelete('set null');
+            $table->foreignUuid('program_studi_id')->nullable()->constrained('program_studis')->onDelete('set null');
         });
 
         Schema::table('students', function (Blueprint $table) {
-            $table->foreignId('program_studi_id')->nullable()->constrained('program_studis')->onDelete('set null');
+            $table->foreignUuid('program_studi_id')->nullable()->constrained('program_studis')->onDelete('set null');
         });
     }
 

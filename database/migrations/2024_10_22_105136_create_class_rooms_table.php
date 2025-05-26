@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('schedule')->nullable();
             $table->string('mode')->nullable();
 
-            $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
+            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnDelete();
             $table->foreignId('academic_year_id')->constrained('academic_years')->cascadeOnDelete();
-            $table->foreignId('lecturer_id')->nullable()->constrained('lecturers')->nullOnDelete();
+            $table->foreignUuid('lecturer_id')->nullable()->constrained('lecturers')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

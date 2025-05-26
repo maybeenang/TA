@@ -63,7 +63,7 @@ class NotificationButton extends Component
 
     public function receiveNotification($notification)
     {
-        dump($notification);
+        /* dump($notification); */
         array_unshift($this->notifications, [
             'id' => $notification['id'],
             'title' => $notification['title'],

@@ -12,34 +12,34 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
-            $table->foreignId('report_id')->nullable()->constrained('reports')->cascadeOnDelete();
+            $table->foreignUuid('report_id')->nullable()->constrained('reports')->cascadeOnDelete();
             $table->string('letter')->nullable();
             $table->decimal('total_score', 5, 2)->default(0);
             $table->timestamps();
         });
 
         Schema::create('grade_components', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('name');
             $table->decimal('weight', 5, 2)->default(0);
             $table->timestamps();
         });
 
         Schema::create('student_grades', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('grade_component_id')->constrained('grade_components')->cascadeOnDelete();
-            $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('grade_component_id')->constrained('grade_components')->cascadeOnDelete();
+            $table->foreignUuid('grade_id')->constrained('grades')->cascadeOnDelete();
             $table->decimal('score', 5, 2)->default(0);
             $table->timestamps();
         });
 
         Schema::create('grading_scale', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('letter');
             $table->decimal('score', 5, 2)->default(0);
             $table->integer('max_score')->default(0);

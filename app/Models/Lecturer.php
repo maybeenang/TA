@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Lecturer extends Model
 {
-    use SoftDeletes, ReportRelatedModel;
+    use SoftDeletes, ReportRelatedModel, HasUuids;
 
     public $fillable = [
         'nip',

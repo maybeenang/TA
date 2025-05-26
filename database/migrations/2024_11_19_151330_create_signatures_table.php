@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('signatures', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('path');
             $table->string('name');
@@ -21,8 +21,8 @@ return new class extends Migration
         });
 
         Schema::table('reports', function (Blueprint $table) {
-            $table->foreignId('signature_gkmp_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
-            $table->foreignId('signature_kaprodi_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+            $table->foreignUuid('signature_gkmp_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
+            $table->foreignUuid('signature_kaprodi_id')->nullable()->constrained('signatures')->cascadeOnDelete()->after('pdf_status');
             // verified
             $table->foreignId('verifikator_gkmp')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('verifikator_kaprodi')->nullable()->constrained('users')->cascadeOnDelete();

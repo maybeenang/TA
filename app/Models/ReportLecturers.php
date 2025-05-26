@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class ReportLecturers extends Model
 {
-
-    use ReportRelatedModel;
+    use ReportRelatedModel, HasUuids;
 
     protected $table = 'report_lecturers';
 

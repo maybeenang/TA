@@ -13,8 +13,7 @@ return new class extends Migration
     {
 
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
-
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('nim')->unique();
 
@@ -23,20 +22,20 @@ return new class extends Migration
         });
 
         Schema::create('students_class_rooms', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->timestamps();
         });
 
         Schema::create('report_statuses', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->timestamps();
         });
 
         Schema::create('reports', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('responsible_lecturer')->nullable();
             $table->longText('teaching_methods')->nullable();
@@ -48,7 +47,7 @@ return new class extends Migration
             $table->timestamp('verified_at')->nullable();
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
-            $table->foreignId('report_status_id')->default(1)->constrained('report_statuses')->cascadeOnDelete();
+            $table->foreignUuid('report_status_id')->default(1)->constrained('report_statuses')->cascadeOnDelete();
             $table->string('pdf_path')->nullable();
             $table->string('pdf_status')->nullable();
             $table->timestamps();
@@ -56,15 +55,15 @@ return new class extends Migration
         });
 
         Schema::create('report_lecturers', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
-            $table->foreignId('lecturer_id')->constrained('lecturers')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->foreignUuid('lecturer_id')->constrained('lecturers')->cascadeOnDelete();
             $table->timestamps();
         });
 
         Schema::create('cpmks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
             $table->string('code')->nullable();
             $table->longtext('description')->nullable();
             $table->string('criteria')->nullable();
@@ -73,8 +72,8 @@ return new class extends Migration
         });
 
         Schema::create('quistionnaires', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
             $table->text('statement');
             $table->float('strongly_agree');
             $table->float('agree');
@@ -84,8 +83,8 @@ return new class extends Migration
         });
 
         Schema::create('attendance_and_activity', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('report_id')->constrained('reports')->cascadeOnDelete();
             $table->integer('week');
             $table->string('meeting_name');
             $table->integer('student_present')->nullable();

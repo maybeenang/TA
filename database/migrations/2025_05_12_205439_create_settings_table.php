@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('key');
             $table->string('name');
             $table->boolean('is_shown')->default(true);
-            $table->foreignId('program_studi_id')->constrained('program_studis')->onDelete('cascade');
+            $table->foreignUuid('program_studi_id')->constrained('program_studis')->onDelete('cascade');
             $table->foreignId('last_updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('last_synced_by')->nullable()->constrained('users')->onDelete('set null');
             $table->dateTime('last_updated_at')->nullable();

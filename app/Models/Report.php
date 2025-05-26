@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 #[ObservedBy(ReportObserver::class)]
 class Report extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasUuids;
 
     public $fillable = [
         'report_status_id',

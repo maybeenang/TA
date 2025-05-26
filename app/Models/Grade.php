@@ -6,13 +6,14 @@ use App\Observers\GradeObserver;
 use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 
 #[ObservedBy(GradeObserver::class)]
 class Grade extends Model
 {
 
-    use ReportRelatedModel;
+    use ReportRelatedModel, HasUuids;
     //
     protected $fillable = [
         'student_id',

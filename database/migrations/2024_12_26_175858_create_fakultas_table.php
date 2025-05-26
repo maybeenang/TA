@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fakultas', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->unique();
 
             $table->softDeletes();
@@ -20,7 +20,7 @@ return new class extends Migration
         });
 
         Schema::table('program_studis', function (Blueprint $table) {
-            $table->foreignId('fakultas_id')->constrained('fakultas');
+            $table->foreignUuid('fakultas_id')->constrained('fakultas');
         });
     }
 
