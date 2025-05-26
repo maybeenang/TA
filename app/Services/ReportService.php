@@ -26,6 +26,12 @@ class ReportService
     public function reportCreated(Report $report)
     {
 
+        $report->update([
+            'teaching_methods' => 'Metode perkuliahan yang digunakan dalam mata kuliah ini adalah Bentuk : kuliah, responsi, tutorial, seminar atau yang setara, praktikum, praktik studio, praktik bengkel, praktik lapangan, penelitian, pengabdian kepada masyarakat dan atau bentuk pembelajaran lainya. Metode Pembelajaran contoh :Problem-Based Learning (PBL). Buku referensi yang digunakan adalah Digital Systems: Principles and Applications ditulis oleh Ronald J. Tocci dan Digital Electronics: Principles and Application karya ditulis oleh Roger L. Tokheim',
+            'self_evaluation' => 'Mata kuliah sistem logika dan digital merupakan mata kuliah pilihan kelompok keahlian instrumentasi. Jumlah mahasiswa yang mengambil mata kuliah ini berjumlah 13 orang. Partisipasi kehadiran mahasiswa pada perkuliahan ini selama satu semester dapat dikatakan cukup baik dengan tingkat kehadiran >80%. Tingkat keaktifan mahasiswa sebesar 9% dimana kurang dari setengah jumlah mahasiswa untuk aktif berdiskusi atau bertanya pada saat perkuliahan berlangsung, hal tersebut dapat terjadi mungkin disebabkan bahan(diksi) materi(soal) yang diberikan cukup sulit dipahami mahasiswa dan efek kelelahan mahasiswa karena perkuliahan diadakan pada saat siang menjelang sore. Proses perkuliahan dibagi menjadi 2 sks pemberian teori (konsep) di kelas selama 14 kali pertemuan dan 1 sks praktikum di laboratorium fisika serta 2 kali ujian (UTS dan UAS). Namun adanya miskomunikasi pada pihak laboratorium maka praktikum tidak berjalan sesuai dengan yang diharapkan. Hasil dari perkuliahan ini dapat dikatakan cukup walaupun masih ada beberapa kekurangan seperti soal-soal latihan yang diberikan untuk mahasiswa belajar mendalami konsep dan aplikasi digital dalam kehidupan sehari-hari.',
+            'follow_up_plan' => 'Tindak lanjut perkuliahan di tahun akademik 2020/2021 maka diperlukan upaya pembuatan soal-soal dan diberikan tugas besar perkuliahan yang dapat membuat mahasiswa lebih mendalami konsep sistem logika digital serta penyusunan jadwal penyelenggaran kuliah yang tepat termasuk praktikum sehingga mahasiswa memiliki jeda waktu istirahat saat pergantian mata kuliah'
+        ]);
+
         // create 3 cmpk with loop
         for ($i = 1; $i <= 3; $i++) {
             $report->cpmks()->create([

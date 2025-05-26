@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Traits\ReportRelatedModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class StudentGrade extends Model
 {
-    use ReportRelatedModel;
+    use ReportRelatedModel, HasUuids;
     protected $fillable = [
         'grade_id',
         'grade_component_id',

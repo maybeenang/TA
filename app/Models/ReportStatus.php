@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class ReportStatus extends Model
 {
-    use ReportRelatedModel, HasUuids;
+    use ReportRelatedModel;
 
     public $fillable = [
         'name',

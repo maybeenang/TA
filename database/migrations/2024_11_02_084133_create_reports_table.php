@@ -29,7 +29,7 @@ return new class extends Migration
         });
 
         Schema::create('report_statuses', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });
@@ -47,7 +47,7 @@ return new class extends Migration
             $table->timestamp('verified_at')->nullable();
 
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
-            $table->foreignUuid('report_status_id')->default(1)->constrained('report_statuses')->cascadeOnDelete();
+            $table->foreignId('report_status_id')->default(1)->constrained('report_statuses')->cascadeOnDelete();
             $table->string('pdf_path')->nullable();
             $table->string('pdf_status')->nullable();
             $table->timestamps();
