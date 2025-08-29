@@ -16,7 +16,7 @@
     @isset($menuData)
         @foreach ($menuData[0]->menu as $item)
             @isset($item->role)
-                @if (! auth()->user()->hasRole($item->role))
+                @if (! auth()->user()->hasRole($item->roles))
                     @continue
                 @endif
             @endisset
